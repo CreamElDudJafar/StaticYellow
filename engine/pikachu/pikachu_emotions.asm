@@ -1,5 +1,5 @@
 IsPlayerTalkingToPikachu::
-	ld a, [wd436]
+	ld a, [wd435]
 	and a
 	ret z
 	ldh a, [hSpriteIndex]
@@ -8,7 +8,7 @@ IsPlayerTalkingToPikachu::
 	call InitializePikachuTextID
 	xor a
 	ldh [hSpriteIndex], a
-	ld [wd436], a
+	ld [wd435], a
 	ret
 
 InitializePikachuTextID::
@@ -344,7 +344,7 @@ MapSpecificPikachuExpression:
     	cp POKEMON_TOWER_7F + 1
     	jr c, .emotion22
 .notInLavenderTower
-	ld a, [wd49c]
+	ld a, [wd49b]
 	and a
 	jr z, .mood_based_emotion
 	dec a
