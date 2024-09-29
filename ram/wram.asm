@@ -2058,11 +2058,11 @@ wDestinationWarpID:: db
 
 wPikachuOverworldStateFlags:: db
 wPikachuSpawnState:: db
+wd431:: db
 wd432:: db
 wd433:: db
 wPikachuCollisionCounter:: db
 wd435:: db
-wd436:: db
 wPikachuFollowCommandBufferSize:: db
 wPikachuFollowCommandBuffer:: ds 16
 
@@ -2116,12 +2116,12 @@ ENDU
 
 wPikachuHappiness:: db
 wPikachuMood:: db
+wd471:: db
 wd472:: db
-wd473:: db
 	ds 1
-wd475:: db
+wd474:: db
 	ds 4
-wd47a:: db
+wd479:: db
 	ds 24
 wd492:: db
 	ds 1
@@ -2131,7 +2131,7 @@ wPrinterSettings:: db
 wUnknownSerialFlag_d499:: db
 wPrinterConnectionOpen:: db
 wPrinterOpcode:: db
-wd49c:: db
+wd49b:: db
 
 	ds 19
 
@@ -2597,8 +2597,8 @@ wGBCPal:: ds PALETTE_SIZE
 wLastBGP:: db
 wLastOBP0:: db
 wLastOBP1:: db
-wdef5:: db
-wBGPPalsBuffer:: ds (NUM_ACTIVE_PALS + 1) * PALETTE_SIZE
+wdef4:: db
+wBGPPalsBuffer:: ds NUM_ACTIVE_PALS + 1 * PALETTE_SIZE
 
 
 SECTION "Stack", WRAM0
