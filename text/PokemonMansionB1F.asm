@@ -1,3 +1,28 @@
+_PokemonMansionJessieJamesText1::
+	text "Not another step,"
+	line "brat!@"
+	text_end
+
+_PokemonMansionJessieJamesText2::
+	text "How dare you"
+	line "humiliate us at"
+	cont "MT.MOON!"
+
+	para "It's payback time,"
+	line "you brat!"
+	done
+
+_PokemonMansionJessieJamesText3::
+	text "Such"
+	line "a dreadful twerp!"
+	prompt
+
+_PokemonMansionJessieJamesText4::
+	text "Looks like TEAM"
+	line "ROCKET's blasting"
+	cont "off again!@"
+	text_end
+
 _PokemonMansionB1FBurglarBattleText::
 	text "Uh-oh. Where am"
 	line "I now?"
