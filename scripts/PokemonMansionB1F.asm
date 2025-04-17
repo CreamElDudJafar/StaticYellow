@@ -100,7 +100,7 @@ ENDC
 
 PokemonMansionB1FScript_455a5:
 	ld a, [wYCoord]
-	cp $e
+	cp $10
 	ret nz
 	ResetEvent EVENT_BEAT_MANSION_4_JESSIE_JAMES_ON_LEFT
 	ld a, [wXCoord]
