@@ -170,18 +170,15 @@ PokemonMansionB1FScript5:
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
 PokemonMansionB1FScript6:
-	ld a, $2
-	ld [wSprite02StateData1MovementStatus], a
 	ld a, SPRITE_FACING_LEFT
 	ld [wSprite01StateData1FacingDirection], a
 	CheckEvent EVENT_BEAT_MANSION_4_JESSIE_JAMES_ON_LEFT
 	jr z, .asm_4564a
 	ld a, SPRITE_FACING_DOWN
-	ld [wSprite02StateData1FacingDirection], a
+	ld [wSprite01StateData1FacingDirection], a
 .asm_4564a
-	call Delay3
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
-	ld [wJoyIgnore], a
+	ld a, $2
+	ld [wSprite01StateData1MovementStatus], a
 PokemonMansionB1FScript7:
 	ld de, PokemonMansionB1FJessieJamesMovementData_45606
 	CheckEvent EVENT_BEAT_MANSION_4_JESSIE_JAMES_ON_LEFT
@@ -203,19 +200,19 @@ PokemonMansionB1FScript8:
 	ld a, [wStatusFlags5]
 	bit BIT_SCRIPTED_NPC_MOVEMENT, a
 	ret nz
-	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
-	ld [wJoyIgnore], a
 PokemonMansionB1FScript9:
 	ld a, $2
-	ld [wSprite03StateData1MovementStatus], a
+	ld [wSprite02StateData1MovementStatus], a
 	ld a, SPRITE_FACING_DOWN
-	ld [wSprite03StateData1FacingDirection], a
+	ld [wSprite02StateData1FacingDirection], a
 	CheckEvent EVENT_BEAT_MANSION_4_JESSIE_JAMES_ON_LEFT
 	jr z, .asm_45697
 	ld a, SPRITE_FACING_RIGHT
-	ld [wSprite03StateData1FacingDirection], a
+	ld [wSprite02StateData1FacingDirection], a
 .asm_45697
 	call Delay3
+	ld a, ~(A_BUTTON | B_BUTTON)
+	ld [wJoyIgnore], a
 	ld a, TEXT_POKEMONMANSIONB1F_TEXT13
 	ldh [hTextID], a
 	call DisplayTextID
@@ -248,8 +245,8 @@ PokemonMansionB1FScript11:
 	ld [wSprite02StateData1MovementStatus], a
 	ld [wSprite03StateData1MovementStatus], a
 	xor a
+	ld [wSprite01StateData1FacingDirection], a
 	ld [wSprite02StateData1FacingDirection], a
-	ld [wSprite03StateData1FacingDirection], a
 	ld a, SELECT | START | D_RIGHT | D_LEFT | D_UP | D_DOWN
 	ld [wJoyIgnore], a
 	ld a, $1
