@@ -111,6 +111,22 @@ SetPal_Pokedex:
 	ld de, BlkPacket_Pokedex
 	ret
 
+; PureRGBnote: ADDED: new function for setting the palette including the type icon color on the movedex data page
+SetPal_Movedex:
+	ld hl, PalPacket_Movedex
+	ld de, wPalPacket
+	ld bc, $10
+	rst _CopyData
+	ld a, [wCurPartySpecies]
+	ld d, a
+	callfar GetTypePalette
+	ld a, d
+	ld hl, wPalPacket + 3
+	ld [hl], a
+	ld hl, wPalPacket
+	ld de, BlkPacket_Pokedex
+	ret
+
 SetPal_Slots:
 	ld hl, PalPacket_Slots
 	ld de, BlkPacket_Slots
@@ -298,6 +314,7 @@ SetPalFunctions:
 	dw SetPal_TrainerCard
 	dw SetPal_PikachusBeach
 	dw SetPal_PikachusBeachTitle
+	dw SetPal_Movedex
 
 ; The length of the blk data of each badge on the Trainer Card.
 ; The Rainbow Badge has 3 entries because of its many colors.

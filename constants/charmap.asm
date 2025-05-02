@@ -4,6 +4,7 @@
 
 	charmap "<NULL>",    $00
 	charmap "<LF>",      $1F
+	charmap "<BAGE>",    $48
 	charmap "<PAGE>",    $49
 	charmap "<PKMN>",    $4a ; "<PK><MN>"
 	charmap "<_CONT>",   $4b ; implements "<CONT>"
@@ -173,7 +174,7 @@
 	charmap "!",         $e7
 	charmap ".",         $e8
 
-	charmap "ァ",         $e9 ; katakana small a, unused
+	charmap "%",         $e9 ; katakana small a, unused
 	charmap "ゥ",         $ea ; katakana small u, unused
 	charmap "ェ",         $eb ; katakana small e, unused
 

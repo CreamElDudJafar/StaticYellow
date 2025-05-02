@@ -1013,6 +1013,7 @@ wSavedY::
 wTempSCX::
 ; which entry from TradeMons to select
 wWhichTrade::
+wDexMaxSeenMove::
 wDexMaxSeenMon::
 wPPRestoreItem::
 wWereAnyMonsAsleep::
@@ -1271,7 +1272,9 @@ wGymCityName:: ds 17
 
 wGymLeaderName:: ds NAME_LENGTH
 
-	ds 16
+	ds 15
+
+wStoredMovedexListIndex:: db
 
 wListPointer:: dw
 
@@ -1788,6 +1791,7 @@ wMoveType::
 wPokedexNum::
 wTempTMHM::
 wUsingPPUp::
+wMovedexMoveID::
 wMaxPP::
 wMoveGrammar::
 ; 0 for player, non-zero for enemy
@@ -1861,8 +1865,21 @@ wSavedSpriteScreenX:: db
 wSavedSpriteMapY:: db
 wSavedSpriteMapX:: db
 
-	ds 5
+	ds 3
 
+wDexMinSeenMon::
+wDexMinSeenMove:: db
+
+; bit 0 = set to 1 when we should mark a move as seen in the movedex flags on showing its animation, 0 otherwise
+; bit 1 = set if we ran from battle
+; bit 2-7 = unused
+wBattleFunctionalFlags:: db
+
+;;;;; PureRGBnote: CHANGED: this property is also used in the pokedex for some flags.
+;;;;; bit 0 -> How we're displaying pokedex data. 0 = internal (from the pokedex), 1 = external (from dialog)
+;;;;; bit 1 -> Which sprite is currently displayed on a pokedex data page. 0 = front sprite, 1 = back sprite 
+;;;;; bit 2 -> used to indicate whether we're in the pokedex data page or not
+wPokedexDataFlags::
 wWhichPrize:: db
 
 ; counts downward each frame
@@ -1953,7 +1970,20 @@ wPokedexOwnedEnd::
 wPokedexSeen:: flag_array NUM_POKEMON
 wPokedexSeenEnd::
 
-	ds 42
+	ds 20
+
+UNION
+
+ds 22 ; 22 of the 42 bytes of space are alotted to movedex seen flags
+
+NEXTU
+
+wMovedexSeen:: flag_array NUM_ATTACKS ; PureRGBnote: ADDED: flags for the movedex, uses all 22 bytes
+wMovedexSeenEnd::
+
+ENDU
+
+;;;;;
 
 wPlayerMoney:: ds 3 ; BCD
 

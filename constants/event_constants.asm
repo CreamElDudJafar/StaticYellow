@@ -37,7 +37,8 @@
 	const_skip 8
 	const EVENT_OAK_GOT_PARCEL
 	const EVENT_GOT_OAKS_PARCEL
-	const_skip 21
+	const EVENT_GOT_MOVEDEX
+	const_skip 20
 	const EVENT_BEAT_VIRIDIAN_GYM_JESSIE_JAMES
 	const EVENT_GOT_TM27
 	const EVENT_BEAT_VIRIDIAN_GYM_GIOVANNI
@@ -757,6 +758,8 @@
 ; arbitrary flags
 	const_next $8D0
 	const FLAG_VIEW_PC_PKMN
+	const FLAG_MOVEDEX_SORTING_MODE
+	const FLAG_INTERRUPTED_TEXT
 	const FLAG_SKIP_MULTI_CHOICE_LOADGBPAL
 
 ; Indigo Plateau events

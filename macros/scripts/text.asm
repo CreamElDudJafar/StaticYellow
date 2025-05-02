@@ -8,6 +8,7 @@ DEF prompt EQUS "db \"<PROMPT>\"" ; Prompt the player to end a text box (initiat
 DEF feed   EQUS "db \"<LF>\","     ; Line Feed (new line, no skip)
 
 DEF page   EQUS "db \"<PAGE>\","         ; Start a new Pokédex page.
+DEF bage   EQUS "db \"<BAGE>\","         ; same as page, but can watch multiple buttons instead of just a / b
 DEF dex    EQUS "db \"<DEXEND>\", \"@\"" ; End a Pokédex entry.
 
 
@@ -96,6 +97,18 @@ ENDM
 	const TX_WAIT_BUTTON ; $0d
 MACRO text_waitbutton
 	db TX_WAIT_BUTTON
+ENDM
+
+	const TX_JUMP ; $0e
+MACRO text_jump
+	db TX_JUMP
+	dw \1 ; address of text commands
+ENDM
+
+	const TX_CALL ; $0f
+MACRO text_call
+	db TX_CALL
+	dw \1 ; address of text commands
 ENDM
 
 	const TX_SOUND_POKEDEX_RATING ; $0e

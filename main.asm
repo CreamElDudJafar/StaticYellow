@@ -499,6 +499,7 @@ INCLUDE "engine/items/itemfinder.asm"
 SECTION "Vending Machine", ROMX
 
 INCLUDE "engine/events/vending_machine.asm"
+INCLUDE "engine/pokemon/calc_stats.asm"
 
 
 SECTION "Itemfinder 2", ROMX
@@ -735,4 +736,9 @@ SECTION "Move Descriptions", ROMX
 INCLUDE "engine/pokemon/move_descriptions.asm"
 INCLUDE "engine/pokemon/evos_moves.asm" ; Moved from Battle Engine 6
 INCLUDE "engine/menus/multi_choice_menu.asm"
+INCLUDE "engine/menus/text_multi_button_prompt.asm"
+;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex
+INCLUDE "engine/menus/movedex.asm"
+INCLUDE "data/moves/movedex_type_palettes.asm"
+;;;;;;;;;;
 
