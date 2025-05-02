@@ -392,6 +392,10 @@ INCLUDE "engine/movie/trade.asm"
 INCLUDE "engine/movie/intro.asm"
 INCLUDE "engine/movie/trade2.asm"
 INCLUDE "engine/menus/options.asm"
+;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex
+INCLUDE "engine/menus/movedex.asm"
+INCLUDE "data/moves/movedex_type_palettes.asm"
+;;;;;;;;;;
 
 
 SECTION "Pokédex Rating", ROMX
@@ -737,8 +741,3 @@ INCLUDE "engine/pokemon/move_descriptions.asm"
 INCLUDE "engine/pokemon/evos_moves.asm" ; Moved from Battle Engine 6
 INCLUDE "engine/menus/multi_choice_menu.asm"
 INCLUDE "engine/menus/text_multi_button_prompt.asm"
-;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex
-INCLUDE "engine/menus/movedex.asm"
-INCLUDE "data/moves/movedex_type_palettes.asm"
-;;;;;;;;;;
-

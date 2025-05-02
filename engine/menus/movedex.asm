@@ -28,8 +28,8 @@ ShowMovedexMenu:
 	ld [wMovedexMoveID], a
 	ldh [hJoy7], a
 .setUpGraphics
-;	ld b, SET_PAL_TOWN_MAP
-;	call RunPaletteCommand
+	ld b, SET_PAL_TOWN_MAP
+	call RunPaletteCommand
 	callfar LoadPokedexTilePatterns
 
 	ld de, MovedexPromptGraphics
@@ -435,7 +435,7 @@ ShowNextMoveData:
 	hlcoord 14, 1
 	ld a, "№"
 	ld [hli], a
-	ld a, "<DOT>"
+	ld a, "."
 	ld [hli], a
 	ld de, wMovedexMoveID
 	lb bc, LEADING_ZEROES | 1, 3

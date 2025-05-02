@@ -107,6 +107,8 @@ PlaceNextChar::
 	dict "<DEXEND>",  PlaceDexEnd
 	dict "<TARGET>",  PlaceMoveTargetsName
 	dict "<USER>",    PlaceMoveUsersName
+	dict "<opponent>", OpponentChar
+	dict "<user>",     UserChar
 
 	ld [hli], a
 	call PrintLetterDelay
@@ -143,6 +145,8 @@ RocketChar::  print_name RocketCharText
 PlacePOKe::   print_name PlacePOKeText
 SixDotsChar:: print_name SixDotsCharText
 PlacePKMN::   print_name PlacePKMNText
+UserChar::    print_name UserText
+OpponentChar:: print_name OpponentText
 
 PlaceMoveTargetsName::
 	ldh a, [hWhoseTurn]
@@ -183,6 +187,8 @@ RocketCharText::  db "ROCKET@"
 SixDotsCharText:: db "……@"
 EnemyText::       db "Enemy @"
 PlacePKMNText::   db "<PK><MN>@"
+UserText::        db "user@"
+OpponentText::    db "opponent@"
 
 ContText::
 	push de
