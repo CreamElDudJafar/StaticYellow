@@ -588,7 +588,7 @@ OaksLabOakGivesPokedexScript:
 	ld a, TEXT_OAKSLAB_RIVAL_LEAVE_IT_ALL_TO_ME
 	ldh [hTextID], a
 	call DisplayTextID
-	SetEvent EVENT_GOT_POKEDEX
+	SetEvents EVENT_GOT_POKEDEX, EVENT_GOT_MOVEDEX
 	ld a, SCRIPT_VIRIDIANCITY_AFTER_POKEDEX
 	ld [wViridianCityCurScript], a
 	SetEvent EVENT_OAK_GOT_PARCEL

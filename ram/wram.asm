@@ -1974,7 +1974,7 @@ wPokedexSeenEnd::
 
 UNION
 
-ds 22 ; 22 of the 42 bytes of space are alotted to movedex seen flags
+	ds 22 ; 22 of the 42 bytes of space are alotted to movedex seen flags
 
 NEXTU
 

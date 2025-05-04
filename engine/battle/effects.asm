@@ -934,7 +934,7 @@ SwitchAndTeleportEffect:
 	jp nz, PrintText
 	jp ConditionalPrintButItFailed
 .playAnimAndPrintText
-;	push af
+	push af
 	ld hl, wBattleFunctionalFlags
 	set 0, [hl]
 	call PlayBattleAnimation

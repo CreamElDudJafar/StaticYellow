@@ -51,9 +51,9 @@ BluesHouseDaisySittingText:
 	rst _PrintText
 	jr .done
 
-.bag_full
-	ld hl, BluesHouseDaisyBagFullText
-	rst _PrintText
+;.bag_full
+;	ld hl, BluesHouseDaisyBagFullText
+;	rst _PrintText
 .done
 	rst TextScriptEnd
 
@@ -70,9 +70,9 @@ GotMapText:
 	sound_get_key_item
 	text_end
 
-BluesHouseDaisyBagFullText:
-	text_far _BluesHouseDaisyBagFullText
-	text_end
+;BluesHouseDaisyBagFullText:
+;	text_far _BluesHouseDaisyBagFullText
+;	text_end
 
 BluesHouseDaisyUseMapText:
 	text_far _BluesHouseDaisyUseMapText

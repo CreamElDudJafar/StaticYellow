@@ -346,6 +346,8 @@ MovedexPromptGraphics::  INCBIN "gfx/movedex/prompts.2bpp"
 MovedexPromptGraphicsEnd::
 MovedexUI::          INCBIN "gfx/movedex/movedex_ui.1bpp"
 MovedexUIEnd::
+PokedexDataUI::          INCBIN "gfx/pokedex/left_right.1bpp"
+PokedexDataUIEnd::
 ExtraMenuBorderConnectors:: INCBIN "gfx/font/extra_menu_border_connectors.1bpp"
 FromToChangeBoxPrompt:: INCBIN "gfx/font/from_to_change_box_prompt.1bpp"
 

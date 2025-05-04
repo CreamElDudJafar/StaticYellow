@@ -46,6 +46,8 @@ SuperPalettes:
 	RGB 31,29,31, 20,26,31, 17,23,10, 03,02,02 ; PAL_BLUEGREENMON ; blue/green alt palette pokemon
 	RGB 31,29,31, 31,29,31, 02,03,03, 03,02,02 ; PAL_BLACK2 ; default move animation palette
 	RGB 31,29,31, 18,24,22, 21,14,09, 03,02,02 ; PAL_SAFARIBALL ; safari ball palette when throwing one in battle
+	RGB 31,29,31, 30,22,17, 16,14,19, 03,02,02 ; PAL_MEWMON2
+	RGB 31,29,31, 24,20,30, 11,20,30, 03,02,02 ; PAL_MEWMON3
 	RGB 31,31,31, 12,31,11, 31,10,06, 00,00,00 ; PAL_BULBASAUR
 	RGB 31,31,31, 12,31,11, 31,12,17, 00,00,00 ; PAL_IVYSAUR
 	RGB 31,31,31, 12,31,19, 31,09,19, 00,00,00 ; PAL_VENUSAUR
@@ -300,6 +302,8 @@ GBCBasePalettes:
 	RGB 31,31,31, 20,26,31, 12,25,06, 03,03,03 ; PAL_BLUEGREENMON ; blue/green alt palette pokemon
 	RGB 31,31,31, 31,31,31, 03,03,03, 03,03,03 ; PAL_BLACK2 ; default move animation palette	
 	RGB 31,31,31, 17,31,11, 17,09,05, 03,03,03 ; PAL_SAFARIBALL ; safari ball palette when throwing one in battle
+	RGB 31,31,31, 31,17,11, 11,05,14, 03,03,03 ; PAL_MEWMON2
+	RGB 31,31,31, 22,13,30, 00,09,31, 03,03,03 ; PAL_MEWMON3
 	RGB 31,31,31, 12,31,11, 31,10,06, 03,03,03 ; PAL_BULBASAUR
 	RGB 31,31,31, 12,31,11, 31,12,17, 03,03,03 ; PAL_IVYSAUR
 	RGB 31,31,31, 12,31,19, 31,09,19, 03,03,03  ; PAL_VENUSAUR

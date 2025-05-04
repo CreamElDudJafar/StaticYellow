@@ -113,7 +113,7 @@ SetPal_Pokedex:
 
 ; PureRGBnote: ADDED: new function for setting the palette including the type icon color on the movedex data page
 SetPal_Movedex:
-	ld hl, PalPacket_Movedex
+	ld hl, PalPacket_Pokedex
 	ld de, wPalPacket
 	ld bc, $10
 	rst _CopyData

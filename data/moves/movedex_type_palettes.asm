@@ -15,7 +15,7 @@ GetTypePalette:
 TypePaletteMapping:
 	db PAL_WHITEMON;normal
 	db PAL_BROWNMON;fighting
-	db PAL_MEWMON;flying
+	db PAL_MEWMON2;flying
 	db PAL_PURPLEMON;poison
 	db PAL_REDMON;ground
 	db PAL_GREYMON;rock
@@ -39,7 +39,7 @@ TypePaletteMapping:
 	db PAL_YELLOWMON;electric
 	db PAL_PINKMON;psychic
 	db PAL_CYANMON;ice
-	db PAL_EXP;dragon
+	db PAL_MEWMON3;dragon
 
 ; input d = type ID
 LoadTypeIcon:
@@ -90,10 +90,6 @@ TypeGraphicMapping:
 	dw DragonTypeIcon;dragon
 
 CheckGBCPsychic:
-;	ld a, [wOptions2]
-;	and %11
-;	cp PALETTES_YELLOW
-;	ret nz
 	ld hl, _PsychicTypeGBCIcon ; need a different icon when in GBC colors mode because it will look weird otherwise
 	ret
 

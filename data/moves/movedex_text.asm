@@ -157,9 +157,10 @@ _SwordsDanceDexEntry::
 _CutDexEntry::
 	text "Slices the foe"
 	next "with a claw, barb"
-	next "tooth, wing, etc.@"
-
-	text_call _GenericNoAdditionalEffectText
+	next "tooth, wing, etc."
+	
+	bage "No additional"
+	next "effect"
 
 	bage "Usable outside"
 	next "battle to cut down"
@@ -396,9 +397,9 @@ _Generic40PercentPoisonText::
 _TwineedleDexEntry::
 	text "Jabs the foe with"
 	next "two barbs, claws,"
-	next "beaks, or spikes.@"
+	next "beaks, or spikes."
 
-	text_call _GenericHitsTwiceText
+	bage "Hits twice"
 	; fall through
 _Generic20PercentPoisonText::
 	bage "20% chance of"
@@ -573,9 +574,10 @@ _HydroPumpDexEntry::
 _SurfDexEntry::
 	text "The whole area"
 	next "is flooded with"
-	next "deep water.@"
+	next "deep water."
 
-	text_call _GenericNoAdditionalEffectText
+	bage "No additional"
+	next "effect"
 
 	bage "Usable outside"
 	next "battle to travel"
@@ -719,9 +721,10 @@ _SeismicTossDexEntry::
 _StrengthDexEntry::
 	text "Slugs the foe"
 	next "with a massive"
-	next "built up power.@"
+	next "built up power."
 
-	text_call _GenericNoAdditionalEffectText
+	bage "No additional"
+	next "effect"
 
 	bage "Usable outside of"
 	next "battle to push"
@@ -1251,9 +1254,10 @@ _MetronomeDexEntry::
 _MirrorMoveDexEntry::
 	text "Uses the last"
 	next "move any foe"
-	next "used.@"
+	next "used."
 
-	text_call _GenericAlwaysGoesFirstText
+	bage "Always goes"
+	next "first"
 
 	bage "Fails if no foe"
 	next "has attacked yet"

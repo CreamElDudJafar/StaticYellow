@@ -392,7 +392,7 @@ INCLUDE "engine/movie/trade.asm"
 INCLUDE "engine/movie/intro.asm"
 INCLUDE "engine/movie/trade2.asm"
 INCLUDE "engine/menus/options.asm"
-;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex
+;;;;;;;;;; PureRGBnote: ADDED: new code for the movedex, must stay with pokedex
 INCLUDE "engine/menus/movedex.asm"
 INCLUDE "data/moves/movedex_type_palettes.asm"
 ;;;;;;;;;;
@@ -733,11 +733,11 @@ INCLUDE "engine/overworld/field_moves.asm"
 INCLUDE "engine/menus/change_box_menu.asm"
 INCLUDE "engine/battle/just_slot_machine_stuff.asm" ; moved from bank 1E
 INCLUDE "engine/overworld/select_button_functionality.asm"
+INCLUDE "engine/menus/multi_choice_menu.asm"
+INCLUDE "engine/menus/text_multi_button_prompt.asm"
 
 
 SECTION "Move Descriptions", ROMX
 
 INCLUDE "engine/pokemon/move_descriptions.asm"
 INCLUDE "engine/pokemon/evos_moves.asm" ; Moved from Battle Engine 6
-INCLUDE "engine/menus/multi_choice_menu.asm"
-INCLUDE "engine/menus/text_multi_button_prompt.asm"

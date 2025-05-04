@@ -334,12 +334,14 @@ _OaksLabOakIHaveARequestText::
 _OaksLabOakMyInventionPokedexText::
 	text "On the desk there"
 	line "is my invention,"
-	cont "#DEX!"
+	cont "#DEX with a"
+	cont "built in MOVEDEX!"
 
 	para "It automatically"
 	line "records data on"
-	cont "#MON you've"
-	cont "seen or caught!"
+	cont "#MON and MOVES"
+	cont "you've seen, used"
+	cont "or caught!"
 
 	para "It's a hi-tech"
 	line "encyclopedia!"

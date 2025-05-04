@@ -1708,6 +1708,8 @@ TryRunningFromBattle:
 	dec a
 .playSound
 	ld [wBattleResult], a
+	ld hl, wBattleFunctionalFlags
+	set 1, [hl]
 	ld a, SFX_RUN
 	call PlaySoundWaitForCurrent
 	ld hl, GotAwayText

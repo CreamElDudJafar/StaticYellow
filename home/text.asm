@@ -360,6 +360,7 @@ NextTextCommand::
 	ld a, [hli]
 	cp TX_END
 	jr nz, .TextCommand
+.NoNextTextCommand:
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	ret
@@ -400,9 +401,15 @@ TextCommand_BOX::
 	pop hl
 	jr NextTextCommand
 
+TextCommand_START_storeFlags:
+	ld a, [wLetterPrintingDelayFlags]
+	push af
+	jr TextCommand_START_noPop
+
 TextCommand_START::
 ; write text until "@"
 	pop hl
+TextCommand_START_noPop::
 	ld d, h
 	ld e, l
 	ld h, b
@@ -444,6 +451,30 @@ TextCommand_BCD::
 	ld c, l
 	pop hl
 	jr NextTextCommand
+
+; PureRGBnote: ADDED: jump to a different address in the same text bank so we can reuse text
+TextCommand_JUMP::
+	pop hl
+	hl_deref
+	push hl
+	jr TextCommand_START
+
+; PureRGBnote: ADDED: call different text in the same bank then come back
+TextCommand_CALL::
+	pop hl
+	push hl
+	hl_deref
+	ResetEvent FLAG_INTERRUPTED_TEXT
+	call TextCommand_START_storeFlags
+	ld b, h
+	ld c, l
+	pop hl
+	CheckEvent FLAG_INTERRUPTED_TEXT
+	jp nz, NextTextCommand.NoNextTextCommand
+	; inc hl twice to increment past the text_call address
+	inc hl
+	inc hl
+	jp TextCommand_START_noPop ; assumes after returning from call we will
 
 TextCommand_MOVE::
 ; move to a new tile
@@ -668,4 +699,6 @@ ENDC
 	dw TextCommand_SOUND         ; TX_SOUND_GET_ITEM_1 (also handles other TX_SOUND_* commands)
 	dw TextCommand_DOTS          ; TX_DOTS
 	dw TextCommand_WAIT_BUTTON   ; TX_WAIT_BUTTON
+	dw TextCommand_JUMP          ; TX_JUMP
+	dw TextCommand_CALL          ; TX_CALL
 	; greater TX_* constants are handled directly by NextTextCommand
