@@ -840,21 +840,21 @@ _DroppedHiddenCoinsText::
 	line "some coins!"
 	done
 
-;_IndigoPlateauStatuesText1::
-;	text "INDIGO PLATEAU"
-;	prompt
+_IndigoPlateauStatuesText1::
+	text "INDIGO PLATEAU"
+	prompt
 
-;_IndigoPlateauStatuesText2::
-;	text "The ultimate goal"
-;	line "of trainers!"
-;	cont "#MON LEAGUE HQ"
-;	done
+_IndigoPlateauStatuesText2::
+	text "The ultimate goal"
+	line "of trainers!"
+	cont "#MON LEAGUE HQ"
+	done
 
-;_IndigoPlateauStatuesText3::
-;	text "The highest"
-;	line "#MON authority"
-;	cont "#MON LEAGUE HQ"
-;	done
+_IndigoPlateauStatuesText3::
+	text "The highest"
+	line "#MON authority"
+	cont "#MON LEAGUE HQ"
+	done
 
 _PokemonBooksText::
 	text "Crammed full of"

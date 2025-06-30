@@ -5,7 +5,7 @@ ENDM
 
 BookshelfTileIDs:
 	; tileset id, bookshelf tile id, text id
-;	bookshelf_tile PLATEAU,      $30, IndigoPlateauStatues
+	bookshelf_tile PLATEAU,      $30, IndigoPlateauStatues
 	bookshelf_tile HOUSE,        $3D, TownMapText
 	bookshelf_tile HOUSE,        $1E, BookOrSculptureText
 	bookshelf_tile MANSION,      $32, BookOrSculptureText
