@@ -44,7 +44,7 @@ TextPredefs::
 	add_tx_pre FoundHiddenItemText                  ; 26
 	add_tx_pre HiddenItemBagFullText                ; 27 XXX unused
 	add_tx_pre VermilionGymTrashText                ; 28
-	add_tx_pre IndigoPlateauHQText                  ; 29
+;	add_tx_pre IndigoPlateauHQText                  ; 29
 	add_tx_pre GameCornerOutOfOrderText             ; 2A
 	add_tx_pre GameCornerOutToLunchText             ; 2B
 	add_tx_pre GameCornerSomeonesKeysText           ; 2C

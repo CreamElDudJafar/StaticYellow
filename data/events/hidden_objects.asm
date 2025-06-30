@@ -38,7 +38,7 @@ HiddenObjectMaps:
 	dbw ROUTE_9,                      Route9HiddenObjects
 	dbw TRADE_CENTER,                 TradeCenterHiddenObjects
 	dbw COLOSSEUM,                    ColosseumHiddenObjects
-	dbw INDIGO_PLATEAU,               IndigoPlateauHiddenObjects
+;	dbw INDIGO_PLATEAU,               IndigoPlateauHiddenObjects
 	dbw INDIGO_PLATEAU_LOBBY,         IndigoPlateauLobbyHiddenObjects
 	dbw COPYCATS_HOUSE_2F,            CopycatsHouse2FHiddenObjects
 	dbw FIGHTING_DOJO,                FightingDojoHiddenObjects
@@ -283,10 +283,10 @@ ColosseumHiddenObjects:
 	hidden_object  4,  4, ANY_FACING, CableClubLeftGameboy
 	db -1 ; end
 
-IndigoPlateauHiddenObjects:
-	hidden_object  8, 13, $ff, PrintIndigoPlateauHQText ; inaccessible
-	hidden_object 11, 13, SPRITE_FACING_DOWN, PrintIndigoPlateauHQText ; inaccessible
-	db -1 ; end
+;IndigoPlateauHiddenObjects:
+;	hidden_object  8, 13, $ff, PrintIndigoPlateauHQText ; inaccessible
+;	hidden_object 11, 13, SPRITE_FACING_DOWN, PrintIndigoPlateauHQText ; inaccessible
+;	db -1 ; end
 
 IndigoPlateauLobbyHiddenObjects:
 	hidden_object 15,  7, SPRITE_FACING_UP, OpenPokemonCenterPC

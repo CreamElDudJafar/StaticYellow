@@ -606,10 +606,10 @@ _FightingDojoText::
 	text "FIGHTING DOJO"
 	done
 
-_IndigoPlateauHQText::
-	text "INDIGO PLATEAU"
-	line "#MON LEAGUE HQ"
-	done
+;_IndigoPlateauHQText::
+;	text "INDIGO PLATEAU"
+;	line "#MON LEAGUE HQ"
+;	done
 
 _RedBedroomSNESText::
 	text "<PLAYER> is"
