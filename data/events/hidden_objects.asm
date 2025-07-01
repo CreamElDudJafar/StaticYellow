@@ -74,7 +74,7 @@ HiddenObjectMaps:
 	dbw CELADON_GYM,                  CeladonGymHiddenObjects
 	dbw GAME_CORNER,                  GameCornerHiddenObjects
 	dbw FUCHSIA_POKECENTER,           FuchsiaPokecenterHiddenObjects
-	dbw SAFARI_ZONE_GATE,             SafariZoneEntranceHiddenObjects
+;	dbw SAFARI_ZONE_GATE,             SafariZoneEntranceHiddenObjects
 	dbw FUCHSIA_GYM,                  FuchsiaGymHiddenObjects
 	dbw POKEMON_MANSION_1F,           Mansion1HiddenObjects
 	dbw CINNABAR_GYM,                 CinnabarGymHiddenObjects
@@ -526,9 +526,9 @@ FuchsiaPokecenterHiddenObjects:
 	hidden_object  0,  4, SPRITE_FACING_UP, PrintBenchGuyText
 	db -1 ; end
 
-SafariZoneEntranceHiddenObjects:
-	hidden_object 10,  1, NUGGET, HiddenItems ; inaccessible
-	db -1 ; end
+;SafariZoneEntranceHiddenObjects:
+;	hidden_object 10,  1, NUGGET, HiddenItems ; inaccessible
+;	db -1 ; end
 
 FuchsiaGymHiddenObjects:
 	hidden_object  3, 15, SPRITE_FACING_UP, GymStatues
