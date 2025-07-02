@@ -735,7 +735,7 @@ ItemUseSurfboard:
 	ld a, [wWalkBikeSurfState]
 	ld [wWalkBikeSurfStateCopy], a
 	cp 2 ; is the player already surfing?
-	jr z, .tryToStopSurfing
+	jr z, .alreadySurfing
 .tryToSurf
 	call IsNextTileShoreOrWater
 	jp nc, SurfingAttemptFailed
@@ -752,41 +752,9 @@ ItemUseSurfboard:
 	ld hl, SurfingGotOnText
 	jp PrintText
 
-.tryToStopSurfing
-	xor a
-	ldh [hSpriteIndex], a
-	ld d, 16 ; talking range in pixels (normal range)
-	call IsSpriteInFrontOfPlayer2
-	res BIT_FACE_PLAYER, [hl]
-	ldh a, [hSpriteIndex]
-	and a ; is there a sprite in the way?
-	jr nz, .cannotStopSurfing
-	ld hl, TilePairCollisionsWater
-	call CheckForTilePairCollisions
-	jr c, .cannotStopSurfing
-	ld a, [wTileInFrontOfPlayer]
-	ld c, a
-	call IsTilePassable
-	jr nc, .stopSurfing
-.cannotStopSurfing
-	ld hl, SurfingNoPlaceToGetOffText
+.alreadySurfing
+	ld hl, AlreadySurfingText
 	jp PrintText
-
-.stopSurfing
-	call .makePlayerMoveForward
-	ld a, $3
-	ld [wPikachuSpawnState], a
-	ld hl, wPikachuOverworldStateFlags
-	set 5, [hl]
-	ld hl, wStatusFlags5
-	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
-	xor a
-	ld [wWalkBikeSurfState], a ; change player state to walking
-	dec a
-	ld [wJoyIgnore], a
-	call PlayDefaultMusic ; play walking music
-	call GBPalWhiteOutWithDelay3
-	jp LoadWalkingPlayerSpriteGraphics
 
 ; uses a simulated button press to make the player move forward
 .makePlayerMoveForward
@@ -814,8 +782,8 @@ SurfingGotOnText:
 	text_far _SurfingGotOnText
 	text_end
 
-SurfingNoPlaceToGetOffText:
-	text_far _SurfingNoPlaceToGetOffText
+AlreadySurfingText:
+	text_far _AlreadySurfingText
 	text_end
 
 ItemUsePokedex:
