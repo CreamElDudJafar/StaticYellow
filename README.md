@@ -21,7 +21,6 @@ Features:
 - Updated Pokeball/Pokedex sprites
 - Fishing Rod Encounters Displayed in Pokedex
 - EXP Bar on Status Screen- Blue
-- Color Attacks/Color For Pokeballs
 - Can’t deposit HMs- prevent softlock
 - Traded Pokemon in Game can now be renamed with Name Rater in Lavendar
 - UP/DOWN ON POKEMON PAGE/ IN BATTLE TO SEE POKEMON STATS
