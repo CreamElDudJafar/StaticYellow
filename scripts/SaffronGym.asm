@@ -107,14 +107,14 @@ SaffronGymSabrinaText:
 	jr nz, .afterBeat
 	call z, SaffronGymSabrinaReceiveTM46Script
 	call DisableWaitingAfterTextDisplay
-	jr .todone
+	rst TextScriptEnd
 .afterBeat
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .SabrinaRematch
 	ld hl, .PostBattleAdviceText
 	rst _PrintText
-	jr .todone
+	rst TextScriptEnd
 .beforeBeat
 	ld hl, .Text
 	rst _PrintText
@@ -129,8 +129,6 @@ SaffronGymSabrinaText:
 	cp 5
 	jr nc, .Sabrina6thGym
 	jr .Sabrina5thGym
-.todone
-	jr .done
 .SabrinaRematch
 	ld hl, .PreBattleRematch1Text
 	rst _PrintText
@@ -152,7 +150,7 @@ SaffronGymSabrinaText:
 .refused
 	ld hl, .PreBattleRematchRefusedText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .Sabrina5thGym
 	call Delay3
 	ld a, OPP_SABRINA
@@ -174,7 +172,6 @@ SaffronGymSabrinaText:
 .endBattle
 	ld a, SCRIPT_SAFFRONGYM_SABRINA_POST_BATTLE
 	ld [wSaffronGymCurScript], a
-.done
 	rst TextScriptEnd
 
 .Text:

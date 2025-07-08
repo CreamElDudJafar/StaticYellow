@@ -114,14 +114,14 @@ VermilionGymLTSurgeText:
 	jr nz, .got_tm24_already
 	call z, VermilionGymLTSurgeReceiveTM24Script
 	call DisableWaitingAfterTextDisplay
-	jr .text_script_end
+	rst TextScriptEnd
 .got_tm24_already
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .SurgeRematch
 	ld hl, .PostBattleAdviceText
 	rst _PrintText
-	jr .text_script_end
+	rst TextScriptEnd
 .before_beat
 	ld hl, .PreBattleText
 	rst _PrintText
@@ -161,12 +161,11 @@ VermilionGymLTSurgeText:
 .refused
 	ld hl, .PreBattleRematchRefusedText
 	rst _PrintText
-	jr .text_script_end
+	rst TextScriptEnd
 .endBattle
 	ld a, SCRIPT_VERMILIONGYM_LT_SURGE_AFTER_BATTLE
 	ld [wVermilionGymCurScript], a
 	ld [wCurMapScript], a
-.text_script_end
 	rst TextScriptEnd
 
 .PreBattleText:

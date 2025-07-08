@@ -117,7 +117,7 @@ SpecialTrainerMoves:
 
 	db ERIKA, 1
 	db 1, 1, MEGA_DRAIN
-	db 1, 2, REFLECT
+	db 1, 2, LEECH_SEED
 	db 1, 3, POISONPOWDER
 	db 2, 1, ACID
 	db 2, 2, STUN_SPORE
@@ -133,7 +133,7 @@ SpecialTrainerMoves:
 	
 	db ERIKA, 2
 	db 1, 1, MEGA_DRAIN
-	db 1, 2, REFLECT
+	db 1, 2, EGG_BOMB
 	db 1, 3, POISONPOWDER
 	db 2, 1, ACID
 	db 2, 2, STUN_SPORE
@@ -152,7 +152,7 @@ SpecialTrainerMoves:
 	
 	db ERIKA, 3
 	db 1, 1, MEGA_DRAIN
-	db 1, 2, REFLECT
+	db 1, 2, EGG_BOMB
 	db 1, 3, POISONPOWDER
 	db 2, 1, ACID
 	db 2, 2, STUN_SPORE
@@ -285,61 +285,61 @@ SpecialTrainerMoves:
 	db 6, 3, FIRE_BLAST
 	db 0
 
-	db SABRINA, 1
+	db SABRINA, 1 
 	db 1, 1, PSYCHIC_M
 	db 1, 2, SURF
 	db 1, 3, THUNDER_WAVE
-	db 2, 1, MEGA_KICK
-	db 2, 2, BARRIER
-	db 2, 3, SOLARBEAM
-	db 3, 1, ICE_BEAM
-	db 3, 2, COUNTER
+	db 2, 1, THUNDERBOLT
+	db 2, 2, MIMIC
+	db 2, 3, PSYCHIC_M
+	db 3, 1, LOVELY_KISS
+	db 3, 2, ICE_BEAM
 	db 3, 3, METRONOME
 	db 4, 1, HYPNOSIS
 	db 4, 2, MEGA_PUNCH
 	db 4, 3, PSYCHIC_M
 	db 5, 1, THUNDER_WAVE
-	db 5, 2, REFLECT
-	db 5, 3, DIG
+	db 5, 2, DIG
+	db 5, 3, PSYCHIC_M
 	db 0
 
 	db SABRINA, 2
 	db 1, 1, PSYCHIC_M
 	db 1, 2, SURF
 	db 1, 3, THUNDER_WAVE
-	db 2, 1, MEGA_KICK
-	db 2, 2, BARRIER
-	db 2, 3, SOLARBEAM
-	db 3, 1, ICE_BEAM
-	db 3, 2, COUNTER
+	db 2, 1, THUNDERBOLT
+	db 2, 2, MIMIC
+	db 2, 3, PSYCHIC_M
+	db 3, 1, LOVELY_KISS
+	db 3, 2, ICE_BEAM
 	db 3, 3, METRONOME
 	db 4, 1, HYPNOSIS
 	db 4, 2, MEGA_PUNCH
 	db 4, 3, PSYCHIC_M
 	db 5, 1, THUNDER_WAVE
-	db 5, 2, REFLECT
-	db 5, 3, DIG
+	db 5, 2, DIG
+	db 5, 3, PSYCHIC_M
 	db 0
 
 	db SABRINA, 3
 	db 1, 1, PSYCHIC_M
 	db 1, 2, NIGHT_SHADE
-	db 1, 3, DOUBLE_TEAM
-	db 2, 1, AMNESIA
-	db 2, 2, SURF
-	db 2, 3, BLIZZARD
+	db 1, 3, HYPNOSIS
+	db 2, 1, SURF
+	db 2, 2, BODY_SLAM
+	db 2, 3, FLAMETHROWER
 	db 3, 1, THUNDERBOLT
 	db 3, 2, THUNDER_WAVE
 	db 3, 3, PSYCHIC_M
 	db 4, 1, LOVELY_KISS
 	db 4, 2, BLIZZARD
-	db 4, 3, DREAM_EATER
+	db 4, 3, PSYCHIC_M
 	db 5, 1, PSYWAVE
 	db 5, 2, HYPNOSIS
-	db 5, 3, SUBSTITUTE
+	db 5, 3, TRI_ATTACK
 	db 6, 1, THUNDER_WAVE
 	db 6, 2, PSYCHIC_M
-	db 6, 3, RECOVER
+	db 6, 3, DIG
 	db 0
 
 	db GIOVANNI, 1

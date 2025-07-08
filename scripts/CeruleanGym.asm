@@ -92,14 +92,14 @@ CeruleanGymMistyText:
 	jr nz, .afterBeat
 	call z, CeruleanGymReceiveTM11
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	rst TextScriptEnd
 .afterBeat
 	ld a, [wGameStage] ; Check if player has beat the game
 	and a
 	jr nz, .MistyRematch
 	ld hl, .TM11ExplanationText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .beforeBeat
 	ld hl, .PreBattleText
 	rst _PrintText
@@ -139,11 +139,10 @@ CeruleanGymMistyText:
 .refused
 	ld hl, .PreBattleRematchRefusedText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .endBattle
 	ld a, SCRIPT_CERULEANGYM_MISTY_POST_BATTLE
 	ld [wCeruleanGymCurScript], a
-.done
 	rst TextScriptEnd
 
 .PreBattleText:

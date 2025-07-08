@@ -98,14 +98,14 @@ PewterGymBrockText:
 	jr nz, .afterBeat
 	call z, PewterGymScriptReceiveTM34
 	call DisableWaitingAfterTextDisplay
-	jr .done
+	rst TextScriptEnd
 .afterBeat
 	ld a, [wGameStage]
 	and a
 	jr nz, .BrockRematch
 	ld hl, .PostBattleAdviceText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .beforeBeat
 	ld hl, .PreBattleText
 	rst _PrintText
@@ -145,12 +145,11 @@ PewterGymBrockText:
 .refused
 	ld hl, .PreBattleRematchRefusedText
 	rst _PrintText
-	jr .done
+	rst TextScriptEnd
 .endBattle
 	ld a, SCRIPT_PEWTERGYM_BROCK_POST_BATTLE
 	ld [wPewterGymCurScript], a
 	ld [wCurMapScript], a
-.done
 	rst TextScriptEnd
 
 .PreBattleText:
