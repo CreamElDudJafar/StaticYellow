@@ -391,7 +391,7 @@ wPlayerMonNumber:: db
 ; the address of the menu cursor's current location within wTileMap
 wMenuCursorLocation:: dw
 
-wMaxDaycareLevel:: db	
+wMaxLevel:: db	
 
 	ds 1
 

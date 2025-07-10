@@ -77,52 +77,22 @@ DaycareGentlemanText:
 	ld [wMonDataLocation], a
 	call LoadMonData
 	callfar CalcLevelFromExperience
-	
-	push bc
+	ld b, MAX_LEVEL
 	ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
-	ld b, MAX_LEVEL
-	jr z, .next1 ; no level caps if not on hard mode
-
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	jr nz, .next1
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld b, 65 ; Flareon/Jolteon/Vaporeon's level
-	jr nc, .next1
-	cp 7
-	ld b, 53 ; Rhydon's level
-	jr nc, .next1
-	cp 6
-	ld b, 50 ; Arcanine's level
-	jr nc, .next1
-	cp 5
-	ld b, 48 ; Alakazam's level
-	jr nc, .next1
-        cp 4
-	ld b, 44 ; Weezing's level
-	jr nc, .next1
-	cp 3
-	ld b, 37 ; Vileplume's level
-	jr nc, .next1
-	cp 2
-        ld b, 28 ; Raichu's level
-	jr nc, .next1
-	cp 1
-	ld b, 22 ; Starmie's level
-	jr nc, .next1
-	ld b, 15 ; Onix's level
-.next1
 	ld a, b
-	ld [wMaxDaycareLevel], a
+	ld [wMaxLevel], a
+	jr z, .next1 ; no level caps if not on hard mode
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld b, a
+.next1
 	ld a, d
 	cp b
 	pop bc
 	jr c, .skipCalcExp
 
-	ld a, [wMaxDaycareLevel]
+	ld a, [wMaxLevel]
 	ld d, a
 	callfar CalcExperience
 	ld hl, wDayCareMonExp
@@ -132,10 +102,13 @@ DaycareGentlemanText:
 	ld [hli], a
 	ldh a, [hExperience + 2]
 	ld [hl], a
-	ld a, [wMaxDaycareLevel]
+	ld a, [wMaxLevel]
 	ld d, a
 
 .skipCalcExp
+	push de
+	ld a, [wMaxLevel]
+	ld d, a
 	xor a
 	ld [wDayCareNumLevelsGrown], a
 	ld hl, wDayCareMonBoxLevel
@@ -143,17 +116,33 @@ DaycareGentlemanText:
 	ld [wDayCareStartLevel], a
 	cp d
 	ld [hl], d
-	ld hl, .MonNeedsMoreTimeText
-	jr z, .next
-	ld a, [wDayCareStartLevel]
+	pop de
+	jr c, .CheckGrowth
+	jr .monCapped
+.CheckGrowth
 	ld b, a
 	ld a, d
 	sub b
 	ld [wDayCareNumLevelsGrown], a
+	ld hl, .MonNeedsMoreTimeText
+	jr z, .next
 	ld hl, .MonHasGrownText
 
 .next
 	rst _PrintText
+; Grew to reach level cap check
+	ld a, [wDayCareNumLevelsGrown]
+	ld b, a
+	ld a, [wDayCareStartLevel]
+	add b
+	ld b, a ; b = start level + levels grown
+	ld a, [wMaxLevel]
+	cp b
+	jr nz, .noCapMessage
+.monCapped
+	ld hl, .MonAtCapText
+	rst _PrintText
+.noCapMessage
 	ld a, [wPartyCount]
 	cp PARTY_LENGTH
 	ld hl, .NoRoomForMonText
@@ -339,4 +328,8 @@ DaycareGentlemanText:
 
 .NotEnoughMoneyText:
 	text_far _DaycareGentlemanNotEnoughMoneyText
+	text_end
+
+.MonAtCapText:
+	text_far _DayCareMonAtCapText
 	text_end

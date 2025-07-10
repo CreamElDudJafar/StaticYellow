@@ -1497,46 +1497,18 @@ ItemUseMedicine:
 	push hl
 	ld b, MAX_LEVEL
 	
-ld a, [wDifficulty] ; Check if player is on hard mode
+	ld a, [wDifficulty] ; Check if player is on hard mode
 	and a
 	jr z, .next1 ; no level caps if not on hard mode
-	
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	jr nz, .next1
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld b, 65 ; Flareon/Jolteon/Vaporeon's level
-	jr nc, .next1
-	cp 7
-	ld b, 53 ; Rhydon's level
-	jr nc, .next1
-	cp 6
-	ld b, 50 ; Arcanine's level
-	jr nc, .next1
-	cp 5
-	ld b, 48 ; Alakazam's level
-	jr nc, .next1
-    cp 4
-	ld b, 44 ; Weezing's level
-	jr nc, .next1
-	cp 3
-	ld b, 37 ; Vileplume's level
-	jr nc, .next1
-	cp 2
-        ld b, 28 ; Raichu's level
-	jr nc, .next1
-	cp 1
-	ld b, 22 ; Starmie's level
-	jr nc, .next1
-	ld b, 15 ; Onix's level
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld b, a
 .next1
 
 	pop hl
 	ld a, [hl] ; a = level
 	cp b ; MAX_LEVEL on normal mode, level cap on hard mode
-	jr z, .vitaminNoEffect ; can't raise level above 100
+	jr nc, .vitaminNoEffect ; can't raise level above 100
 	inc a
 	ld [hl], a ; store incremented level
 	ld [wCurEnemyLevel], a

@@ -452,9 +452,12 @@ _NormalModeText::
 	done
 
 _HardModeText::
-	text "Set mode, no items"
-	line "in battle and gym"
-	cont "level caps apply."
+	text "Forced SET mode,"
+	line "no items allowed"
+	cont "in battle, gym"
+	cont "level caps, and"
+	cont "opponents #MON"
+	cont "have max STATS."
 	done
 
 _OakSpeechText1::

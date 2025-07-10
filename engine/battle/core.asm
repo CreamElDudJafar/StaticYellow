@@ -4265,48 +4265,10 @@ CheckForDisobedience:
 	ld a, [wPlayerID]
 	cp [hl]
 	jr nz, .monIsTraded
-
-	ld a, [wDifficulty] ; Check if player is on hard mode
-	and a
-	jr z, .NormalMode2
-; what level might disobey?
-	ld a, [wGameStage] ; Check if player has beat the game
-	and a
-	ld a, 101
-	jr nz, .next
-	farcall GetBadgesObtained
-	ld a, [wNumSetBits]
-	cp 8
-	ld a, 65 ; Flareon/Jolteon/Vaporeon's level
-	jr nc, .next
-	cp 7
-	ld a, 53 ; Rhydon's level
-	jr nc, .next
-	cp 6
-	ld a, 50 ; Arcanine's level
-	jr nc, .next
-	cp 5
-	ld a, 48 ; Alakazam's level
-	jr nc, .next
-    cp 4
-	ld a, 44 ; Weezing's level
-	jr nc, .next
-	cp 3
-	ld a, 37 ; Vileplume's level
-	jr nc, .next
-	cp 2
-        ld a, 28 ; Raichu's level
-	jr nc, .next
-	cp 1
-	ld a, 22 ; Starmie's level
-	jr nc, .next
-	ld a, 15 ; Onix's level
-	jp .next
-.NormalMode2
 	inc hl
 	ld a, [wPlayerID + 1]
 	cp [hl]
-	jp z, .canUseMove ; on normal mode non traded pokemon will always obey
+	jp z, .canUseMove
 .monIsTraded
 ; what level might disobey?
 	ld hl, wObtainedBadges
@@ -6511,11 +6473,18 @@ LoadEnemyMonData:
 	jr nz, .storeDVs
 	ld a, [wIsInBattle]
 	cp $2 ; is it a trainer battle?
+	jr nz, .wildMon
 ; fixed DVs for trainer mon
+	ld a, [wDifficulty]
+	and a
+	ld a, ATKDEFDV_TRAINER_HARD
+	ld b, SPDSPCDV_TRAINER_HARD
+	jr nz, .storeDVs
 	ld a, ATKDEFDV_TRAINER
 	ld b, SPDSPCDV_TRAINER
-	jr z, .storeDVs
+	jr .storeDVs
 ; random DVs for wild mon
+.wildMon
 	call BattleRandom
 	ld b, a
 	call BattleRandom
