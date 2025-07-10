@@ -89,7 +89,6 @@ DaycareGentlemanText:
 .next1
 	ld a, d
 	cp b
-	pop bc
 	jr c, .skipCalcExp
 
 	ld a, [wMaxLevel]
