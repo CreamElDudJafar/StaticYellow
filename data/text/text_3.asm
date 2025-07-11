@@ -456,8 +456,9 @@ _HardModeText::
 	line "no items allowed"
 	cont "in battle, gym"
 	cont "level caps, and"
-	cont "opponents #MON"
-	cont "have max STATS."
+	cont "all opponent's"
+        cont "#MON will have"
+	cont "maximum STATS."
 	done
 
 _OakSpeechText1::
