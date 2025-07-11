@@ -159,21 +159,21 @@ OptionsMenu_BattleStyle:
 	and a
 	jr nz, .lockedToSet
 	ld a, [wOptions]
-	and $40 ; mask other bits
-	jr .noButtonPressed
+	and 1 << BIT_BATTLE_SHIFT
+	jr .done
 .ButtonPressed
 	ld a, [wDifficulty]
 	and a
 	jr nz, .lockedToSet
 	ld a, [wOptions]
-	xor $40
+	xor 1 << BIT_BATTLE_SHIFT
 	ld [wOptions], a
-	jr .noButtonPressed
+	jr .done
 .lockedToSet
 	ld a, [wOptions]
-	or $40
+	or 1 << BIT_BATTLE_SHIFT
 	ld [wOptions], a
-.noButtonPressed
+.done
 	ld bc, $0
 	sla a
 	sla a
