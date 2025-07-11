@@ -126,6 +126,18 @@ ItemUseBall:
 	cp MONS_PER_BOX
 	jp z, BoxFullCannotThrowBall
 
+; Hard mode, can't throw balls at pokemon above level cap
+	ld a, [wDifficulty]
+	and a
+	jr z, .canUseBall ; skip on normal mode
+	callfar GetLevelCap
+	ld a, [wMaxLevel]
+	ld b, a
+	ld a, [wEnemyMonLevel]
+	dec a ; force a carry if values are equal
+	cp b
+	jp nc, TooStrongToCatch
+
 .canUseBall
 	xor a
 	ld [wCapturedMonSpecies], a
@@ -2603,6 +2615,10 @@ ItemUseNotTime:
 	ld hl, ItemUseNotTimeText
 	jr ItemUseFailed
 
+TooStrongToCatch:
+	ld hl, TooStrongToCatchText
+	jr ItemUseFailed
+
 ItemUseNotYoursToUse:
 	ld hl, ItemUseNotYoursToUseText
 	jr ItemUseFailed
@@ -2644,6 +2660,10 @@ ItemUseFailed:
 
 ItemUseNotTimeText:
 	text_far _ItemUseNotTimeText
+	text_end
+
+TooStrongToCatchText:
+	text_far _TooStrongToCatchText
 	text_end
 
 ItemUseNotYoursToUseText:
