@@ -1908,7 +1908,6 @@ SendOutMon:
 	ld [wCurPartySpecies], a
 	ld a, SENDTOSS_ANIM
 	call PlayMoveAnimation
-
 	ld a, POOF_ANIM
 	call PlayMoveAnimation
 	hlcoord 4, 11
