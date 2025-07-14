@@ -212,5 +212,6 @@ DEF NUM_ATTACKS EQU const_value - 1
 	const HIDEPIC_ANIM ; monster disappears
 	const ROCK_ANIM ; throw rock
 	const BAIT_ANIM ; throw bait
+	const SENDTOSS_ANIM ; send out mon
 
 DEF NUM_ATTACK_ANIMS EQU const_value - 1

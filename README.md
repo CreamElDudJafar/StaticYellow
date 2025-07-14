@@ -99,6 +99,7 @@ CREDITS: THE MOST IMPORTANT PART OF THIS
 -Melody- For the rest of Pokedex code that makes it run and look clean. You also assisted with the LearnSet moves and Bugs. Thanks for the help with Celebrations too.
 -Devianart- For all the female sprites for the game
 -FrenchOrange- for all the running and surfing sprites added to the game/ yellow sprites, Pokemon Front Sprite Tweaks
+-Thoth33- For new improved hard mode code, Players Pokemon being sent out of Pokeball visual effect in battle, and for the color help in Celebrations games.
 -Rosie- for the Nurse Joy, Jenny, Yellow back picture.
 -PokeFanMarcel- For the Nurse Joy SS Anne room, the code for the running sprites to work and the code to make the EXP ALL a key item that can turn on or off
 -RainbowMetalPigeon/ExtremeYellow- Space code for Bank 1E, Surrender in battle option, and Pikachu Flying Animation. Also for 3rd character/gender tutorial AND FOR CREATING THE HARDEST GEN 1 YELLOW HACK EVER. BUT I LOVE PLAYING IT

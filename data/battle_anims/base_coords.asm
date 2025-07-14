@@ -177,4 +177,11 @@ FrameBlockBaseCoords:
 	db $18, $4C ; BASECOORD_AE
 	db $1C, $48 ; BASECOORD_AF
 	db $48, $28 ; BASECOORD_B0
+	db $48, $14 ; BASECOORD_B1
+	db $3C, $1C ; BASECOORD_B2
+	db $38, $1E ; BASECOORD_B3
+	db $3C, $20 ; BASECOORD_B4
+	db $40, $22 ; BASECOORD_B5
+	db $58, $26 ; BASECOORD_B6
+	db $4C, $24 ; BASECOORD_B7
 	assert_table_length NUM_BASECOORDS

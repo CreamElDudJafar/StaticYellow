@@ -135,6 +135,7 @@ DEF FIRST_SE_ID EQU const_value
 	const SUBANIM_0_SAFARI_ROCK
 	const SUBANIM_0_SAFARI_BAIT
 	const SUBANIM_0_STAR_HIGH
+	const SUBANIM_0_BALL_TOSS_SEND
 DEF NUM_SUBANIMS EQU const_value
 
 ; types of subanimations
@@ -453,6 +454,13 @@ DEF NUM_FRAMEBLOCKS EQU const_value
 	const BASECOORD_AE
 	const BASECOORD_AF
 	const BASECOORD_B0
+	const BASECOORD_B1
+	const BASECOORD_B2
+	const BASECOORD_B3
+	const BASECOORD_B4
+	const BASECOORD_B5
+	const BASECOORD_B6
+	const BASECOORD_B7
 DEF NUM_BASECOORDS EQU const_value
 
 ; frame block modes that are part of subanimations

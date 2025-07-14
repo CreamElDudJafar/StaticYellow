@@ -29,4 +29,5 @@ AnimationIdSpecialEffects:
 	anim_special_effect POOF_ANIM,             DoPoofSpecialEffects
 	anim_special_effect GREATTOSS_ANIM,        DoBallTossSpecialEffects
 	anim_special_effect ULTRATOSS_ANIM,        DoBallTossSpecialEffects
+	anim_special_effect SENDTOSS_ANIM,         SendTossSpecialEffects
 	db -1 ; end

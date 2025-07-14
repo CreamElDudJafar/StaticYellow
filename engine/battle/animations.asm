@@ -778,6 +778,18 @@ DoBallTossSpecialEffects:
 	ld [wSubAnimCounter], a
 	ret
 
+SendTossSpecialEffects:
+	ldh a, [rOBP0]
+	xor %00111100 ; complement colors 1 and 2
+	ldh [rOBP0], a
+	call UpdateGBCPal_OBP0
+	ld a, [wSubAnimCounter]
+	cp 9 ; is it the beginning of the subanimation?
+	ret nz
+; if it is the beginning of the subanimation, play a sound
+	ld a, SFX_BALL_TOSS
+	jp PlaySound
+
 DoBallShakeSpecialEffects:
 	ld a, [wSubAnimCounter]
 	cp 4 ; is it the beginning of a shake?

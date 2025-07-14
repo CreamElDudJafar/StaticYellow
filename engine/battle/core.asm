@@ -1901,6 +1901,14 @@ SendOutMon:
 	jr c, .starterPikachu
 	ld a, $1
 	ldh [hWhoseTurn], a
+	ld a, [wCurPartySpecies]
+	ld b, a
+	push bc
+	ld a, POKE_BALL
+	ld [wCurPartySpecies], a
+	ld a, SENDTOSS_ANIM
+	call PlayMoveAnimation
+
 	ld a, POOF_ANIM
 	call PlayMoveAnimation
 	hlcoord 4, 11
@@ -1920,7 +1928,9 @@ SendOutMon:
 	callfar PlayPikachuSoundClip
 	jr .done
 .playRegularCry
-	ld a, [wCurPartySpecies]
+	pop bc
+	ld a, b
+	ld [wCurPartySpecies], a
 	call PlayCry
 .done
 	call PrintEmptyString

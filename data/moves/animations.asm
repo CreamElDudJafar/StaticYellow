@@ -203,6 +203,7 @@ AttackAnimationPointers:
 	dw HidePicAnim
 	dw ThrowRockAnim
 	dw ThrowBaitAnim
+	dw SendTossAnim
 	assert_table_length NUM_ATTACK_ANIMS
 
 ; each animation is a list of subanimations
@@ -1272,4 +1273,8 @@ ThrowRockAnim:
 
 ThrowBaitAnim:
 	battle_anim BARRAGE, SUBANIM_0_SAFARI_BAIT, 0, 3
+	db -1 ; end
+
+SendTossAnim:
+	battle_anim NO_MOVE, SUBANIM_0_BALL_TOSS_SEND, 0, 3
 	db -1 ; end
