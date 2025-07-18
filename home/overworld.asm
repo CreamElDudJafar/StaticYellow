@@ -763,6 +763,8 @@ CheckIfInFlyMap::
 	ret z
 	cp CELADON_MART_ROOF
 	ret z
+	cp SS_ANNE_BOW
+	ret z
 	; fallthrough
 CheckIfInDigMap::
 	call CheckIfInOutsideMap
