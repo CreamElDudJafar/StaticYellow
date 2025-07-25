@@ -266,7 +266,7 @@ LoadTownMap_Fly::
 	jr z, .pressedDown ; skip past unvisited towns
 	jp .townMapFlyLoop
 .wrapToEndOfList
-	ld hl, wFlyLocationsList + NUM_CITY_MAPS + 2
+	ld hl, wFlyLocationsList + NUM_FLY_LOCATIONS
 	jr .pressedDown
 
 ToText:
@@ -280,25 +280,21 @@ BuildFlyLocationsList:
 	ld e, a
 	ld a, [wTownVisitedFlag + 1]
 	ld d, a
-	ld b, 0
-	ld c, NUM_CITY_MAPS + 2
+	lb bc, 0, NUM_FLY_LOCATIONS
 .loop
 	srl d
 	rr e
 	ld a, NOT_VISITED
-	jr nc, .notVisited
+	jr nc, .gotValue
 	ld a, b ; store the map number of the town if it has been visited
 ; new for route 4 and route 10
-	cp 11
-	jr nz, .notRoute4
+	cp FLYLOC_ROUTE_4_CENTER
+	jr c, .gotValue
 	ld a, ROUTE_4
-.notRoute4
-	cp 12
-	jr nz, .notRoute10
+	jr z, .gotValue
 	ld a, ROUTE_10
+.gotValue
 ; back to vanilla
-.notRoute10
-.notVisited
 	ld [hl], a
 	inc hl
 	inc b
