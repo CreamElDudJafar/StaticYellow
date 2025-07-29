@@ -8,8 +8,8 @@ Route15GateLeftBinoculars:
 	ld [wCurPartySpecies], a
 ;	call PlayCry
 	call DisplayMonFrontSpriteInBox
-;	xor a
-;	ldh [hAutoBGTransferEnabled], a
+	xor a
+	ldh [hAutoBGTransferEnabled], a
 	ret
 
 Route15UpstairsBinocularsText::
