@@ -158,7 +158,7 @@ INCLUDE "engine/slots/game_corner_slots2.asm"
 
 SECTION "Slot Machines", ROMX
 
-INCLUDE "engine/movie/title_rb.asm"
+;INCLUDE "engine/movie/title_rb.asm" ; Leftover R/B. Removed from game
 INCLUDE "engine/slots/slot_machine.asm"
 INCLUDE "engine/slots/game_corner_slots.asm"
 
