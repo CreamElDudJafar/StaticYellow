@@ -76,8 +76,6 @@ INCLUDE "engine/menus/party_menu.asm"
 INCLUDE "gfx/player.asm"
 INCLUDE "engine/menus/start_sub_menus.asm"
 INCLUDE "engine/items/tms.asm"
-INCLUDE "text/tmhm_names.asm"
-tmhmNamesEnd:
 
 EXPBarGraphics::  INCBIN "gfx/exp_bar.2bpp"
 EXPBarGraphicsEnd::

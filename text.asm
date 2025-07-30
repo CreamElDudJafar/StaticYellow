@@ -263,6 +263,8 @@ INCLUDE "text/ChampionsRoom.asm"
 INCLUDE "text/RedsHouse1F.asm"
 INCLUDE "text/RedsHouse2F.asm"
 INCLUDE "text/BluesHouse1F.asm"
+INCLUDE "text/tmhm_names.asm"
+tmhmNamesEnd:
 
 
 SECTION "Pokédex Text", ROMX
