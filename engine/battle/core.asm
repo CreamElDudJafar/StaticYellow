@@ -2010,7 +2010,7 @@ DrawPlayerHUDAndHPBar:
 	hlcoord 10, 7
 	call CenterMonName
 	call PlaceString
-	call PrintEXPBarAt1711
+	callfar PrintEXPBarAt1711
 	ld hl, wBattleMonSpecies
 	ld de, wLoadedMon
 	ld bc, wBattleMonDVs - wBattleMonSpecies
