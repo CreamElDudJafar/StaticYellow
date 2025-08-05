@@ -118,3 +118,8 @@ _Route16SignText::
 	line "CELADON CITY -"
 	cont "FUCHSIA CITY"
 	done
+
+_Route16UsePokeFluteText::
+	text "Play the #"
+	line "FLUTE?"
+	done

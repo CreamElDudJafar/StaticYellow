@@ -97,6 +97,28 @@ Route12TrainerHeader6:
 	db -1 ; end
 
 Route12SnorlaxText:
+	text_asm
+	ld b, POKE_FLUTE
+	call IsItemInBag
+	ld hl, Route12Snorlax2Text
+	jr z, .end
+	ld hl, Route12UsePokeFluteText
+	rst _PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ld hl, Route12Snorlax2Text
+	jr nz, .end
+	ld a, POKE_FLUTE
+	ld [wCurItem], a
+	call UseItem
+	jr .end2
+.end
+	rst _PrintText
+.end2
+	rst TextScriptEnd
+
+Route12Snorlax2Text:
 	text_far _Route12SnorlaxText
 	text_end
 
@@ -240,4 +262,8 @@ Route12SignText:
 
 Route12SportFishingSignText:
 	text_far _Route12SportFishingSignText
+	text_end
+
+Route12UsePokeFluteText:
+	text_far _Route12UsePokeFluteText
 	text_end

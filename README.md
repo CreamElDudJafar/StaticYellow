@@ -58,6 +58,7 @@ Features:
 - Nurse Joy room on SS Anne
 - Secret Key, Lift Key, Card Key Consumed when used
 - Town Map in Start Menu
+- Can click A Button on Snorlax to use Poke Flute
 - Running and Surfing Sprites
 - Lapras Swims in Fuchsia City
 - Elevator time shorter and tells you what floor you are on
