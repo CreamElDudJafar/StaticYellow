@@ -314,6 +314,7 @@ Evolution_ReloadTilesetTilePatterns:
 	ld a, [wLinkState]
 	cp LINK_STATE_TRADING
 	ret z
+	call GBPalWhiteOutWithDelay3
 	jp ReloadTilesetTilePatterns
 
 LearnMoveFromLevelUp:
