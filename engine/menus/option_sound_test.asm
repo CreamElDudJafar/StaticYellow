@@ -55,6 +55,7 @@ DisplaySoundTestMenu:
 	ld a, SFX_PRESS_AB
 	rst _PlaySound
 	call ClearScreen
+	callfar DisplayOptionMenu
 	ret
 	
 .inc_track
