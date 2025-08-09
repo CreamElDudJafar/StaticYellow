@@ -7,6 +7,7 @@ Features:
 - Second Branch: Gen 1 Graphics/Sprites
 - Now you can Play Gen1 as either Red, Green, or Yellow.  
 - All 151 Pokémons can be caught or evolved without trading. MEW IS OBTAINABLE  
+- Sound Test in Options Menu (Press Select)
 - GEN 2 Sprites and Battle Graphics  
 - Can Surrender in Battle by clicking RUN  
 - NPC Tradeback Guy in FUCHSIA CITY- BILLS GRANDPAS HOUSE (evolve trade evolutions)  
@@ -94,7 +95,7 @@ CREDITS: THE MOST IMPORTANT PART OF THIS
 - Dannye- Created Pokeyellow Gen 2 repo, Pokered-gbc repos and much much more. This game is based on his Pokeyellow Gen2. Dannye did all the sprites, EXP Bar work, answered a lot of questions and is someone I can consider a friend
 - Vortiene/PureRGB-  Another great person who has helped so many people in discord. His credit goes from Safari Zone options, Elevator times shorter, Overworld Sprites, SS Ticket and other key items being removed when used, Box Slot Space on Catching Pokemon, Lapras swimming in Fuchsia City, PC Box View Mode, SELECT for Bicycle and tons of Bugs fixes. Taught me about Unions, calling codes from other banks and RST VECTORS FOR SPACE…. PURERGB IS IN THE TOP 3 OF GEN 1 HACKS IN MY OPINON ALONG WITH RED++ AND SHIN POKERED FOR ALL THERE UPDATES AND FEATURES
 - CRz Shadows/The Smith Plays/Yellow Legacy- The reason I started disassembly. A lot of initial changes features came from there game. Moves in Pokedex, Running Shoes, Pikachu fixes, Gym Leader rematches, Mr Mime in house, eeveeolution next to trainer and post game mart clerk. Alot of Pokemon learnsets, level up moves were borrowed and used from Yellow Legacy, as well as some trainer ideas like Janine in Kogas Gym IN MY OPINON THE TWO BEST YELLOW HACKS ARE YELLOW LEGACY AND EXTREME YELLOW. THIS GAME WOULD NOT BE MADE WITHOUT THERES SO PLEASE TRY IT. Thanks for Crystal and Emerald Legacy too!!
--JojoBear13/ShinPokeRed- Trainer AI code taken from game, as well as many many bug fixes. TRY SHINPOKERED. AS I STATED BEFORE ITS IN TOP 3 OF GEN 1 HACKS.
+-JojoBear13/ShinPokeRed- Trainer AI code taken from game, Sound Test Option, as well as many many bug fixes. TRY SHINPOKERED. AS I STATED BEFORE ITS IN TOP 3 OF GEN 1 HACKS.
 -JustRegularLuna/Red++- My favorite Gen 1 hack. First one I ever played too. The main reason celebrations was made was to try to create magic like you did. Features from Red++ include Gender code, Sprite Palette help, Intro being changed, Oak Giving 5 pokeballs, updated pokeball and pokedex sprites.
 - Engezertorung- A lot of help with color, sprite and graphics. Very helpful and patient. Please try his Pokered-gbc French and English updated game.
 -Melody- For the rest of Pokedex code that makes it run and look clean. You also assisted with the LearnSet moves and Bugs. Thanks for the help with Celebrations too.

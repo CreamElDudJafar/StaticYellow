@@ -3,8 +3,11 @@ DisplayOptionMenu_:
 .optionMenuLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
+	ld b, a
 	and START | B_BUTTON
 	jr nz, .exitOptionMenu
+	bit BIT_SELECT, b ; Select button pressed
+	jp nz, DisplaySoundTestMenu
 	call OptionsControl
 	jr c, .dpadDelay
 	call GetOptionPointer
@@ -451,4 +454,4 @@ AllOptionsText:
 	next "PRINT:@"
 
 OptionMenuCancelText:
-	db "CANCEL@"
+	db "CANCEL     SELECT@"

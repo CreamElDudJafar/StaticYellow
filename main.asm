@@ -187,6 +187,7 @@ INCLUDE "engine/menus/options.asm"
 INCLUDE "engine/menus/movedex.asm"
 INCLUDE "data/moves/movedex_type_palettes.asm"
 ;;;;;;;;;;
+INCLUDE "engine/menus/option_sound_test.asm"
 
 
 SECTION "Pokédex Rating", ROMX
