@@ -12,11 +12,11 @@ ResetStatusAndHalveMoneyOnBlackout::
 	ld [wNPCMovementScriptPointerTableNum], a
 	ld [wMiscFlags], a
 
-	ldh [hMoney], a
-	ldh [hMoney + 1], a
-	ldh [hMoney + 2], a
-	call HasEnoughMoney
-	jr c, .lostmoney ; never happens
+;	ldh [hMoney], a
+;	ldh [hMoney + 1], a
+;	ldh [hMoney + 2], a
+;	call HasEnoughMoney
+;	jr c, .lostmoney ; never happens
 
 	; Halve the player's money.
 	ld a, [wPlayerMoney]
@@ -38,7 +38,8 @@ ResetStatusAndHalveMoneyOnBlackout::
 	ldh a, [hDivideBCDQuotient + 2]
 	ld [wPlayerMoney + 2], a
 
-.lostmoney
+	callfar ClearSafariFlags
+;.lostmoney
 	ld hl, wStatusFlags6
 	set BIT_FLY_OR_DUNGEON_WARP, [hl]
 	res BIT_FLY_WARP, [hl]
