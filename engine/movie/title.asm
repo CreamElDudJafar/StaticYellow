@@ -137,6 +137,17 @@ DisplayTitleScreen:
 	call LoadScreenTilesFromBuffer1
 	ld c, 36
 	rst _DelayFrames
+	ld a, BANK(Music_TitleScreen)
+	ld b, a
+	ld a, [wAudioROMBank]
+	cp b
+	jr z, .correct_audio_bank
+	call StopAllMusic
+	ld a, BANK(Music_TitleScreen)
+	ld [wAudioROMBank], a
+	ld [wAudioSavedROMBank], a
+.correct_audio_bank
+	
 	ld a, SFX_INTRO_WHOOSH
 	rst _PlaySound
 
