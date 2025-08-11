@@ -474,7 +474,7 @@ INCLUDE "audio/music/routes3.asm"
 INCLUDE "audio/music/routes4.asm"
 INCLUDE "audio/music/indigoplateau.asm"
 INCLUDE "audio/music/pallettown.asm"
-INCLUDE "audio/music/unusedsong.asm"
+;INCLUDE "audio/music/unusedsong.asm"
 INCLUDE "audio/music/cities1.asm"
 INCLUDE "audio/sfx/get_item1_1.asm"
 INCLUDE "audio/music/museumguy.asm"
@@ -528,7 +528,7 @@ INCLUDE "audio/music/silphco.asm"
 INCLUDE "audio/music/meeteviltrainer.asm"
 INCLUDE "audio/music/meetfemaletrainer.asm"
 INCLUDE "audio/music/meetmaletrainer.asm"
-INCLUDE "audio/music/introbattle.asm"
+;INCLUDE "audio/music/introbattle.asm" ; Red and Blue Intro
 INCLUDE "audio/music/surfing.asm"
 INCLUDE "audio/music/jigglypuffsong.asm"
 INCLUDE "audio/music/halloffame.asm"
@@ -542,9 +542,9 @@ INCLUDE "audio/music/surfingpikachu.asm"
 INCLUDE "audio/music/yellowunusedsong.asm"
 INCLUDE "audio/music/meetjessiejames.asm"
 
-IF !DEF(_DEBUG)
-	INCBIN "garbage/bank20.bin"
-ENDC
+;IF !DEF(_DEBUG)
+;	INCBIN "garbage/bank20.bin"
+;ENDC
 
 
 ; Pikachu cries are in different banks
