@@ -161,7 +161,6 @@ SoundTestTrackList:
 	dw Title_Music_DefeatedTrainer, (MUSIC_DEFEATED_TRAINER << 8) | Bank(Music_DefeatedTrainer)
 	dw Title_Music_DefeatedWildMon, (MUSIC_DEFEATED_WILD_MON << 8) | Bank(Music_DefeatedWildMon)
 	dw Title_Music_DefeatedGymLeader, (MUSIC_DEFEATED_GYM_LEADER << 8) | Bank(Music_DefeatedGymLeader)
-	dw Title_Music_IntroBattle, (MUSIC_INTRO_BATTLE << 8) | Bank(Music_IntroBattle) ; Red and Blue
 	dw Title_Music_TitleScreen, (MUSIC_TITLE_SCREEN << 8) | Bank(Music_TitleScreen)
 	dw Title_Music_Credits, (MUSIC_CREDITS << 8) | Bank(Music_Credits)
 	dw Title_Music_HallOfFame, (MUSIC_HALL_OF_FAME << 8) | Bank(Music_HallOfFame)
@@ -170,6 +169,7 @@ SoundTestTrackList:
 	dw Title_Music_BikeRiding, (MUSIC_BIKE_RIDING << 8) | Bank(Music_BikeRiding)
 	dw Title_Music_Surfing, (MUSIC_SURFING << 8) | Bank(Music_Surfing)
 	dw Title_Music_GameCorner, (MUSIC_GAME_CORNER << 8) | Bank(Music_GameCorner)
+	dw Title_Music_IntroBattle, (MUSIC_INTRO_BATTLE << 8) | Bank(Music_IntroBattle) ; Red and Blue
 	dw Title_Music_YellowIntro, (MUSIC_YELLOW_INTRO << 8) | Bank(Music_YellowIntro)
 	dw Title_Music_Dungeon1, (MUSIC_DUNGEON1 << 8) | Bank(Music_Dungeon1)
 	dw Title_Music_Dungeon2, (MUSIC_DUNGEON2 << 8) | Bank(Music_Dungeon2)
@@ -213,7 +213,6 @@ Title_Music_FinalBattle: db "Final Battle@"
 Title_Music_DefeatedTrainer: db "Trainer Victory@"
 Title_Music_DefeatedWildMon: db "Wild Victory@"
 Title_Music_DefeatedGymLeader: db "Leader Victory@"
-Title_Music_IntroBattle: db "Red and Blue Intro@" ; Red and Blue
 Title_Music_TitleScreen: db "Main Title@"
 Title_Music_Credits: db "Credits@"
 Title_Music_HallOfFame: db "Hall of Fame@"
@@ -222,6 +221,7 @@ Title_Music_JigglypuffSong: db "Jigglypuff's Song@"
 Title_Music_BikeRiding: db "Bike Riding@"
 Title_Music_Surfing: db "Surfing@"
 Title_Music_GameCorner: db "Game Corner@"
+Title_Music_IntroBattle: db "Red and Blue Intro@" ; Red and Blue
 Title_Music_YellowIntro: db "Yellow Intro@"
 Title_Music_Dungeon1: db "Dungeon 1@"
 Title_Music_Dungeon2: db "Dungeon 2@"

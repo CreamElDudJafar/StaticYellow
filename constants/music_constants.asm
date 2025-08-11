@@ -35,7 +35,6 @@ ENDM
 	music_const MUSIC_DEFEATED_TRAINER,    Music_DefeatedTrainer
 	music_const MUSIC_DEFEATED_WILD_MON,   Music_DefeatedWildMon
 	music_const MUSIC_DEFEATED_GYM_LEADER, Music_DefeatedGymLeader
-	music_const MUSIC_INTRO_BATTLE,        Music_IntroBattle ; Red and Blue
 
 	; AUDIO_3
 	music_const MUSIC_TITLE_SCREEN,        Music_TitleScreen
@@ -62,6 +61,7 @@ ENDM
 	music_const MUSIC_MEET_JESSIE_JAMES,   Music_MeetJessieJames
 	music_const MUSIC_YELLOW_UNUSED_SONG,  Music_YellowUnusedSong
 	music_const MUSIC_GB_PRINTER,          Music_GBPrinter
+	music_const MUSIC_INTRO_BATTLE,        Music_IntroBattle ; Red and Blue
 
 	; AUDIO_1 AUDIO_2 AUDIO_3 AUDIO_4
 DEF NOISE_INSTRUMENTS_START EQUS "SFX_NOISE_INSTRUMENT01"
