@@ -1,4 +1,4 @@
-DEF NUM_MUSIC_TRACKS EQU 49
+DEF NUM_MUSIC_TRACKS EQU 50
 
 DisplaySoundTestMenu:
 	ld a, SFX_PRESS_AB
@@ -161,6 +161,7 @@ SoundTestTrackList:
 	dw Title_Music_DefeatedTrainer, (MUSIC_DEFEATED_TRAINER << 8) | Bank(Music_DefeatedTrainer)
 	dw Title_Music_DefeatedWildMon, (MUSIC_DEFEATED_WILD_MON << 8) | Bank(Music_DefeatedWildMon)
 	dw Title_Music_DefeatedGymLeader, (MUSIC_DEFEATED_GYM_LEADER << 8) | Bank(Music_DefeatedGymLeader)
+	dw Title_Music_IntroBattle, (MUSIC_INTRO_BATTLE << 8) | Bank(Music_IntroBattle) ; Red and Blue
 	dw Title_Music_TitleScreen, (MUSIC_TITLE_SCREEN << 8) | Bank(Music_TitleScreen)
 	dw Title_Music_Credits, (MUSIC_CREDITS << 8) | Bank(Music_Credits)
 	dw Title_Music_HallOfFame, (MUSIC_HALL_OF_FAME << 8) | Bank(Music_HallOfFame)
@@ -212,6 +213,7 @@ Title_Music_FinalBattle: db "Final Battle@"
 Title_Music_DefeatedTrainer: db "Trainer Victory@"
 Title_Music_DefeatedWildMon: db "Wild Victory@"
 Title_Music_DefeatedGymLeader: db "Leader Victory@"
+Title_Music_IntroBattle: db "Red and Blue Intro@" ; Red and Blue
 Title_Music_TitleScreen: db "Main Title@"
 Title_Music_Credits: db "Credits@"
 Title_Music_HallOfFame: db "Hall of Fame@"

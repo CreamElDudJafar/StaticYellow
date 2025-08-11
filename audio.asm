@@ -541,6 +541,7 @@ SECTION "Music 4", ROMX
 INCLUDE "audio/music/surfingpikachu.asm"
 INCLUDE "audio/music/yellowunusedsong.asm"
 INCLUDE "audio/music/meetjessiejames.asm"
+INCLUDE "audio/music/introbattle.asm" ; Red and Blue Intro
 
 ;IF !DEF(_DEBUG)
 ;	INCBIN "garbage/bank20.bin"
