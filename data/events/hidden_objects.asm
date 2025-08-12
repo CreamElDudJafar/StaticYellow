@@ -447,6 +447,7 @@ CeladonCityHiddenObjects:
 	db -1 ; end
 
 CeladonHotelHiddenObjects:
+	hidden_object 13,  3, SPRITE_FACING_UP,   OpenPokemonCenterPC
 	hidden_object  0,  4, SPRITE_FACING_LEFT, PrintBenchGuyText
 	db -1 ; end
 
