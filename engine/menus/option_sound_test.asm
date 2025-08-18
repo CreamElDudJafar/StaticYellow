@@ -1,4 +1,4 @@
-DEF NUM_MUSIC_TRACKS EQU 50
+DEF NUM_MUSIC_TRACKS EQU 51
 
 DisplaySoundTestMenu:
 	ld a, SFX_PRESS_AB
@@ -184,7 +184,7 @@ SoundTestTrackList:
 	dw Title_Music_MeetJessieJames, (MUSIC_MEET_JESSIE_JAMES << 8) | Bank(Music_MeetJessieJames)
 	dw Title_Music_YellowUnusedSong, (MUSIC_YELLOW_UNUSED_SONG << 8) | Bank(Music_YellowUnusedSong)
 	dw Title_Music_GBPrinter, (MUSIC_GB_PRINTER << 8) | Bank(Music_GBPrinter)
-
+	dw Title_Music_UnusedSong, (MUSIC_UNUSED_SONG << 8) | Bank(Music_UnusedSong)
 
 Title_Music_PalletTown: db "Pallet Town@"
 Title_Music_Pokecenter: db "#MON Center@"
@@ -236,3 +236,4 @@ Title_Music_SurfingPikachu: db "Surfing Pikachu@"
 Title_Music_MeetJessieJames: db "Meet JessieJames@"
 Title_Music_YellowUnusedSong: db "Yellow Unused Song@"
 Title_Music_GBPrinter: db "GB Printer@"
+Title_Music_UnusedSong: db "Unused Trade Song@"

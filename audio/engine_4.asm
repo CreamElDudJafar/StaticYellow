@@ -3,12 +3,12 @@
 Audio4_PlaySound::
 	ld [wSoundID], a
 	ld a, [wSoundID]
-	cp $ff
+	cp SFX_STOP_ALL_MUSIC
 	jp z, .stopAllAudio
 	cp MAX_SFX_ID_4
 	jp z, .playSfx
 	jp c, .playSfx
-	cp $a4
+	cp $a6
 	jr z, .playMusic
 	jp nc, .playSfx
 

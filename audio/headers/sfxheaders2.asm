@@ -427,9 +427,9 @@ SFX_Vine_Whip::
 	channel_count 1
 	channel 8, SFX_Vine_Whip_Ch8
 
-SFX_Battle_16::
-	channel_count 1
-	channel 8, SFX_Battle_16_Ch8
+;SFX_Battle_16::
+;	channel_count 1
+;	channel 8, SFX_Battle_16_Ch8
 
 SFX_Battle_17::
 	channel_count 1

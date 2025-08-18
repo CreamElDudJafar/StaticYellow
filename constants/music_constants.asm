@@ -61,6 +61,7 @@ ENDM
 	music_const MUSIC_MEET_JESSIE_JAMES,   Music_MeetJessieJames
 	music_const MUSIC_YELLOW_UNUSED_SONG,  Music_YellowUnusedSong
 	music_const MUSIC_GB_PRINTER,          Music_GBPrinter
+	music_const MUSIC_UNUSED_SONG,         Music_UnusedSong
 	music_const MUSIC_INTRO_BATTLE,        Music_IntroBattle ; Red and Blue
 
 	; AUDIO_1 AUDIO_2 AUDIO_3 AUDIO_4
@@ -199,7 +200,7 @@ DEF BATTLE_SFX_START EQUS "SFX_PECK"
 	music_const SFX_BATTLE_13,          SFX_Battle_13
 	music_const SFX_BATTLE_14,          SFX_Battle_14
 	music_const SFX_VINE_WHIP,          SFX_Vine_Whip
-	music_const SFX_BATTLE_16,          SFX_Battle_16 ; unused?
+;	music_const SFX_BATTLE_16,          SFX_Battle_16 ; unused?
 	music_const SFX_BATTLE_17,          SFX_Battle_17
 	music_const SFX_BATTLE_18,          SFX_Battle_18
 	music_const SFX_BATTLE_19,          SFX_Battle_19
