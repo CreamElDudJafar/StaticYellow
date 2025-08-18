@@ -8,7 +8,7 @@ Audio4_PlaySound::
 	cp MAX_SFX_ID_4
 	jp z, .playSfx
 	jp c, .playSfx
-	cp $a6
+	cp MUSIC4_END - 1
 	jr z, .playMusic
 	jp nc, .playSfx
 

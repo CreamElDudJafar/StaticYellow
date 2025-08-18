@@ -32,3 +32,5 @@ Music_IntroBattle:: ; Red and Blue
 	channel 2, Music_IntroBattle_Ch2
 	channel 3, Music_IntroBattle_Ch3
 	channel 4, Music_IntroBattle_Ch4
+
+Music_Audio4End::

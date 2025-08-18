@@ -10,7 +10,7 @@ Audio2_PlaySound::
 	cp MAX_SFX_ID_2
 	jp z, .playSfx
 	jp c, .playSfx
-	cp $fe
+	cp MUSIC2_END - 1
 	jr z, .playMusic
 	jp nc, .playSfx
 

@@ -26,6 +26,7 @@ ENDM
 	music_const MUSIC_ROUTES3,             Music_Routes3
 	music_const MUSIC_ROUTES4,             Music_Routes4
 	music_const MUSIC_INDIGO_PLATEAU,      Music_IndigoPlateau
+	music_const MUSIC1_END,                Music_Audio1End
 
 	; AUDIO_2
 	music_const MUSIC_GYM_LEADER_BATTLE,   Music_GymLeaderBattle
@@ -35,6 +36,7 @@ ENDM
 	music_const MUSIC_DEFEATED_TRAINER,    Music_DefeatedTrainer
 	music_const MUSIC_DEFEATED_WILD_MON,   Music_DefeatedWildMon
 	music_const MUSIC_DEFEATED_GYM_LEADER, Music_DefeatedGymLeader
+	music_const MUSIC2_END,                Music_Audio2End
 
 	; AUDIO_3
 	music_const MUSIC_TITLE_SCREEN,        Music_TitleScreen
@@ -55,6 +57,7 @@ ENDM
 	music_const MUSIC_MEET_EVIL_TRAINER,   Music_MeetEvilTrainer
 	music_const MUSIC_MEET_FEMALE_TRAINER, Music_MeetFemaleTrainer
 	music_const MUSIC_MEET_MALE_TRAINER,   Music_MeetMaleTrainer
+	music_const MUSIC3_END,                Music_Audio3End
 
 	; AUDIO_4
 	music_const MUSIC_SURFING_PIKACHU,     Music_SurfingPikachu
@@ -63,6 +66,7 @@ ENDM
 	music_const MUSIC_GB_PRINTER,          Music_GBPrinter
 	music_const MUSIC_UNUSED_SONG,         Music_UnusedSong
 	music_const MUSIC_INTRO_BATTLE,        Music_IntroBattle ; Red and Blue
+	music_const MUSIC4_END,                Music_Audio4End
 
 	; AUDIO_1 AUDIO_2 AUDIO_3 AUDIO_4
 DEF NOISE_INSTRUMENTS_START EQUS "SFX_NOISE_INSTRUMENT01"
