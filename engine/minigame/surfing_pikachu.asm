@@ -2310,10 +2310,10 @@ Func_f8f9d:
 	ld de, Unkn_f973d
 	ret
 
-Func_f8fa4: ; unused
-	inc a
-	ld [wSurfingMinigameWaveFunctionNumber], a
-	ret
+;Func_f8fa4: ; unused
+;	inc a
+;	ld [wSurfingMinigameWaveFunctionNumber], a
+;	ret
 
 SurfingMinigameWaveFunction_GoToNextWaveFunction:
 	ld hl, wSurfingMinigameWaveFunctionNumber
