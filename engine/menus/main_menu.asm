@@ -136,18 +136,18 @@ InitOptions:
 	ld [wPrinterSettings], a
 	ret
 
-Func_5cc1:
+;Func_5cc1:
 ; unused?
-	ld a, $6d
-	cp $80
-	ret c ; will always be executed
-	ld hl, NotEnoughMemoryText
-	rst _PrintText
-	ret
+;	ld a, $6d
+;	cp $80
+;	ret c ; will always be executed
+;	ld hl, NotEnoughMemoryText
+;	rst _PrintText
+;	ret
 
-NotEnoughMemoryText:
-	text_far _NotEnoughMemoryText
-	text_end
+;NotEnoughMemoryText:
+;	text_far _NotEnoughMemoryText
+;	text_end
 
 StartNewGame:
 	ld hl, wStatusFlags6
@@ -175,7 +175,7 @@ SpecialEnterMap::
 	call ResetPlayerSpriteData
 	ld c, 20
 	rst _DelayFrames
-	call Func_5cc1
+;	call Func_5cc1 ; unused
 	ld a, [wEnteringCableClub]
 	and a
 	ret nz

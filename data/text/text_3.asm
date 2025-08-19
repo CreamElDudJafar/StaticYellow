@@ -441,10 +441,10 @@ _ExpressionText::
 	text "."
 	prompt
 
-_NotEnoughMemoryText::
-	text "Not enough Yellow"
-	line "Version memory."
-	done
+;_NotEnoughMemoryText::
+;	text "Not enough Yellow"
+;	line "Version memory."
+;	done
 
 _NormalModeText::
 	text "Normal #MON"
