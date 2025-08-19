@@ -149,7 +149,7 @@ PrintPrizePrice:
 	lb bc, 1, 7
 	call TextBoxBorder
 	call UpdateSprites
-	hlcoord 12, 0
+	hlcoord 13, 0
 	ld de, .CoinString
 	call PlaceString
 	hlcoord 13, 1
@@ -162,7 +162,7 @@ PrintPrizePrice:
 	ret
 
 .CoinString:
-	db "COIN@"
+	db "COINS@"
 
 .SixSpacesString:
 	db "      @"
