@@ -120,20 +120,20 @@ DebugSetPokedexEntries:
 
 DebugItemsList:
 	db MASTER_BALL, 99
-;	db TOWN_MAP, 1
+	db COIN_CASE,  1
 	db SILPH_SCOPE, 1
 	db BICYCLE, 1
 	db FULL_RESTORE, 99
 	db ESCAPE_ROPE, 99
-	db RARE_CANDY, 99
 	db SECRET_KEY, 1
+	db POKE_FLUTE, 1
+	db SILPH_SCOPE, 1
 	db CARD_KEY, 1
-	db FULL_HEAL, 99
 	db REVIVE, 99
 	db CHEAT_CANDY, 1
 	db S_S_TICKET, 1
 	db LIFT_KEY, 1
-	db PP_UP, 99
+	db MAX_ELIXER, 99
 	db -1 ; end
 
 DebugUnusedList:
