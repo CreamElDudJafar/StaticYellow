@@ -588,6 +588,8 @@ TextCommand_SOUND::
 	jr z, .pokemonCry
 	cp TX_SOUND_CRY_DEWGONG
 	jr z, .pokemonCry
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
 	ld a, [hl]
 	rst _PlaySound
 	call WaitForSoundToFinish

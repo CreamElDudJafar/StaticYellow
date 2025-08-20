@@ -531,3 +531,45 @@ GetMonFieldMoves:
 	ret
 
 INCLUDE "data/moves/field_moves.asm"
+
+PrintLetterDelay_::
+	ld a, [wLetterPrintingDelayFlags]
+	bit BIT_FAST_TEXT_DELAY, a
+	jr z, .waitOneFrame
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	ldh [hFrameCounter], a
+
+	jr nz, .checkButtons	
+	ld hl, wChannelSoundIDs + CHAN5
+	ld a, [hli]
+	add [hl]
+	inc hl
+	add [hl]
+	inc hl
+	add [hl]
+	jr z, .checkButtons
+	ld hl, hFlagsFFFA
+	set 2, [hl]
+
+	jr .checkButtons
+.waitOneFrame
+	ld a, 1
+	ld [hFrameCounter], a
+.checkButtons
+	call Joypad
+	ld a, [hJoyHeld]
+;joenote - make this work better when zero text delay is implemented
+	and A_BUTTON | B_BUTTON
+	jr z, .buttonsNotPressed
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	call nz, DelayFrame
+	jr .done
+.buttonsNotPressed ; if neither A nor B is pressed
+	ld a, [hFrameCounter]
+	and a
+	jr nz, .checkButtons
+.done
+	ret
+	

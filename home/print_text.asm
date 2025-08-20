@@ -11,34 +11,9 @@ PrintLetterDelay::
 	push hl
 	push de
 	push bc
-	ld a, [wLetterPrintingDelayFlags]
-	bit BIT_FAST_TEXT_DELAY, a
-	jr z, .waitOneFrame
-	ld a, [wOptions]
-	and $f
-	ldh [hFrameCounter], a
-	jr .checkButtons
-.waitOneFrame
-	ld a, 1
-	ldh [hFrameCounter], a
-.checkButtons
-	call Joypad
-	ldh a, [hJoyHeld]
-.checkAButton
-	bit BIT_A_BUTTON, a
-	jr z, .checkBButton
-	jr .endWait
-.checkBButton
-	bit BIT_B_BUTTON, a
-	jr z, .buttonsNotPressed
-.endWait
-	rst _DelayFrame
-	jr .done
-.buttonsNotPressed ; if neither A nor B is pressed
-	ldh a, [hFrameCounter]
-	and a
-	jr nz, .checkButtons
-.done
+	push af
+	callfar PrintLetterDelay_
+	pop af
 	pop bc
 	pop de
 	pop hl

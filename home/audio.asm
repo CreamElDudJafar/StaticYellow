@@ -156,6 +156,15 @@ PlaySound::
 	push hl
 	push de
 	push bc
+	
+	push af
+	ld a, [hFlagsFFFA]
+	bit 2, a
+	res 2, a
+	ld [hFlagsFFFA]	, a
+	call nz, WaitForSoundToFinish
+	pop af
+
 	ld b, a
 	ld a, [wNewSoundID]
 	and a
