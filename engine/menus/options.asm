@@ -44,80 +44,86 @@ OptionMenuJumpTable:
 	dw OptionsMenu_Cancel
 
 OptionsMenu_TextSpeed:
-	call GetTextSpeed
-	ldh a, [hJoy5]
-	bit BIT_D_RIGHT, a
-	jr nz, .pressedRight
-	bit BIT_D_LEFT, a
-	jr nz, .pressedLeft
-	jr .nonePressed
-.pressedRight
-	ld a, c
-	cp $2
-	jr c, .increase
-	ld c, $ff
-.increase
-	inc c
-	ld a, e
-	jr .save
-.pressedLeft
-	ld a, c
-	and a
-	jr nz, .decrease
-	ld c, $3
-.decrease
-	dec c
-	ld a, d
+    	call GetTextSpeed ; c = 0 (instant), 1 (fast), 2 (medium), 3 (slow),
+    	ldh a, [hJoy5]    ; d = left speed, e = right speed
+    	bit BIT_D_RIGHT, a
+    	jr nz, .pressedRight
+    	bit BIT_D_LEFT, a
+    	jr nz, .pressedLeft
+    	jr .nonePressed
+.pressedRight ; pick right speed e and increase c
+    	inc c
+    	ld a, c
+    	cp 4
+    	jr nz, .save
+    	ld c, 0   ; wrap around to 0 if c = 4
+    	jr .save
+.pressedLeft  ; pick left speed d and decrease c
+    	ld e, d
+    	dec c
+    	ld a, c
+    	cp -1 ; inc a
+    	jr nz, .save
+    	ld c, 3   ; wrap around to 3 if c = 0
 .save
-	ld b, a
-	ld a, [wOptions]
-	and $f0
-	or b
-	ld [wOptions], a
+    	ld a, [wOptions]
+    	and ~TEXT_DELAY_MASK
+    	or e
+    	ld [wOptions], a
 .nonePressed
-	ld b, $0
-	ld hl, TextSpeedStringsPointerTable
-	add hl, bc
-	add hl, bc
-	ld e, [hl]
-	inc hl
-	ld d, [hl]
-	hlcoord 14, 2
-	call PlaceString
-	and a
-	ret
+    	ld b, 0
+    	sla c
+    	ld hl, TextSpeedStringsPointerTable
+    	add hl, bc
+    	ld a, [hli]
+    	ld e, a
+    	ld d, [hl]
+    	hlcoord 14, 2
+    	call PlaceString
+    	and a
+    	ret
 
 TextSpeedStringsPointerTable:
-	dw FastText
-	dw MidText
-	dw SlowText
+    	dw InstantText
+    	dw FastText
+    	dw MediumText
+    	dw SlowText
 
+InstantText:
+    	db "INST@"
 FastText:
-	db "FAST@"
-MidText:
-	db "MID @"
+    	db "FAST@"
+MediumText:
+    	db "MID @"
 SlowText:
-	db "SLOW@"
+    	db "SLOW@"
 
 GetTextSpeed:
-	ld a, [wOptions]
-	and $f
-	cp $5
-	jr z, .slowTextOption
-	cp $1
-	jr z, .fastTextOption
-; mid text option
-	ld c, $1
-	lb de, 1, 5
-	ret
-.slowTextOption
-	ld c, $2
-	lb de, 3, 1
-	ret
+    	ld a, [wOptions]
+    	and TEXT_DELAY_MASK
+    	ld c, 0
+    	cp TEXT_DELAY_INSTANT
+    	jr z, .instantTextOption
+    	inc c
+    	cp TEXT_DELAY_FAST
+    	jr z, .fastTextOption
+    	inc c
+    	cp TEXT_DELAY_MEDIUM
+    	jr z, .mediumTextOption
+; slow text option
+    	inc c
+    	lb de, TEXT_DELAY_MEDIUM, TEXT_DELAY_INSTANT
+    	ret
+.mediumTextOption
+    	lb de, TEXT_DELAY_FAST, TEXT_DELAY_SLOW
+    	ret
 .fastTextOption
-	ld c, $0
-	lb de, 5, 3
-	ret
+    	lb de, TEXT_DELAY_INSTANT, TEXT_DELAY_MEDIUM
+    	ret
+.instantTextOption
+    	lb de, TEXT_DELAY_SLOW, TEXT_DELAY_FAST
+    	ret
+
 
 OptionsMenu_BattleAnimations:
 	ldh a, [hJoy5]
