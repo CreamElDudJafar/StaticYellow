@@ -173,8 +173,8 @@ _SilphCo7FRivalDefeatedText::
 	prompt
 
 _SilphCo7FRivalVictoryText::
-	text "<RIVAL>: How can"
-	line "I put this?"
+	text "How can I"
+	line "put this?"
 
 	para "You're not good"
 	line "enough to play"

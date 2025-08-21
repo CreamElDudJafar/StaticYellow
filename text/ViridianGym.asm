@@ -20,6 +20,13 @@ _ViridianGymJessieJamesLostText::
 	cont "anymore."
 	prompt
 
+_ViridianGymJessieJamesWonText::
+	text "We finally won!"
+	
+	para "Give us all your"
+	line "#MON!"
+	prompt
+
 _ViridianGymJessieJamesPostBattleText::
 	text "Looks like TEAM"
 	line "ROCKET's blasting"

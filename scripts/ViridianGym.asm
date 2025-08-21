@@ -268,7 +268,7 @@ ViridianGymJessieJamesText:
 	set BIT_TALKED_TO_TRAINER, [hl]
 	set BIT_PRINT_END_BATTLE_TEXT, [hl]
 	ld hl, ViridianGymJessieJamesLostText
-	ld de, ViridianGymJessieJamesLostText
+	ld de, ViridianGymJessieJamesWonText
 	call SaveEndBattleTextPointers
 	ld a, OPP_ROCKET
 	ld [wCurOpponent], a
@@ -499,6 +499,10 @@ ViridianGymJessieJamesBeforeBattleText:
 
 ViridianGymJessieJamesLostText:
 	text_far _ViridianGymJessieJamesLostText
+	text_end
+
+ViridianGymJessieJamesWonText:
+	text_far _ViridianGymJessieJamesWonText
 	text_end
 
 ViridianGymJessieJamesPostBattleText:

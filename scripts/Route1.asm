@@ -94,7 +94,7 @@ Route1OakText:
 	ld [wCurMapScript], a	;joenote - also set the value for current map script or you will have a bad time
 	
 	ld hl, OakDefeatedText
-	ld de, OakDefeatedText
+	ld de, OakWonText
 	call SaveEndBattleTextPointers
 	ld hl, OakRealChallengeBattleText
 	rst _PrintText
@@ -119,6 +119,10 @@ OakRefusedBattleText:
 
 OakDefeatedText:
 	text_far _OakDefeatedText
+	text_end
+
+OakWonText:
+	text_far _OakWonText
 	text_end
 
 OakPostBattleText:

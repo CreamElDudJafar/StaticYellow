@@ -21,7 +21,7 @@ _Route22Rival2DefeatedText::
 	prompt
 
 _Route22Rival2VictoryText::
-	text "<RIVAL>: Hahaha!"
+	text "Hahaha!"
 	line "<PLAYER>! That's"
 	cont "your best? You're"
 	cont "nowhere near as"

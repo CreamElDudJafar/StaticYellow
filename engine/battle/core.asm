@@ -1214,30 +1214,22 @@ ChooseNextMon:
 HandlePlayerBlackOut:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
-	jr z, .noLossText
+	jr z, .surrendered
 	ld a, [wSurrenderedFromTrainerBattle]
 	and a
 	lb bc, 12, SCREEN_WIDTH
-	jr nz, .surrendered
+	jr nz, .RivalBattle
 ; back to vanilla
 	ld a, [wCurOpponent]
 	cp OPP_RIVAL1
-	jr nz, .noLossText
-.lossText
-	lb bc, 8, 21
+	jr z, .RivalBattle
+	cp OPP_RIVAL2
+	jr z, .RivalBattle
+	cp OPP_RIVAL3
+	jr z, .RivalBattle
+	cp OPP_PROF_OAK
+	jr z, .RivalBattle
 .surrendered
-	hlcoord 0, 0  ; rival 1 battle
-	call ClearScreenArea
-	call ScrollTrainerPicAfterBattle
-	ld c, 40
-	rst _DelayFrames
-;	ld hl, Rival1WinText
-;	rst _PrintText
-	call PrintEndBattleText
-	ld a, [wCurMap]
-	cp OAKS_LAB
-	ret z            ; starter battle in oak's lab: don't black out
-.noLossText
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
 
@@ -1267,10 +1259,21 @@ HandlePlayerBlackOut:
 	call ClearScreen
 	scf
 	ret
+.RivalBattle
+	coord hl, 0, 0  ; sony 1 battle
+	call ClearScreenArea
+	call ScrollTrainerPicAfterBattle
+	ld c, 40
+	rst _DelayFrames
+	call PrintEndBattleText
+	ld a, [wCurMap]
+	cp OAKS_LAB
+	ret z            ; starter battle in oak's lab: don't black out
+	jr .surrendered
 
-Rival1WinText:
-	text_far _Rival1WinText
-	text_end
+;Rival1WinText:
+;	text_far _Rival1WinText
+;	text_end
 
 PlayerBlackedOutText2:
 	text_far _PlayerBlackedOutText2
