@@ -60,15 +60,18 @@ Cut2::
 	ld de, CutTreeBlockSwaps
 	call ReplaceTreeTileBlock
 	call RedrawMapView
+	call .common
+	jp RedrawMapView
+.common
+	ld a, SFX_CUT
+	rst _PlaySound
 	farcall AnimCut
 	ld a, $1
 	ld [wUpdateSpritesEnabled], a
-	ld a, SFX_CUT
-	rst _PlaySound
 	ld a, $90
 	ldh [hWY], a
 	call UpdateSprites
-	jp RedrawMapView
+	ret
 
 UsedCutText:
 	text_far _UsedCutText
