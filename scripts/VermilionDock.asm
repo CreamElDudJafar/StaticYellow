@@ -37,6 +37,9 @@ VermilionDock_Script:
 	ret
 
 VermilionDockSSAnneLeavesScript:
+	ld a, [wObtainedBadges]
+	bit BIT_MARSHBADGE, a
+	ret nz
 	SetEventForceReuseHL EVENT_SS_ANNE_LEFT
 	ld a, $ff
 	ld [wJoyIgnore], a

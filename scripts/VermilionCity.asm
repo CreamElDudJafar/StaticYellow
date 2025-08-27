@@ -183,7 +183,6 @@ VermilionCitySailor1Text:
 	text_asm
 	ld a, [wObtainedBadges]
 	bit BIT_MARSHBADGE, a
-
 	jr nz, .default
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .ship_departed
