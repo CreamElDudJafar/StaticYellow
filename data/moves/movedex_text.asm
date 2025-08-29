@@ -1460,10 +1460,13 @@ _PoisonGasDexEntry::
 	next "of corrosive"
 	next "choking gas."
 
-	bage "Often lands"
-	next "critical hits.@"
+	bage "Poisons the foe"
+	next "if it works."
 
-	text_jump _Generic20PercentPoisonText
+	bage "Doesn't work on"
+	next "POISON-type"
+	next "#MON"
+	dex
 
 _BarrageDexEntry::
 	text "Hurls orbs of"
