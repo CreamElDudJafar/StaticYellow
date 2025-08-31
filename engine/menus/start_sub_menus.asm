@@ -390,8 +390,11 @@ StartMenu_Item::
 	cp a, 1
 	jp z, .infoItem
 	ld a, [wCurItem]
+	cp SURFBOARD
+	jr z, .notSurfboard
 	cp BICYCLE
 	jr nz, .notBicycle
+.notSurfboard
 	ld a, [wStatusFlags6]
 	bit BIT_ALWAYS_ON_BIKE, a
 	jr z, .useItem_closeMenu

@@ -255,6 +255,7 @@ NothingToSort::
 ItemSortList::
 	; Used Key Items
 	db BICYCLE
+	db SURFBOARD
 	db ITEMFINDER
 	db EXP_ALL
 	db TOWN_MAP

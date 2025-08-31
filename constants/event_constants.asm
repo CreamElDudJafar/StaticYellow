@@ -186,7 +186,8 @@
 	const_next $278
 	const EVENT_MANSION_SWITCH_ON
 	const EVENT_USED_SECRET_KEY
-	const_skip 15
+	const EVENT_GOT_SURFBOARD
+	const_skip 14
 	const EVENT_BEAT_MANSION_1_TRAINER_0
 	const_skip 14
 	const EVENT_GOT_TM38

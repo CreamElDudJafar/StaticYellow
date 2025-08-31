@@ -51,6 +51,7 @@ Features:
 - Moon Stone can be bought in Celadon Mart-
 - Team Rocket Received a buff in levels and parties
 - Reusable Repel B/W
+- SURFBOARD in Cinnabar Pokecenter. Alternative form to SURF without a Pokemon needed.
 - Engine Bugfixes
 - Attack after waking up from Sleep
 - Sleep engine fixed (it works now like gen 2 - max 6 turns)

@@ -28,6 +28,11 @@ _BicycleDescription::
 	next "for fast movement."
 	prompt
 
+_SurfboardDescription::
+	text "A small board used"
+	next "for surfing."
+	prompt
+
 _MoonStoneDescription::
 _FireStoneDescription::
 _ThunderStoneDescription::
