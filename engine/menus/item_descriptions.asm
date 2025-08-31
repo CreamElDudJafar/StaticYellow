@@ -23,7 +23,7 @@ ItemDescriptionPointers:
 	text_end
 	text_far _BicycleDescription
 	text_end
-	text_far _UnusedItemDescription
+	text_far _SurfboardDescription
 	text_end
 	text_far _UnusedItemDescription
 	text_end

@@ -19,3 +19,37 @@ _CinnabarPokecenterGentlemanText::
 	para "I think it's"
 	line "worth a try!"
 	done
+
+_CinnabarPokecenterSurfboardText::
+	text "Hi! I didn't need"
+	line "a #MON to get"
+	cont "here."
+
+	para "I rode on my"
+	line "SURFBOARD."
+
+	para "You don't know"
+	line "what that is?"
+
+	para "I know, I'll give"
+	line "you my old one!"
+	cont "Here you go!"
+	prompt
+
+_CinnabarPokecenterGotSurfboardText::
+	text "<PLAYER> got"
+	line "@"
+	text_ram wStringBuffer
+	text "!@"
+	text_end
+
+_CinnabarPokecenterEnjoySurfingText::
+	text "You can use it"
+	line "from your item"
+	cont "pack to SURF."
+	done
+
+_CinnabarPokecenterNoRoomText::
+	text "You have too much"
+	line "stuff with you!"
+	done
