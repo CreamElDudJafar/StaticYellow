@@ -256,14 +256,14 @@ HandlePrizeChoice:
 	ld hl, OhFineThenTextPtr
 	jp PrintText
 
-UnknownPrizeData:
+;UnknownPrizeData:
 ; XXX what's this?
-	db $00,$01,$00,$01,$00,$01,$00,$00,$01
+;	db $00,$01,$00,$01,$00,$01,$00,$00,$01
 
-HereYouGoTextPtr:
-	text_far _HereYouGoText
-	text_waitbutton
-	text_end
+;HereYouGoTextPtr:
+;	text_far _HereYouGoText
+;	text_waitbutton
+;	text_end
 
 SoYouWantPrizeTextPtr:
 	text_far _SoYouWantPrizeText
