@@ -87,6 +87,7 @@ Features:
 - ELITE 4 REMATCHES
 - Jenny and Joy Post Game Battle
 - Coin Clerk in Celadon will sell coins in bulk after 4th Badge
+- Celadon Hotel has Pokemon Observer: Will give Coins based on if player owns Pokemon and in 1st Party slot. (Resets Pokemon if you exit Hotel or Save and Power Off/On
 - 2nd Plateau Mart after E4 beaten says ALL TMs
 - SLOT FIXES
 - BUG FIXES
@@ -97,33 +98,33 @@ CREDITS: THE MOST IMPORTANT PART OF THIS
 - Dannye- Created Pokeyellow Gen 2 repo, Pokered-gbc repos and much much more. This game is based on his Pokeyellow Gen2. Dannye did all the sprites, EXP Bar work, answered a lot of questions and is someone I can consider a friend
 - Vortiene/PureRGB-  Another great person who has helped so many people in discord. His credit goes from Safari Zone options, Elevator times shorter, Overworld Sprites, SS Ticket and other key items being removed when used, Box Slot Space on Catching Pokemon, Lapras swimming in Fuchsia City, PC Box View Mode, SELECT for Bicycle, MOVEDEX and tons of Bugs fixes. Taught me about Unions, calling codes from other banks and RST VECTORS FOR SPACE…. PURERGB IS IN THE TOP 3 OF GEN 1 HACKS IN MY OPINON ALONG WITH RED++ AND SHIN POKERED FOR ALL THERE UPDATES AND FEATURES
 - CRz Shadows/The Smith Plays/Yellow Legacy- The reason I started disassembly. A lot of initial changes features came from there game. Moves in Pokedex, Running Shoes, Pikachu fixes, Gym Leader rematches, Mr Mime in house, eeveeolution next to trainer and post game mart clerk. Alot of Pokemon learnsets, level up moves were borrowed and used from Yellow Legacy, as well as some trainer ideas like Janine in Kogas Gym IN MY OPINON THE TWO BEST YELLOW HACKS ARE YELLOW LEGACY AND EXTREME YELLOW. THIS GAME WOULD NOT BE MADE WITHOUT THERES SO PLEASE TRY IT. Thanks for Crystal and Emerald Legacy too!!
--JojoBear13/ShinPokeRed- Trainer AI code taken from game, Sound Test Option, as well as many many bug fixes. TRY SHINPOKERED. AS I STATED BEFORE ITS IN TOP 3 OF GEN 1 HACKS.
--JustRegularLuna/Red++- My favorite Gen 1 hack. First one I ever played too. The main reason celebrations was made was to try to create magic like you did. Features from Red++ include Gender code, Sprite Palette help, Intro being changed, Oak Giving 5 pokeballs, updated pokeball and pokedex sprites.
+- JojoBear13/ShinPokeRed- Trainer AI code taken from game, Sound Test Option, Coin Observer, as well as many many bug fixes. TRY SHINPOKERED. AS I STATED BEFORE ITS IN TOP 3 OF GEN 1 HACKS.
+- JustRegularLuna/Red++- My favorite Gen 1 hack. First one I ever played too. The main reason celebrations was made was to try to create magic like you did. Features from Red++ include Gender code, Sprite Palette help, Intro being changed, Oak Giving 5 pokeballs, updated pokeball and pokedex sprites.
 - Engezertorung- A lot of help with color, sprite and graphics. Very helpful and patient. Please try his Pokered-gbc French and English updated game.
--Melody- For the rest of Pokedex code that makes it run and look clean. You also assisted with the LearnSet moves and Bugs. Thanks for the help with Celebrations too.
--Devianart- For all the female sprites for the game
--Thoth33- For new improved hard mode code, Players Pokemon being sent out of Pokeball visual effect in battle, and for the color help in Celebrations games.
--FrenchOrange- for all the running and surfing sprites added to the game/ yellow sprites
--Rosie- for the Nurse Joy, Jenny, Yellow back picture.
--SteppoBlazer- Fixing the Unused Song.
--PokeFanMarcel- For the Nurse Joy SS Anne room, the code for the running sprites to work and the code to make the EXP ALL a key item that can turn on or off
--RainbowMetalPigeon/ExtremeYellow- Space code for Bank 1E, Surrender in battle option, and Pikachu Flying Animation. Also for 3rd character/gender tutorial AND FOR CREATING THE HARDEST GEN 1 YELLOW HACK EVER. BUT I LOVE PLAYING IT
--RainbowDevs/Pokemon Brown- Another awesome Gen 1 hack. Some Pokemon Sprites were taken from Brown and added into this game.
+- Melody- For the rest of Pokedex code that makes it run and look clean. You also assisted with the LearnSet moves and Bugs. Thanks for the help with Celebrations too.
+- Devianart- For all the female sprites for the game
+- Thoth33- For new improved hard mode code, Players Pokemon being sent out of Pokeball visual effect in battle, and for the color help in Celebrations games.
+- FrenchOrange- for all the running and surfing sprites added to the game/ yellow sprites
+- Rosie- for the Nurse Joy, Jenny, Yellow back picture.
+- SteppoBlazer- Fixing the Unused Song.
+- PokeFanMarcel- For the Nurse Joy SS Anne room, the code for the running sprites to work and the code to make the EXP ALL a key item that can turn on or off
+- RainbowMetalPigeon/ExtremeYellow- Space code for Bank 1E, Surrender in battle option, and Pikachu Flying Animation. Also for 3rd character/gender tutorial AND FOR CREATING THE HARDEST GEN 1 YELLOW HACK EVER. BUT I LOVE PLAYING IT
+- RainbowDevs/Pokemon Brown- Another awesome Gen 1 hack. Some Pokemon Sprites were taken from Brown and added into this game.
 - BYRAX- FOR THE BOXART FOR ALL THE GBC/GBA GAMES. ALSO TESTING THE GAME MULTIPLE TIMES AS WELL.
 - JA2398- Tester
--DarthBR- Tester
+- DarthBR- Tester
 - Bri- Tester
--Dreams897
+- Dreams897
 - Mauvesea
--Alio
--SCORP MILLER
--ELRT
--TUXMAN
--BEEFMAN
--BlueZangoose- Answered questions
--Rangi42- Pret and Disassembly Team
-MegaMan-Omega- Sprites
--ZetaPhoenix- Explaining how to call from other banks
+- Alio
+- SCORP MILLER
+- ELRT
+- TUXMAN
+- BEEFMAN
+- BlueZangoose- Answered questions
+- Rangi42- Pret, RedStar/BlueStar, N64 Graphic, and Disassembly Team
+- MegaMan-Omega- Sprites
+- ZetaPhoenix- Explaining how to call from other banks
 - DISCORD AND EVERYONE FOR PLAYING OR THINKING ABOUT PLAY
 
 ** IF I FORGOT SOMEONE OR SOME DETAIL LET ME KNOW AND I WILL ADD IT. I PUT CREDIT TO EVERYONE IN THE COMMITS THEY HELPED WITH AS WELL, AS WELL AS LINKS TO THEIR CODES IF I HAD IT HANDY***
