@@ -223,7 +223,7 @@ INCLUDE "text/CinnabarLabMetronomeRoom.asm"
 INCLUDE "text/CinnabarLabFossilRoom.asm"
 INCLUDE "text/CinnabarPokecenter.asm"
 INCLUDE "text/CinnabarMart.asm"
-INCLUDE "text/IndigoPlateauLobby.asm"
+;INCLUDE "text/IndigoPlateauLobby.asm" ;; Moved to Text 9
 INCLUDE "text/CopycatsHouse1F.asm"
 INCLUDE "text/CopycatsHouse2F.asm"
 INCLUDE "text/FightingDojo.asm"
@@ -259,6 +259,7 @@ SECTION "Text 9", ROMX
 
 INCLUDE "text/move_deleter.asm"
 INCLUDE "text/move_relearner.asm"
+INCLUDE "text/IndigoPlateauLobby.asm"
 INCLUDE "text/ChampionsRoom.asm"
 INCLUDE "text/RedsHouse1F.asm"
 INCLUDE "text/RedsHouse2F.asm"

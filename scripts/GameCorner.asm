@@ -255,7 +255,7 @@ GameCornerClerkText:
 	ld c, $2
 	predef AddBCDPredef
 	call GameCornerDrawCoinBox
-	ld hl, .ThanksHereAre500Coins
+	ld hl, .ThanksHereAre800Coins
 	jr .print_ret
 
 .DoYouNeedSomeGameCoins:
@@ -270,8 +270,8 @@ GameCornerClerkText:
 	text_far _GameCornerClerkThanksHereAre50CoinsText
 	text_end
 
-.ThanksHereAre500Coins:
-	text_far _GameCornerClerkThanksHereAre500CoinsText
+.ThanksHereAre800Coins:
+	text_far _GameCornerClerkThanksHereAre800CoinsText
 	text_end
 
 .PleaseComePlaySometime:

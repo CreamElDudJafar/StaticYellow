@@ -529,7 +529,8 @@ INCLUDE "engine/overworld/select_button_functionality.asm"
 INCLUDE "engine/menus/multi_choice_menu.asm"
 INCLUDE "engine/menus/text_multi_button_prompt.asm"
 INCLUDE "engine/gfx/animated_tiles_code.asm"
-
+INCLUDE "engine/custom_function/coin_function.asm"
+INCLUDE "engine/custom_function/monlist.asm"
 
 SECTION "Move Descriptions", ROMX
 
