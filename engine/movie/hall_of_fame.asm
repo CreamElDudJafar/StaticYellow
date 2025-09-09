@@ -116,8 +116,7 @@ HoFShowMonOrPlayer:
 	call LoadFrontSpriteByMonIndex
 	predef LoadMonBackPic
 .next1
-	ld b, SET_PAL_POKEMON_WHOLE_SCREEN
-	ld c, 0
+	lb bc, SET_PAL_POKEMON_WHOLE_SCREEN, 0
 	call RunPaletteCommand
 	ld a, %11100100
 	ldh [rBGP], a
@@ -258,8 +257,7 @@ HoFDisplayPlayerStats:
 	predef DisplayDexRating
 
 	hlcoord 11, 0 ; Yellow Text Box
-	ld b, 2
-	ld c, 7
+	lb bc, 2, 7
 	call TextBoxBorder
 	hlcoord 12, 1
 	ld de, StaticText
