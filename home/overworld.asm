@@ -145,7 +145,7 @@ OverworldLoopLessDelay::
 	ld hl, wMiscFlags
 	res BIT_TURNING, [hl]
 	xor a
-	ld [wd434], a
+	ld [wPikachuCollisionCounter], a
 	ld a, 1
 	ld [wCheckFor180DegreeTurn], a
 	ld a, [wPlayerMovingDirection] ; the direction that was pressed last time
@@ -204,7 +204,7 @@ OverworldLoopLessDelay::
 	cp b
 	jr z, .noDirectionChange
 	ld a, $8
-	ld [wd434], a
+	ld [wPikachuCollisionCounter], a
 ; unlike in red/blue, yellow does not have the 180 degrees odd code
 	ld hl, wMiscFlags
 	set BIT_TURNING, [hl]
@@ -1348,7 +1348,7 @@ CollisionCheckOnLand::
 	ldh a, [hJoyHeld]
 	and $2
 	jr nz, .asm_0a5c
-	ld hl, wd434
+	ld hl, wPikachuCollisionCounter
 	ld a, [hl]
 	and a
 	jr z, .asm_0a5c
@@ -1864,7 +1864,7 @@ LoadWalkingPlayerSpriteGraphics::
 LoadRunningPlayerSpriteGraphics::
 ; new sprite copy stuff
 	xor a
-	ld [wd473], a
+	ld [wd472], a
 	ld b, BANK(RedRunSprite)
 	ld de, RedRunSprite
 	ld a, [wPlayerGender]
@@ -1899,7 +1899,7 @@ LoadSurfingPlayerSpriteGraphics2::
 
 LoadSurfingPlayerSpriteGraphics::
 	xor a
-	ld [wd473], a
+	ld [wd472], a
 	ld b, BANK(RedSurfSprite)
 	ld de, RedSurfSprite
 	ld a, [wPlayerGender]
