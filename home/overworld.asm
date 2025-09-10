@@ -301,7 +301,7 @@ OverworldLoopLessDelay::
 .speedUp
 	call DoBikeSpeedup ; Make you go faster if you were holding B
 .notRunning
-	ld a,[wNoSprintSteps]  ; Load the value from wNoSpriteSteps into register a
+	ld a, [wNoSprintSteps]  ; Load the value from wNoSpriteSteps into register a
 	cp 0    ; Compare the value in a with 0
 	jr z, .skipDecrement ; Jump to skipDecrement if zero flag is set (i.e., a == 0)
 	dec a  ; Decrement a

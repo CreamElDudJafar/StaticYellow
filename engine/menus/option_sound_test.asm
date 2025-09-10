@@ -8,17 +8,17 @@ DisplaySoundTestMenu:
 	ld [hJoy7], a
 	
 ;place the static strings for the screen
-	coord hl, 5, 1
+	hlcoord 5, 1
 	ld de, SoundTestTextInstructions3
 	call PlaceString
-	coord hl, 1, 14
+	hlcoord 1, 14
 	ld de, SoundTestTextInstructions2
 	call PlaceString
-	coord hl, 1, 16
+	hlcoord 1, 16
 	ld de, SoundTestTextInstructions1
 	call PlaceString
 ;draw text box for the audio track
-	coord hl, 0, 6
+	hlcoord 0, 6
 	ld b, 1
 	ld c, 18
 	call TextBoxBorder
@@ -101,7 +101,7 @@ DisplaySoundTestMenu:
 
 .updatetrackname
 	;blank track name
-	coord hl, 1, 7
+	hlcoord 1, 7
 	ld de, SoundTestTextBlankTrack
 	call PlaceString
 
@@ -121,7 +121,7 @@ DisplaySoundTestMenu:
 	ld d, a
 
 	;print track name
-	coord hl, 1, 7
+	hlcoord 1, 7
 	call PlaceString
 	ret
 	
