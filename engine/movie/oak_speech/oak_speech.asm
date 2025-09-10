@@ -367,7 +367,7 @@ DifficultyChoice::
 InitDifficultyTextBoxParameters::
   	ld a, DIFFICULTY_MENU
 	ld [wTwoOptionMenuID], a
-	coord hl, 5, 5
+	hlcoord 5, 5
 	lb bc, 6, 6 ; Cursor Pos
 	ret
 	
@@ -386,7 +386,7 @@ YesNoNormalHardChoice::
 InitYesNoNormalHardTextBoxParameters::
   	ld a, YES_NO_MENU
 	ld [wTwoOptionMenuID], a
-	coord hl, 7, 5
+	hlcoord 7, 5
 	lb bc, 6, 8 ; Cursor Pos
 	ret
 	

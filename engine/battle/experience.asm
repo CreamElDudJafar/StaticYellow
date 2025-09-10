@@ -283,7 +283,7 @@ GainExperience:
 	call CallBattleCore
 	call SaveScreenTilesToBuffer1
 .printGrewLevelText
-	callabd_ModifyPikachuHappiness PIKAHAPPY_LEVELUP
+	farcall_ModifyPikachuHappiness PIKAHAPPY_LEVELUP
 	ld hl, GrewLevelText
 	rst _PrintText
 	xor a ; PLAYER_PARTY_DATA

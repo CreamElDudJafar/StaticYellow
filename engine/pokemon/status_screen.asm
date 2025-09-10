@@ -105,7 +105,7 @@ StatusScreen:
 	push af
 	xor a
 	ld [hTileAnimations], a
-	coord hl, 19, 3
+	hlcoord 19, 3
 	lb bc, 2, 8
 	call DrawLineBox ; Draws the box around name, HP and status
 	hlcoord 2, 7
@@ -113,13 +113,13 @@ StatusScreen:
 	ld [hl], "."
 	dec hl
 	ld [hl], "№"
-	coord hl, 19, 9
+	hlcoord 19, 9
 	lb bc, 8, 6
 	call DrawLineBox ; Draws the box around types, ID No. and OT
-	coord hl, 10, 9
+	hlcoord 10, 9
 	ld de, Type1Text
 	call PlaceString ; "TYPE1/"
-	coord hl, 11, 3
+	hlcoord 11, 3
 	predef DrawHP
 
 ;joenote - print stat exp if select is held
@@ -175,42 +175,42 @@ StatusScreen:
 	ld [wLoadedMonLevel], a
 	pop af
 	ld [wBattleMonLevel], a
-	coord hl, 16, 6
+	hlcoord 16, 6
 	ld de, wLoadedMonStatus
 	call PrintStatusCondition
 	jr nz, .StatusWritten
-	coord hl, 16, 6
+	hlcoord 16, 6
 	ld de, OKText
 	call PlaceString ; "OK"
 .StatusWritten
-	coord hl, 9, 6
+	hlcoord 9, 6
 	ld de, StatusText
 	call PlaceString ; "STATUS/"
-	coord hl, 14, 2
+	hlcoord 14, 2
 	call PrintLevel ; Pokémon level
 	ld a, [wMonHIndex]
 	ld [wPokedexNum], a
 	ld [wCurSpecies], a
 	predef IndexToPokedex
-	coord hl, 3, 7
+	hlcoord 3, 7
 	ld de, wPokedexNum
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber ; Pokémon no.
-	coord hl, 11, 10
+	hlcoord 11, 10
 	predef PrintMonType
 	ld hl, NamePointers2
 	call .GetStringPointer
 	ld d, h
 	ld e, l
-	coord hl, 9, 1
+	hlcoord 9, 1
 	call PlaceString ; Pokémon name
 	ld hl, OTPointers
 	call .GetStringPointer
 	ld d, h
 	ld e, l
-	coord hl, 12, 16
+	hlcoord 12, 16
 	call PlaceString ; OT
-	coord hl, 12, 14
+	hlcoord 12, 14
 	ld de, wLoadedMonOTID
 	lb bc, LEADING_ZEROES | 2, 5
 	call PrintNumber ; ID Number
@@ -218,7 +218,7 @@ StatusScreen:
 	call PrintStatsBox
 	call Delay3
 	call GBPalNormal
-	coord hl, 1, 0
+	hlcoord 1, 0
 	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
 	ld a, [wMonDataLocation]
 	cp ENEMY_PARTY_DATA

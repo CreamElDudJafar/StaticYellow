@@ -797,7 +797,7 @@ TradeCenter_Trade:
 	add hl, bc
 	ld a, [hl]
 	ld [wTradedPlayerMonSpecies], a
-	callabd_ModifyPikachuHappiness PIKAHAPPY_TRADE
+	farcall_ModifyPikachuHappiness PIKAHAPPY_TRADE
 	xor a
 	ld [wRemoveMonFromBox], a
 	call RemovePokemon
