@@ -144,7 +144,7 @@ gfx/battle/move_anim_1.2bpp: tools/gfx += --trim-whitespace
 
 gfx/credits/the_end.2bpp: tools/gfx += --interleave --png=$<
 
-gfx/diploma/diploma_3.2bpp: tools/gfx += --trim-whitespace
+gfx/diploma/diploma.2bpp: tools/gfx += --trim-whitespace
 
 gfx/slots/slots_1.2bpp: tools/gfx += --trim-whitespace
 
