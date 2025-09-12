@@ -128,15 +128,15 @@ GetTextSpeed:
 OptionsMenu_BattleAnimations:
 	ldh a, [hJoy5]
 	and D_RIGHT | D_LEFT
-	jr nz, .asm_41d33
+	jr nz, .buttonPressed
 	ld a, [wOptions]
 	and $80 ; mask other bits
-	jr .asm_41d3b
-.asm_41d33
+	jr .nothingPressed
+.buttonPressed
 	ld a, [wOptions]
 	xor $80
 	ld [wOptions], a
-.asm_41d3b
+.nothingPressed
 	ld bc, $0
 	sla a
 	rl c
@@ -163,14 +163,14 @@ AnimationOffText:
 OptionsMenu_BattleStyle:
 	ldh a, [hJoy5]
 	and D_LEFT | D_RIGHT
-	jr nz, .ButtonPressed
+	jr nz, .buttonPressed
 	ld a, [wDifficulty]
 	and a
 	jr nz, .lockedToSet
 	ld a, [wOptions]
 	and 1 << BIT_BATTLE_SHIFT
 	jr .done
-.ButtonPressed
+.buttonPressed
 	ld a, [wDifficulty]
 	and a
 	jr nz, .lockedToSet
@@ -217,17 +217,17 @@ OptionsMenu_SpeakerSettings:
 	jr nz, .pressedRight
 	bit BIT_D_LEFT, a
 	jr nz, .pressedLeft
-	jr .asm_41dca
+	jr .nothingPressed
 .pressedRight
 	ld a, c
 	inc a
 	and $3
-	jr .asm_41dba
+	jr .save
 .pressedLeft
 	ld a, c
 	dec a
 	and $3
-.asm_41dba
+.save
 	ld c, a
 	swap a
 	ld b, a
@@ -237,7 +237,7 @@ OptionsMenu_SpeakerSettings:
 	and $cf
 	or b
 	ld [wOptions], a
-.asm_41dca
+.nothingPressed
 	ld b, $0
 	ld hl, SpeakerOptionStringsPointerTable
 	add hl, bc
@@ -266,34 +266,35 @@ Earphone3SoundText:
 	db "EARPHONE3@"
 
 OptionsMenu_GBPrinterBrightness:
-	call Func_41e7b
+	call GetGBPrinterBrightness
 	ldh a, [hJoy5]
 	bit BIT_D_RIGHT, a
 	jr nz, .pressedRight
 	bit BIT_D_LEFT, a
 	jr nz, .pressedLeft
-	jr .asm_41e32
+	jr .nothingPressed
 .pressedRight
 	ld a, c
 	cp $4
-	jr c, .asm_41e22
+	jr c, .increase
 	ld c, $ff
-.asm_41e22
+.increase
 	inc c
 	ld a, e
-	jr .asm_41e2e
+	jr .save
 .pressedLeft
 	ld a, c
 	and a
-	jr nz, .asm_41e2c
+	jr nz, .decrease
 	ld c, $5
-.asm_41e2c
+.decrease
 	dec c
 	ld a, d
-.asm_41e2e
+.save
 	ld b, a
 	ld [wPrinterSettings], a
-.asm_41e32
+
+.nothingPressed
 	ld b, $0
 	ld hl, GBPrinterOptionStringsPointerTable
 	add hl, bc
@@ -324,32 +325,32 @@ DarkerPrintText:
 DarkestPrintText:
 	db "DARKEST @"
 
-Func_41e7b:
+GetGBPrinterBrightness:
 	ld a, [wPrinterSettings]
 	and a
-	jr z, .asm_41e93
+	jr z, .setLightest
 	cp $20
-	jr z, .asm_41e99
+	jr z, .setLighter
 	cp $60
-	jr z, .asm_41e9f
+	jr z, .setDarker
 	cp $7f
-	jr z, .asm_41ea5
+	jr z, .setDarkest
 	ld c, $2
 	lb de, $20, $60
 	ret
-.asm_41e93
+.setLightest
 	ld c, $0
 	lb de, $7f, $20
 	ret
-.asm_41e99
+.setLighter
 	ld c, $1
 	lb de, $0, $40
 	ret
-.asm_41e9f
+.setDarker
 	ld c, $3
 	lb de, $40, $7f
 	ret
-.asm_41ea5
+.setDarkest
 	ld c, $4
 	lb de, $60, $0
 	ret
