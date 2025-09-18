@@ -11,6 +11,10 @@ ShowPokedexMenu:
 	inc a
 	ld [wPokedexNum], a
 	ldh [hJoy7], a
+	ld a, [wPokedexPlace1]
+	ld [wListScrollOffset], a
+	ld a, [wPokedexPlace2]
+	ld [wCurrentMenuItem], a
 .setUpGraphics
 	callfar LoadPokedexTilePatterns
 	;;;;;;;;;;; PureRGBnote: ADDED: load these new button prompt graphics into VRAM
@@ -41,6 +45,10 @@ ShowPokedexMenu:
 	cp 2
 	jr z, .startPressed
 .exitPokedex
+	ld a, [wListScrollOffset]
+	ld [wPokedexPlace1], a
+	ld a, [wCurrentMenuItem]
+	ld [wPokedexPlace2], a
 	xor a
 	ld [wMenuWatchMovingOutOfBounds], a
 	ld [wCurrentMenuItem], a
