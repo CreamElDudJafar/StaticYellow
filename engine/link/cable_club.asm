@@ -816,7 +816,7 @@ TradeCenter_Trade:
 	call AddNTimes
 	ld de, wLoadedMon
 	ld bc, wEnemyMon2 - wEnemyMon1
-	rst _CopyData
+	call CopyData
 	call AddEnemyMonToPlayerParty
 	ld a, [wPartyCount]
 	dec a
