@@ -1,4 +1,4 @@
-; This file is INCLUDEd three times, once in each audio engine.
+; This file is INCLUDED four times, once in each audio engine.
 
 	table_width 2
 	dw $F82C ; C_

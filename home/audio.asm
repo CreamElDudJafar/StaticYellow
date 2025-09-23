@@ -139,14 +139,14 @@ PlayMusic::
 	ld a, b
 	jr PlaySound
 
-Func_2223::
-	xor a
-	ld [wChannelSoundIDs + CHAN5], a
-	ld [wChannelSoundIDs + CHAN6], a
-	ld [wChannelSoundIDs + CHAN7], a
-	ld [wChannelSoundIDs + CHAN8], a
-	ldh [rNR10], a
-	ret
+;Func_2223:: ; unreferenced
+;	xor a
+;	ld [wChannelSoundIDs + CHAN5], a
+;	ld [wChannelSoundIDs + CHAN6], a
+;	ld [wChannelSoundIDs + CHAN7], a
+;	ld [wChannelSoundIDs + CHAN8], a
+;	ldh [rNR10], a
+;	ret
 
 StopAllMusic::
 	ld a, SFX_STOP_ALL_MUSIC
