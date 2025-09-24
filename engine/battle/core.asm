@@ -976,7 +976,7 @@ TrainerBattleVictory:
 	cp PROF_OAK
 	jr z, .special1998
 	cp LANCE
-	jr nz, .special1998
+	jr nz, .notrival
 .special1998	
 	ld b, MUSIC_DEFEATED_GYM_LEADER
 	cp RIVAL3 ; final battle against rival
