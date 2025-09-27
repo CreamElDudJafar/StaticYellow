@@ -73,6 +73,8 @@ FuchsiaPokecenterNurseText:
 .refused
 	ld hl, NurseJoyRefusedText
 	rst _PrintText
+	ld a, PLAYER_DIR_DOWN
+	ld [wPlayerMovingDirection], a
 .done
 	rst TextScriptEnd
 .NotFirstBattle
