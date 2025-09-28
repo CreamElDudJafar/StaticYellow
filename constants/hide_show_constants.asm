@@ -197,7 +197,6 @@ DEF SHOW EQU $15
 	const HS_SILPH_CO_11F_1                ; BB
 	const HS_SILPH_CO_11F_JAMES            ; BC
 	const HS_SILPH_CO_11F_2                ; BD
-	const HS_SILPH_CO_11F_3                ; BD
 	const HS_SILPH_CO_11F_JESSIE           ; BE
 	const HS_POKEMON_TOWER_8F_ROCKET_1     ; BF 
 	const HS_POKEMON_TOWER_8F_ROCKET_2     ; EC
@@ -231,12 +230,13 @@ DEF SHOW EQU $15
 	const HS_CERULEAN_CAVE_B1F_ITEM_1      ; D8
 	const HS_CERULEAN_CAVE_B1F_ITEM_2      ; D9
 	const HS_CERULEAN_CAVE_B1F_ITEM_3      ; DA
-	const HS_MEW                           ; DB
+	const HS_CERULEAN_CAVE_B1F_ITEM_4      ; DB
+	const HS_MEW                           ; EF
 	const HS_VICTORY_ROAD_1F_ITEM_1        ; DC
 	const HS_VICTORY_ROAD_1F_ITEM_2        ; DD
-	const HS_LANCESROOM_LANCE              ; DE
-	const HS_LANCESROOM_LANCE_REMATCH      ; DF
-	const HS_CHAMPIONS_ROOM_OAK            ; 
+	const HS_LANCESROOM_LANCE              ; EE
+	const HS_LANCESROOM_LANCE_REMATCH
+	const HS_CHAMPIONS_ROOM_OAK            ; DE
 	const HS_CHAMPIONS_ROOM_JOLTEON
 	const HS_CHAMPIONS_ROOM_FLAREON
 	const HS_CHAMPIONS_ROOM_VAPOREON
