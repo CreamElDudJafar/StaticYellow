@@ -97,6 +97,21 @@ _SilphCo11FGiovanniYouRuinedOurPlansText::
 	line "shall return!"
 	done
 
+_SilphCo11FRocket1BattleText::
+	text "Stop right there!"
+	line "Don't you move!"
+	done
+
+_SilphCo11FRocket1EndBattleText::
+	text "Don't..."
+	line "Please!"
+	prompt
+
+_SilphCo11FRocket1AfterBattleText::
+	text "So, you want to"
+	line "see my BOSS?"
+	done
+
 _SilphCo11FRocket2BattleText::
 	text "Halt! Do you have"
 	line "an appointment"
