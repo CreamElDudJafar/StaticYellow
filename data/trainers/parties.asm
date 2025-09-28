@@ -604,7 +604,8 @@ RocketData:
 	db 34, ELECTRODE, 0
 ; Silph Co. 11F
 	db 33, HYPNO, MAGNETON, MR_MIME, MUK, 0
-	db 33, DITTO, FARFETCHD, MAROWAK, KADABRA, 0
+; Unused
+	db 32, CUBONE, DROWZEE, MAROWAK, 0
 ; Jessie & James
 	db 17, EKANS, MEOWTH, KOFFING, 0 ; Mt. Moon B2F
 	db 28, KOFFING, MEOWTH, EKANS, WEEPINBELL, 0 ; Rocket Hideout B4F

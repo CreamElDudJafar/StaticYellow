@@ -488,8 +488,7 @@ SilphCo11F_TextPointers:
 	dw_const SilphCo11FBeautyText,                    TEXT_SILPHCO11F_BEAUTY
 	dw_const SilphCo11FGiovanniText,                  TEXT_SILPHCO11F_GIOVANNI
 	dw_const SilphCo11FJessieJamesText,               TEXT_SILPHCO11F_JAMES
-	dw_const SilphCo11FRocket1Text,                   TEXT_SILPHCO11F_ROCKET1
-	dw_const SilphCo11FRocket2Text,                   TEXT_SILPHCO11F_ROCKET2
+	dw_const SilphCo11FRocketText,                    TEXT_SILPHCO11F_ROCKET
 	dw_const SilphCo11FJessieJamesText,               TEXT_SILPHCO11F_JESSIE
 	dw_const SilphCo11FGiovanniYouRuinedOurPlansText, TEXT_SILPHCO11F_GIOVANNI_YOU_RUINED_OUR_PLANS
 	dw_const SilphCo11FJessieJamesText,               TEXT_SILPHCO11F_TEXT8
@@ -500,9 +499,7 @@ SilphCo11F_TextPointers:
 SilphCo11TrainerHeaders:
 	def_trainers 5
 SilphCo11TrainerHeader0:
-	trainer EVENT_BEAT_SILPH_CO_11F_TRAINER_0, 3, SilphCo11FRocket1BattleText, SilphCo11FRocket1EndBattleText, SilphCo11FRocket1AfterBattleText
-SilphCo11TrainerHeader1:
-	trainer EVENT_BEAT_SILPH_CO_11F_TRAINER_1, 3, SilphCo11FRocket2BattleText, SilphCo11FRocket2EndBattleText, SilphCo11FRocket2AfterBattleText	
+	trainer EVENT_BEAT_SILPH_CO_11F_TRAINER_0, 3, SilphCo11FRocketBattleText, SilphCo11FRocketEndBattleText, SilphCo11FRocketAfterBattleText
 	db -1 ; end
 
 SilphCo11FJessieJamesText:
@@ -592,38 +589,20 @@ SilphCo11FGiovanniYouRuinedOurPlansText:
 	text_far _SilphCo11FGiovanniYouRuinedOurPlansText
 	text_end
 
-SilphCo11FRocket1Text:
+SilphCo11FRocketText:
 	text_asm
 	ld hl, SilphCo11TrainerHeader0
 	call TalkToTrainer
 	rst TextScriptEnd
 
-SilphCo11FRocket1BattleText:
-	text_far _SilphCo11FRocket1BattleText
-	text_end
-
-SilphCo11FRocket1EndBattleText:
-	text_far _SilphCo11FRocket1EndBattleText
-	text_end
-
-SilphCo11FRocket1AfterBattleText:
-	text_far _SilphCo11FRocket1AfterBattleText
-	text_end
-
-SilphCo11FRocket2Text:
-	text_asm
-	ld hl, SilphCo11TrainerHeader1
-	call TalkToTrainer
-	rst TextScriptEnd
-
-SilphCo11FRocket2BattleText:
+SilphCo11FRocketBattleText:
 	text_far _SilphCo11FRocket2BattleText
 	text_end
 
-SilphCo11FRocket2EndBattleText:
+SilphCo11FRocketEndBattleText:
 	text_far _SilphCo11FRocket2EndBattleText
 	text_end
 
-SilphCo11FRocket2AfterBattleText:
+SilphCo11FRocketAfterBattleText:
 	text_far _SilphCo11FRocket2AfterBattleText
 	text_end
