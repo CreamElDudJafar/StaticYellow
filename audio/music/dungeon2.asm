@@ -266,26 +266,26 @@ Music_Dungeon2_Ch3::
 	sound_call .sub2
 	sound_loop 0, .mainloop
 
-.sub1: ; unreferenced
-	octave 2
-	note G_, 2
-	note A#, 4
-	note G_, 2
-	octave 3
-	note C#, 4
-	octave 2
-	note G_, 2
-	note A_, 2
-	note A#, 2
-	note G_, 2
-	octave 3
-	note C#, 4
-	octave 2
-	note G_, 2
-	note A#, 2
-	note G_, 2
-	rest 2
-	sound_ret
+;.sub1: ; unreferenced
+;	octave 2
+;	note G_, 2
+;	note A#, 4
+;	note G_, 2
+;	octave 3
+;	note C#, 4
+;	octave 2
+;	note G_, 2
+;	note A_, 2
+;	note A#, 2
+;	note G_, 2
+;	octave 3
+;	note C#, 4
+;	octave 2
+;	note G_, 2
+;	note A#, 2
+;	note G_, 2
+;	rest 2
+;	sound_ret
 
 .sub2:
 	octave 4
