@@ -182,7 +182,7 @@ Music_UnusedSong_Ch1::
     note B_, 2
     rest 6
     sound_loop 0, .mainloop 
-    sound_ret ; unused
+;   sound_ret ; unused
 
 
 Music_UnusedSong_Ch2::
