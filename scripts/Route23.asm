@@ -222,9 +222,9 @@ Route23CheckForBadgeScript:
 	ld [wRoute23CurScript], a
 	ret
 
-Route23PrintOhThatsTheBadgeTextScript: ; unreferenced
-	ld hl, Route23OhThatIsTheBadgeText
-	jp PrintText
+;Route23PrintOhThatsTheBadgeTextScript: ; unreferenced
+;	ld hl, Route23OhThatIsTheBadgeText
+;	jp PrintText
 
 Route23YouDontHaveTheBadgeYetText:
 	text_far _Route23YouDontHaveTheBadgeYetText
