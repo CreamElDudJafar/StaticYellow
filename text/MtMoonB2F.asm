@@ -130,21 +130,3 @@ _MtMoonB2FRocket4AfterBattleText::
 	line "here long before"
 	cont "people came."
 	done
-
-_MtMoonB2FRocket5BattleText::
-	text "TEAM ROCKET will"
-	line "find the fossils,"
-	cont "revive and sell"
-	cont "them for cash."
-	done
-
-_MtMoonB2FRocket5EndBattleText::
-	text "Urgh!"
-	line "Now I'm mad!"
-	prompt
-
-_MtMoonB2FRocket5AfterBattleText::
-	text "You made me mad!"
-	line "TEAM ROCKET will"
-	cont "blacklist you!"
-	done
