@@ -531,6 +531,8 @@ INCLUDE "engine/menus/text_multi_button_prompt.asm"
 INCLUDE "engine/gfx/animated_tiles_code.asm"
 INCLUDE "engine/custom_function/coin_function.asm"
 INCLUDE "engine/custom_function/monlist.asm"
+INCLUDE "engine/gfx/set_attack_animation_palette.asm"
+
 
 SECTION "Move Descriptions", ROMX
 
