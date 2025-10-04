@@ -1,3 +1,6 @@
+	object_const_def
+	const_export MTMOONB1F_ROCKET
+
 MtMoonB1F_Object:
 	db $3 ; border block
 
@@ -14,5 +17,6 @@ MtMoonB1F_Object:
 	def_bg_events
 
 	def_object_events
+	object_event 20,  8, SPRITE_ROCKET, STAY, DOWN, TEXT_MTMOONB1F_ROCKET, OPP_ROCKET, 4
 
 	def_warps_to MT_MOON_B1F

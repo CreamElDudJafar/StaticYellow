@@ -2250,11 +2250,11 @@ wRoute25CurScript:: db
 wRoute9CurScript:: db
 wRoute10CurScript:: db
 wMtMoon1FCurScript:: db
+wMtMoonB1FCurScript:: db
 wMtMoonB2FCurScript:: db
 wSSAnne1FRoomsCurScript:: db
 wSSAnne2FRoomsCurScript:: db
 wRoute22CurScript:: db
-	ds 1
 wRedsHouse2FCurScript:: db
 wViridianMartCurScript:: db
 wRoute22GateCurScript:: db
