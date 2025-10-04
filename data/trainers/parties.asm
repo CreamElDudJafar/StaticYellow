@@ -546,8 +546,8 @@ RocketData:
 	db 13, RATTATA, ZUBAT, 0
 	db 11, SANDSHREW, VOLTORB, ZUBAT, 0
 	db 12, ZUBAT, EKANS, SQUIRTLE, 0
-; Unused
-	db 16, RATICATE, 0
+; Mt. Moon B1F
+	db 15, CHARMANDER, RATICATE, 0
 ; Cerulean City
 	db 17, MACHOP, DROWZEE, 0
 ; Route 24
