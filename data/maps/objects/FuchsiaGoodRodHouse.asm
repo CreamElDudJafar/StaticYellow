@@ -1,5 +1,6 @@
 	object_const_def
 	const_export FUCHSIAGOODRODHOUSE_FISHING_GURU
+	const_export FUCHSIAGOODRODHOUSE_FISHING_GUIDE
 
 FuchsiaGoodRodHouse_Object:
 	db $c ; border block
@@ -13,5 +14,6 @@ FuchsiaGoodRodHouse_Object:
 
 	def_object_events
 	object_event  5,  3, SPRITE_FISHING_GURU, STAY, RIGHT, TEXT_FUCHSIAGOODRODHOUSE_FISHING_GURU
+	object_event  7,  3, SPRITE_POKEDEX, STAY, NONE, TEXT_FUCHSIAGOODRODHOUSE_FISHING_GUIDE
 
 	def_warps_to FUCHSIA_GOOD_ROD_HOUSE

@@ -1,81 +1,123 @@
-SuperRodFishingSlots::
-	db PALLET_TOWN, STARYU, 10, TENTACOOL, 10, STARYU, 10, TENTACOOL, 20
-	db VIRIDIAN_CITY, POLIWAG, 5, POLIWAG, 10, POLIWAG, 15, POLIWAG, 10
-	db CERULEAN_CITY, GOLDEEN, 25, GOLDEEN, 30, SEAKING, 30, SEAKING, 40
-	db VERMILION_CITY, TENTACOOL, 15, TENTACOOL, 20, TENTACOOL, 15, HORSEA, 20
-	db CELADON_CITY, GOLDEEN, 15, GOLDEEN, 15, GOLDEEN, 15, GOLDEEN, 20
-	db FUCHSIA_CITY, MAGIKARP, 35, MAGIKARP, 30, MAGIKARP, 35, GYARADOS, 35
-	db CINNABAR_ISLAND, STARYU, 15, TENTACOOL, 15, STARYU, 10, TENTACOOL, 30
-	db ROUTE_4, GOLDEEN, 25, GOLDEEN, 25, GOLDEEN, 30, SEAKING, 30
-	db ROUTE_6, GOLDEEN, 25, GOLDEEN, 20, GOLDEEN, 25, GOLDEEN, 25
-	db ROUTE_24, GOLDEEN, 25, GOLDEEN, 25, GOLDEEN, 30, SEAKING, 30
-	db ROUTE_25, KRABBY, 15, KRABBY, 15, KINGLER, 20, KINGLER, 25
-	db ROUTE_10, KRABBY, 20, KRABBY, 20, HORSEA, 15, KINGLER, 25
-	db ROUTE_11, TENTACOOL, 20, TENTACOOL, 20, TENTACOOL, 20, HORSEA, 15
-	db ROUTE_12, HORSEA, 25, HORSEA, 25, SEADRA, 25, SEADRA, 35
-	db ROUTE_13, HORSEA, 15, HORSEA, 20, TENTACOOL, 10, SEADRA, 20
-	db ROUTE_17, TENTACOOL, 5, TENTACOOL, 15, SHELLDER, 25, SHELLDER, 35
-	db ROUTE_18, TENTACOOL, 25, SHELLDER, 25, SHELLDER, 30, SHELLDER, 40
-	db ROUTE_19, TENTACOOL, 25, STARYU, 25, TENTACOOL, 35, TENTACRUEL, 35
-	db ROUTE_20, TENTACOOL, 30, TENTACRUEL, 30, STARYU, 30, TENTACRUEL, 40
-	db ROUTE_21, TENTACOOL, 20, STARYU, 20, TENTACOOL, 30, TENTACRUEL, 30
-	db ROUTE_22, POLIWAG, 10, POLIWAG, 15, POLIWAG, 15, POLIWHIRL, 15
-	db ROUTE_23, POLIWHIRL, 45, POLIWRATH, 45, OMANYTE, 45, KABUTO, 45
-	db VERMILION_DOCK, TENTACOOL, 15, TENTACOOL, 15, STARYU, 15, SHELLDER, 15
-	db SAFARI_ZONE_CENTER, MAGIKARP, 20, MAGIKARP, 20, DRATINI, 20, DRAGONAIR, 25
-	db SAFARI_ZONE_EAST, MAGIKARP, 25, MAGIKARP, 20, DRATINI, 25, DRATINI, 25
-	db SAFARI_ZONE_NORTH, MAGIKARP, 25, MAGIKARP, 20, GYARADOS, 20, DRATINI, 20
-	db SAFARI_ZONE_WEST, MAGIKARP, 25, MAGIKARP, 20, DRATINI, 20, DRATINI, 20
-	db SEAFOAM_ISLANDS_B3F, KRABBY, 40, STARYU, 40, KINGLER, 40, STARYU, 40
-	db SEAFOAM_ISLANDS_B4F, KRABBY, 40, STARYU, 40, KINGLER, 40, STARYU, 40
-	db CERULEAN_CAVE_1F, SEAKING, 55, DEWGONG, 55, CLOYSTER, 55, GYARADOS, 55
-	db CERULEAN_CAVE_B1F, SEAKING, 60, STARMIE, 60, KABUTOPS, 60, OMASTAR, 60
+; super rod encounters
+SuperRodData::
+	; map, fishing group
+	dbw PALLET_TOWN,         .Group1
+	dbw VIRIDIAN_CITY,       .Group1
+	dbw CERULEAN_CITY,       .Group2
+	dbw VERMILION_CITY,      .Group3
+	dbw CELADON_CITY,        .Group3
+	dbw FUCHSIA_CITY,        .Group4
+	dbw CINNABAR_ISLAND,     .Group4
+	dbw ROUTE_4,             .Group3
+	dbw ROUTE_6,             .Group4
+	dbw ROUTE_10,            .Group5
+	dbw ROUTE_11,            .Group4
+	dbw ROUTE_12,            .Group7
+	dbw ROUTE_13,            .Group7
+	dbw ROUTE_17,            .Group5
+	dbw ROUTE_18,            .Group5
+	dbw ROUTE_19,            .Group5
+	dbw ROUTE_20,            .Group5
+	dbw ROUTE_21,            .Group5
+	dbw ROUTE_22,            .Group7
+	dbw ROUTE_23,            .Group12
+	dbw ROUTE_24,            .Group7
+	dbw ROUTE_25,            .Group7
+	dbw CERULEAN_GYM,        .Group11
+	dbw VERMILION_DOCK,      .Group4
+	dbw SEAFOAM_ISLANDS_B3F, .Group8
+	dbw SEAFOAM_ISLANDS_B4F, .Group8
+	dbw SAFARI_ZONE_EAST,    .Group6
+	dbw SAFARI_ZONE_NORTH,   .Group6
+	dbw SAFARI_ZONE_WEST,    .Group6
+	dbw SAFARI_ZONE_CENTER,  .Group6
+	dbw CERULEAN_CAVE_B1F,   .Group10
+	dbw CERULEAN_CAVE_1F,    .Group9
 	db -1 ; end
 
+; fishing groups
+; number of monsters, followed by level/monster pairs
 
-CheckMapForFishingMon:
-	push hl
-	push bc
-	ld hl, SuperRodFishingSlots
-.loop
-	ld a, [hl] ; current map idW
-	cp $ff
-	jr z, .done
-	ld c, a
-	inc hl
+.Group1:
+	db 4 ; How Many Pokemon
+	db 10, STARYU
+	db 10, TENTACOOL
+	db 10, STARYU
+	db 20, SLOWPOKE
 
-	ld b, $0
-.loop2
-	ld a, $4 ; 4 pokemon per map
-	cp b
-	jr z, .loop
-	ld a, [wPokedexNum] ; ID of the mon we're searching for
-	; Do old rod and good rod mons manually because there's so little of them
-	cp MAGIKARP
-	jr z, .found
-	cp POLIWAG
-	jr z, .found
-	cp GOLDEEN
-	jr z, .found
-	cp HORSEA
-	jr z, .found
-	cp [hl]
-	jr nz, .notfound
-.found
-	dec de
-	ld a, [de]
-	cp c
-	inc de
-	jr z, .notfound ; already added this to buffer
-	ld a, c ; found so add map id to list
-	ld [de], a
-	inc de
-.notfound
-	inc hl
-	inc hl
-	inc b
-	jr .loop2
-.done
-	pop bc
-	pop hl
-	ret
+.Group2:
+	db 4
+	db 25, KRABBY
+	db 30, PSYDUCK
+	db 30, SEAKING
+	db 40, SEAKING
+
+.Group3:
+	db 4
+	db 20, SLOWPOKE
+	db 30, STARYU
+	db 30, SEEL
+	db 35, GYARADOS
+
+.Group4:
+	db 4
+	db 20, KRABBY
+	db 20, SHELLDER
+	db 30, SEADRA
+	db 35, TENTACRUEL
+
+.Group5:
+	db 4
+	db 25, TENTACOOL
+	db 25, SLOWPOKE
+	db 25, TENTACOOL
+	db 25, SHELLDER
+
+.Group6:
+	db 4
+	db 15, KRABBY
+	db 20, SEEL
+	db 20, DRATINI
+	db 25, DRAGONAIR
+
+.Group7:
+	db 4
+	db 20, SEEL
+	db 30, GOLDUCK
+	db 30, POLIWHIRL
+	db 35, DEWGONG
+
+.Group8:
+	db 4
+	db 35, KINGLER
+	db 35, SEADRA
+	db 35, DEWGONG
+	db 40, STARMIE
+
+.Group9:
+	db 4
+	db 45, OMANYTE
+	db 45, KABUTO
+	db 50, LAPRAS
+	db 50, CLOYSTER
+
+.Group10:
+	db 4
+	db 50, OMASTAR
+	db 50, KABUTOPS
+	db 50, CLOYSTER
+	db 15, GYARADOS
+
+.Group11:
+	db 4
+	db 20, PSYDUCK
+	db 20, KRABBY
+	db 25, SEEL
+	db 30, GOLDUCK
+
+.Group12:
+	db 4
+	db 40, GOLDUCK
+	db 40, WARTORTLE
+	db 40, STARMIE
+	db 40, VAPOREON
