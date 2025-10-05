@@ -2044,84 +2044,28 @@ CoinCaseNumCoinsText:
 ItemUseOldRod:
 	call FishingInit
 	jp c, ItemUseNotTime
-.RandomLoop
-	call Random
-	srl a
-	jr c, .SetBite
-	and %11
-	cp 2
-	jr nc, .RandomLoop
-	; choose which monster appears
-	ld hl, OldRodMons
-	add a
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld b, [hl]
-	inc hl
-	ld c, [hl]
-	and a
-.SetBite
-	ld a, 0
-	rla
-	xor 1
+	call ReadOldRodData
+	;ld a, e
 	jr RodResponse
-
-INCLUDE "data/wild/old_rod.asm"
 
 ItemUseGoodRod:
 	call FishingInit
 	jp c, ItemUseNotTime
-.RandomLoop
-	call Random
-	srl a
-	jr c, .SetBite
-	and %11
-	cp 2
-	jr nc, .RandomLoop
-	; choose which monster appears
-	ld hl, GoodRodMons
-	add a
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld b, [hl]
-	inc hl
-	ld c, [hl]
-	and a
-.SetBite
-	ld a, 0
-	rla
-	xor 1
+	call ReadGoodRodData
+	;ld a, e
 	jr RodResponse
-
-INCLUDE "data/wild/good_rod.asm"
 
 ItemUseSuperRod:
 	call FishingInit
 	jp c, ItemUseNotTime
-	callfar ReadSuperRodData
-	ld c, e
-	ld b, d
-	ld a, $2
-	ld [wRodResponse], a
-	ld a, c
-	and a ; are there fish in the map?
-	jr z, DoNotGenerateFishingEncounter ; if not, do not generate an encounter
-	ld a, $1
-	ld [wRodResponse], a
-	call Random
-	and $1
-	jr nz, RodResponse
-	xor a
-	ld [wRodResponse], a
-	jr DoNotGenerateFishingEncounter
-
+	call ReadSuperRodData
+	;ld a, e
 RodResponse:
+	ld a, e ; moved after jr
 	ld [wRodResponse], a
 
 	dec a ; is there a bite?
-	jr nz, DoNotGenerateFishingEncounter
+	jr nz, .DoNotGenerateFishingEncounter
 	; if yes, store level and species data
 	ld a, 1
 	ld [wMoveMissed], a
@@ -2130,7 +2074,7 @@ RodResponse:
 	ld a, c ; species
 	ld [wCurOpponent], a
 
-DoNotGenerateFishingEncounter:
+.DoNotGenerateFishingEncounter
 	ld hl, wWalkBikeSurfState
 	ld a, [hl] ; store the value in a
 	push af
@@ -2206,7 +2150,7 @@ ItemfinderFoundNothingText:
 	text_far _ItemfinderFoundNothingText
 	text_end
 
-ItemUseExpAll:    ; marcelnote - ExpAll can be activated/deactivated
+ItemUseExpAll:  
 	ld a, [wIsInBattle]
 	and a
 	jp nz, ItemUseNotTime
@@ -3184,6 +3128,66 @@ IsNextTileShoreOrWater::
 
 INCLUDE "data/tilesets/water_tilesets.asm"
 
+; return e = 2 if no fish on this map
+; return e = 1 if a bite, bc = level,species
+; return e = 0 if no bite
+ReadOldRodData:
+	ld hl, OldRodData
+	jr ReadSuperRodData.gotFishingData
+ReadGoodRodData:
+	ld hl, GoodRodData
+	jr ReadSuperRodData.gotFishingData
+ReadSuperRodData:
+	ld hl, SuperRodData
+.gotFishingData
+	ld a, [wCurMap]
+	ld de, 3 ; each fishing group is three bytes wide
+	call IsInArray
+	jr c, .ReadFishingGroup
+	ld e, $2 ; $2 if no fishing groups found
+	ret
+
+.ReadFishingGroup
+; hl points to the fishing group entry in the index
+	inc hl ; skip map id
+
+	; read fishing group address
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+
+	ld b, [hl] ; how many mons in group
+	inc hl ; point to data
+	ld e, $0 ; no bite yet
+
+.RandomLoop
+	; check two bits instead of srl, and 75% chance of battle (50% before)
+	call Random
+	bit 7, a
+	jr nz, .gotBite
+	bit 6, a
+	ret z ; no bite if both bits 6 and 7 are 0
+
+.gotBite
+	and %111 ; changed from 2-bit to 3-bit to have up to 8 different encounters
+	cp b
+	jr nc, .RandomLoop ; if a is greater than the number of mons, regenerate
+
+	; get the mon
+	add a
+	ld c, a
+	ld b, $0
+	add hl, bc
+	ld b, [hl] ; level
+	inc hl
+	ld c, [hl] ; species
+	ld e, $1 ; $1 if there's a bite
+	ret
+
+INCLUDE "data/wild/old_rod.asm"  
+INCLUDE "data/wild/good_rod.asm"  
+INCLUDE "data/wild/super_rod.asm"
+
 ; reloads map view and processes sprite data
 ; for items that cause the overworld to be displayed
 ItemUseReloadOverworldData:
@@ -3192,55 +3196,168 @@ ItemUseReloadOverworldData:
 
 ; creates a list at wBuffer of maps where the mon in [wPokedexNum] can be found.
 ; this is used by the pokedex to display locations the mon can be found on the map.
-FindWildLocationsOfMon:
-	ld hl, WildDataPointers
+FindWildLandLocationsOfMon:
+	ld hl, WildDataPointers + 1
 	ld de, wBuffer
-	ld c, $0
+	ld c, 0
 .loop
-	inc hl
+	push hl ; save hl -> high byte of map data pointer
 	ld a, [hld]
-	inc a
+	ld l, [hl]
+	ld h, a
+	inc a   ; is high byte $ff?
 	jr z, .done
-	push hl
 	ld a, [hli]
-	ld h, [hl]
-	ld l, a
-	ld a, [hli]
-	and a
-	call nz, CheckMapForMon ; land
-	ld a, [hli]
-	and a
-	call nz, CheckMapForMon ; water
-	pop hl
+	and a   ; are there grass wild Mons?
+	call nz, CheckMapForMon ; grass
+	pop hl  ; restore hl -> high byte of map data pointer
 	inc hl
-	inc hl
+	inc hl  ; move hl to next map data pointer (low byte)
 	inc c
 	jr .loop
 .done
-	farcall CheckMapForFishingMon
-	ld a, $ff ; list terminator
-	ld [de], a
+	pop hl     ; clear the stack
+	ld [de], a ; exceptionally the terminator
 	ret
 
-CheckMapForMon:
-	inc hl
-	ld b, NUM_WILDMONS
+; Creates a list at wBuffer of maps where the mon in [wPokedexNum] can be found by surfing.
+FindWildWaterLocationsOfMon: ; modified version of FindWildLocationsOfMon
+	ld hl, WildDataPointers + 1
+	ld de, wBuffer
+	ld c, 0 ; c = map ID tracker
 .loop
+	push hl ; save hl -> high byte of map data pointer
+	ld a, [hld]
+	ld l, [hl]
+	ld h, a
+	inc a   ; is high byte $ff?
+	jr z, .done
+	ld a, [hli]
+	and a   ; are there grass wild Mons?
+	jr z, .noGrassMons
+; skip grass Mons
+	push bc ; save c = map ID tracker
+	ld b, 0
+	ld c, 2 * NUM_WILDMONS
+	add hl, bc
+	pop bc  ; restore c = map ID tracker
+.noGrassMons
+	ld a, [hli]
+	and a   ; are there water wild Mons?
+	call nz, CheckMapForMon ; water
+	pop hl  ; restore hl -> high byte of map data pointer
+	inc hl
+	inc hl  ; move hl to next map data pointer (low byte)
+	inc c
+	jr .loop
+.done
+	pop hl     ; clear the stack
+	ld [de], a ; exceptionally the terminator is 0
+	ret
+
+
+CheckMapForMon:
+	push de ; save buffer address
+	ld d, NUM_WILDMONS
 	ld a, [wPokedexNum]
-	cp [hl]
-	jr nz, .nextEntry
+	ld e, a ; e = Mon to search for
+.loop
+	inc hl      ; skip level
+	ld a, [hli] ; next Mon
+	cp e
+	jr z, .foundMon
+	dec d
+	jr nz, .loop
+	; Mon is not in map
+	pop de  ; restore buffer address
+	ret
+
+.foundMon
+	pop de  ; restore buffer address
+	ld a, c
+	ld [wMapCoordsTemp], a
+	push bc ; save c = map ID tracker
+	push de
+	callfar LoadTownMapEntryFar ; transforms [wMapCoordsTemp] from map ID into map coords
+	pop de
+	call AddIfNotDuplicate
+	pop bc  ; restore c = map ID tracker
+	ret
+
+
+FindWildRodsLocationsOfMon:
+	ld de, wBuffer
+	ld hl, OldRodData
+	call .mapsLoop
+	ld hl, GoodRodData
+	call .mapsLoop
+	ld hl, SuperRodData
+	call .mapsLoop
+	xor a ; exceptionally the terminator is 0
+	ld [de], a
+	ret
+	
+.mapsLoop
+	ld a, [wPokedexNum]
+	ld c, a     ; c = Mon to search for
+	ld a, [hli] ; a = map ID
+	cp -1
+	ret z
+	push hl ; save hl -> first byte of fishing group pointer
+	push af ; save a = map ID
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a ; hl = address of fishing group
+	ld a, [hli]
+	ld b, a ; a = num of Mons in this group
+.loop
+	inc hl  ; skip Mon level
+	ld a, [hli]
+	cp c
+	jr z, .foundMon
+	dec b
+	jr nz, .loop
+	; Mon is not in this map
+	pop af  ; clear the stack
+	pop hl  ; restore hl -> first byte of fishing group pointer
+	inc hl
+	inc hl  ; move to next map ID
+	jr .mapsLoop
+
+.foundMon
+	pop af  ; restore a = map ID
+	ld [wMapCoordsTemp], a
+	push de
+	callfar LoadTownMapEntryFar ; transforms [wMapCoordsTemp] from map ID into map coords
+	pop de
+	call AddIfNotDuplicate
+	pop hl ; restore hl -> first byte of fishing group pointer
+	inc hl
+	inc hl
+	jr .mapsLoop
+
+; This function adds [wMapCoordsTemp] to the list at wBuffer
+; only if it's not already there (meaning above de)
+AddIfNotDuplicate:
+	ld a, [wMapCoordsTemp]
+	ld c, a
+	xor a
+	ld [de], a ; mark temporary end of list
+	ld hl, wBuffer
+.loop
+	ld a, [hli]
+	and a
+	jr z, .notDuplicate
+	cp c
+	jr nz, .loop
+	ret ; duplicate
+
+.notDuplicate
 	ld a, c
 	ld [de], a
 	inc de
-	inc hl
 	ret
-.nextEntry
-	inc hl
-	inc hl
-	dec b
-	jr nz, .loop
-	dec hl
-	ret
+
 
 ;;;;;;;;;; pureRGBnote: ADDED: text indicating your box is full or how much is left
 PrintRemainingBoxSpacePrompt:

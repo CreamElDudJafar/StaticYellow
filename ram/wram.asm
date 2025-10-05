@@ -861,6 +861,11 @@ wFlyAnimUsingCoordList:: db
 ; $ff sentinel values at each end
 wFlyLocationsList:: ds NUM_FLY_LOCATIONS + 2
 
+	ds 1
+
+wMapCoordsTemp:: db
+wAreaUnknownCountdown:: db
+
 NEXTU
 wWhichTownMapLocation:: db
 wFlyAnimCounter:: db

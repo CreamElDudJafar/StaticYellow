@@ -126,8 +126,6 @@ LoadTownMap_Nest:
 	ld a, [hl]
 	push af
 	ld [hl], $ff
-	push hl
-	call DisplayWildLocations
 	call GetMonName
 	hlcoord 1, 0
 	call PlaceString
@@ -135,12 +133,121 @@ LoadTownMap_Nest:
 	ld l, c
 	ld de, MonsNestText
 	call PlaceString
-	call WaitForTextScrollButtonPress
-	call ExitTownMap
-	pop hl
-	pop af
+	
+	ld a, 3   ; 3 tries before printing Area Unknown
+	ld [wAreaUnknownCountdown], a
+	call DisplayWildLandLocations
+	jr nc, .switchToWaterCountdown ; didn't find any Land location
+	hlcoord 0, 17
+	ld a, $70 ; A button tile
+	ld [hli], a
+	ld a, $71 ; first "Land" tile
+	ld [hli], a
+	ld a, $72 ; second "Land" tile
 	ld [hl], a
+	call WaitForTextScrollButtonPress
+	ldh a, [hJoy5]
+	and A_BUTTON
+	jr z, .exit
+	ld a, SFX_TINK
+	rst _PlaySound
+	jr .switchToWater
+.exit
+	call ExitTownMap
+	pop af
+	ld [wUpdateSpritesEnabled], a
 	ret
+
+.switchToWaterCountdown
+	ld hl, wAreaUnknownCountdown
+	dec [hl]
+	jp z, .printAreaUnknown
+.switchToWater
+	call Delay3
+	call DisplayWildWaterLocations
+	jr nc, .switchToRodsCountdown ; didn't find any Water location
+	xor a
+	ld [wAreaUnknownCountdown], a ; reset countdown
+	hlcoord 0, 17
+	ld a, $70 ; A button tile
+	ld [hli], a
+	ld a, $73 ; first "Water" tile
+	ld [hli], a
+	ld a, $74 ; second "Water" tile
+	ld [hli], a
+	ld a, $75 ; third "Water" tile
+	ld [hl], a
+	call WaitForTextScrollButtonPress
+	ldh a, [hJoy5]
+	and A_BUTTON
+	jr z, .exit
+	ld a, SFX_TINK
+	rst _PlaySound
+	jr .switchToRods
+
+.switchToRodsCountdown
+	ld hl, wAreaUnknownCountdown
+	dec [hl]
+	jr z, .printAreaUnknown
+.switchToRods
+	CheckEvent EVENT_GOT_FISHING_GUIDE
+	jr z, .switchToLandCountdown
+	call Delay3
+	call DisplayWildRodsLocations
+	jr nc, .switchToLandCountdown ; didn't find any Rods location
+	xor a
+	ld [wAreaUnknownCountdown], a ; reset countdown
+	hlcoord 0, 17
+	ld a, $70 ; A button tile
+	ld [hli], a
+	ld a, $76 ; first "Rods" tile
+	ld [hli], a
+	ld a, $77 ; second "Rods" tile
+	ld [hli], a
+	ld a, $78 ; third "Rods" tile
+	ld [hl], a
+	call WaitForTextScrollButtonPress
+	ldh a, [hJoy5]
+	and A_BUTTON
+	jr z, .exit
+	ld a, SFX_TINK
+	rst _PlaySound
+	jr .switchToLand
+
+.switchToLandCountdown
+	ld hl, wAreaUnknownCountdown
+	dec [hl]
+	jr z, .printAreaUnknown
+.switchToLand
+	call Delay3
+	call DisplayWildLandLocations
+	jr nc, .switchToWaterCountdown
+	xor a
+	ld [wAreaUnknownCountdown], a ; reset countdown
+	hlcoord 1, 17
+	ld a, $71 ; first "Land" tile
+	ld [hli], a
+	ld a, $72 ; second "Land" tile
+	ld [hli], a
+	ld a, $64 ; third "Land" tile
+	ld [hl], a
+	call WaitForTextScrollButtonPress
+	ldh a, [hJoy5]
+	and A_BUTTON
+	jp z, .exit
+	ld a, SFX_TINK
+	rst _PlaySound
+	jp .switchToWater
+
+.printAreaUnknown
+	hlcoord 1, 7
+	lb bc, 2, 15
+	call TextBoxBorder
+	hlcoord 2, 9
+	ld de, AreaUnknownText
+	call PlaceString
+	call WaitForTextScrollButtonPress
+	jp .exit
 
 MonsNestText:
 	db "'s NEST@"
@@ -320,6 +427,11 @@ LoadTownMap:
 	ld bc, WorldMapTileGraphicsEnd - WorldMapTileGraphics
 	ld a, BANK(WorldMapTileGraphics)
 	call FarCopyData
+	ld hl, MonNestOptionsTileGraphics ; gfx for nests
+	ld de, vChars2 tile $70
+	ld bc, MonNestOptionsTileGraphicsEnd - MonNestOptionsTileGraphics
+	ld a, BANK(MonNestOptionsTileGraphics)
+	call FarCopyData
 	ld hl, MonNestIcon
 	ld de, vSprites tile $04
 	ld bc, MonNestIconEnd - MonNestIcon
@@ -397,52 +509,55 @@ DrawPlayerOrBirdSprite:
 	ld bc, NUM_SPRITE_OAM_STRUCTS * 4
 	jp CopyData
 
+DisplayWildRodsLocations:
+	callfar FindWildRodsLocationsOfMon ; builds list of map coords at wBuffer
+	jr DisplayWildLocations
+
+DisplayWildWaterLocations:
+	callfar FindWildWaterLocationsOfMon ; builds list of map coords at wBuffer
+	jr DisplayWildLocations
+
+DisplayWildLandLocations: 
+	callfar FindWildLandLocationsOfMon ; builds list of map coords at wBuffer
+	; fallthrough
+
+
 DisplayWildLocations:
-	farcall FindWildLocationsOfMon
-	call ZeroOutDuplicatesInList
 	ld hl, wShadowOAM
-	ld de, wTownMapCoords
+	ld b, NUM_SPRITE_OAM_STRUCTS - 4
+	ld de, $4
+.hideSpritesLoop
+	ld [hl], $a0
+	add hl, de
+	dec b
+	jr nz, .hideSpritesLoop
+	ld hl, wShadowOAM
+	ld de, wBuffer
 .loop
 	ld a, [de]
-	cp $ff
-	jr z, .exitLoop
 	and a
-	jr z, .nextEntry
-	push hl
-	call LoadTownMapEntry
-	pop hl
-	ld a, [de]
+	jr z, .exitLoop
+	inc de
 	cp $19 ; Cerulean Cave's coordinates
-	jr z, .nextEntry ; skip Cerulean Cave
+	jr z, .loop ; skip Cerulean Cave
 	call TownMapCoordsToOAMCoords
 	ld a, $4 ; nest icon tile no.
 	ld [hli], a
 	xor a
 	ld [hli], a
-.nextEntry
-	inc de
 	jr .loop
 .exitLoop
 	ld a, l
 	and a ; were any OAM entries written?
-	jr nz, .drawPlayerSprite
-; if no OAM entries were written, print area unknown text
-	hlcoord 1, 7
-	lb bc, 2, 15
-	call TextBoxBorder
-	hlcoord 2, 9
-	ld de, AreaUnknownText
-	call PlaceString
-	jr .done
-.drawPlayerSprite
-	ld a, [wCurMap]
-	ld b, $0
-	call DrawPlayerOrBirdSprite
-.done
+	push af
 	ld hl, wShadowOAM
 	ld de, wShadowOAMBackup
 	ld bc, NUM_SPRITE_OAM_STRUCTS * 4
-	jp CopyData
+	call CopyData
+	pop af
+	ret z ; if list was empty, return with clear carry flag
+	scf
+	ret   ; if the list wasn't empty, return with carry flag set
 
 AreaUnknownText:
 	db " AREA UNKNOWN@"
@@ -559,28 +674,9 @@ WriteSymmetricMonPartySpriteOAM:
 	jr nz, .loop
 	ret
 
-ZeroOutDuplicatesInList:
-; replace duplicate bytes in the list of wild pokemon locations with 0
-	ld de, wBuffer
-.loop
-	ld a, [de]
-	inc de
-	cp $ff
-	ret z
-	ld c, a
-	ld l, e
-	ld h, d
-.zeroDuplicatesLoop
-	ld a, [hl]
-	cp $ff
-	jr z, .loop
-	cp c
-	jr nz, .skipZeroing
-	xor a
-	ld [hl], a
-.skipZeroing
-	inc hl
-	jr .zeroDuplicatesLoop
+LoadTownMapEntryFar:
+	ld a, [wMapCoordsTemp]
+	; fallthrough
 
 LoadTownMapEntry:
 ; in: a = map number
@@ -607,6 +703,7 @@ LoadTownMapEntry:
 .readEntry
 	ld a, [hli]
 	ld [de], a
+	ld [wMapCoordsTemp], a
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
