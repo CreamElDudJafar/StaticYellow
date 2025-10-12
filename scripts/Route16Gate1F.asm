@@ -40,9 +40,10 @@ Route16Gate1FDefaultScript:
 	ld [wRoute16Gate1FCurScript], a
 	ret
 .next_to_counter
-	ld a, SCRIPT_ROUTE16GATE1F_GUARD
-	ld [wRoute16Gate1FCurScript], a
-	ret
+;	ld a, SCRIPT_ROUTE16GATE1F_GUARD
+;	ld [wRoute16Gate1FCurScript], a
+;	ret
+	jp Route16Gate1FGuardScript
 
 .StopsPlayerCoords:
 	dbmapcoord  4,  7
