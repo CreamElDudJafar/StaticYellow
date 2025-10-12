@@ -314,9 +314,9 @@ UpdateSpriteInWalkingAnimation:
 	ld l, a
 	ldh a, [hRandomAdd]
 	and $7f
+	inc a			;joenote - fix the oversight that can make the delay $100
 	ld [hl], a                       ; x#SPRITESTATEDATA2_MOVEMENTDELAY:
-	                                 ; set next movement delay to a random value in [0,$7f]
-	inc [hl]                         
+	                                 ; set next movement delay to a random value in [0,$7f]                        
 	dec h ; HIGH(wSpriteStateData1)
 	ldh a, [hCurrentSpriteOffset]
 	inc a
