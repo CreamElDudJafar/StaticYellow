@@ -44,7 +44,7 @@ DisplayPokemonCenterDialogue_::
 	ld a, [wCurrentMenuItem]
 	and a
 	jp nz, .declinedHealing ; if the player chose No
-	jp .skipHealingText
+	jr .skipHealingText
 .skiptext1
 	ld hl, ShallWeHealYourPokemonFastText
 	rst _PrintText
@@ -101,6 +101,7 @@ DisplayPokemonCenterDialogue_::
 	ld hl, PokemonFightingFitText
 	rst _PrintText
 .FightingFitShort
+	call UpdateSprites
 	callfar IsStarterPikachuInOurParty
 	jr nc, .notInParty
 	lb bc, 15, 0
@@ -122,7 +123,7 @@ DisplayPokemonCenterDialogue_::
 	jr .done
 .declinedHealing
 	call LoadScreenTilesFromBuffer1 ; restore screen
-	jp .skipEventFirstPokecenter
+	jr .skipEventFirstPokecenter
 .done
 	SetEvent EVENT_FIRST_POKECENTER
 .skipEventFirstPokecenter
