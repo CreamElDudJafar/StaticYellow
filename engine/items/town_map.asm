@@ -333,6 +333,7 @@ LoadTownMap_Fly::
 	jr nz, .pressedDown
 	jr .pressedB
 .pressedA
+	call WaitForSoundToFinish
 	ld a, SFX_HEAL_AILMENT
 	rst _PlaySound
 	ld a, [hl]
