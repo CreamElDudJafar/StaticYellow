@@ -59,12 +59,15 @@ DisplayPokemonCenterDialogue_::
 	call UpdateSprites
 	callfar PikachuWalksToNurseJoy
 .notHealingPlayerPikachu
+	call LoadCurrentMapView
+	call Delay3
+	call UpdateSprites
 	CheckEvent EVENT_FIRST_POKECENTER
 	jr nz, .skiptext2
 	ld hl, NeedYourPokemonText
 	rst _PrintText
 .skiptext2
-	ld c, 64
+	ld c, 34
 	rst _DelayFrames
 	call CheckPikachuFollowingPlayer
 	jr nz, .playerPikachuNotOnScreen
