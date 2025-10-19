@@ -9,6 +9,7 @@
 	const_export ROUTE19_SWIMMER6
 	const_export ROUTE19_SWIMMER7
 	const_export ROUTE19_SWIMMER8
+	const_export ROUTE19_CLERK
 
 Route19_Object:
 	db $43 ; border block
@@ -18,6 +19,7 @@ Route19_Object:
 
 	def_bg_events
 	bg_event 11, 11, TEXT_ROUTE19_SIGN
+	bg_event  3, 11, TEXT_ROUTE19_SIGN1
 
 	def_object_events
 	object_event  9,  7, SPRITE_COOLTRAINER_M, STAY, RIGHT, TEXT_ROUTE19_COOLTRAINER_M1, OPP_SWIMMER, 2
@@ -30,5 +32,6 @@ Route19_Object:
 	object_event 11, 43, SPRITE_SWIMMER, STAY, RIGHT, TEXT_ROUTE19_SWIMMER6, OPP_BEAUTY, 13
 	object_event  9, 42, SPRITE_SWIMMER, STAY, UP, TEXT_ROUTE19_SWIMMER7, OPP_SWIMMER, 8
 	object_event 10, 44, SPRITE_SWIMMER, STAY, DOWN, TEXT_ROUTE19_SWIMMER8, OPP_BEAUTY, 14
-
+	object_event  2, 10, SPRITE_FISHER,  STAY, RIGHT, TEXT_ROUTE19_CLERK
+	
 	def_warps_to ROUTE_19

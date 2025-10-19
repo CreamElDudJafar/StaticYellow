@@ -25,7 +25,9 @@ Route19_TextPointers:
 	dw_const Route19Swimmer6Text,      TEXT_ROUTE19_SWIMMER6
 	dw_const Route19Swimmer7Text,      TEXT_ROUTE19_SWIMMER7
 	dw_const Route19Swimmer8Text,      TEXT_ROUTE19_SWIMMER8
+	dw_const Route19MartClerkText,     TEXT_ROUTE19_CLERK
 	dw_const Route19SignText,          TEXT_ROUTE19_SIGN
+	dw_const Route19Sign1Text,         TEXT_ROUTE19_SIGN1
 
 Route19TrainerHeaders:
 	def_trainers
@@ -226,3 +228,10 @@ Route19Swimmer8AfterBattleText:
 Route19SignText:
 	text_far _Route19SignText
 	text_end
+
+Route19Sign1Text:
+	text_far _Route19Sign1Text
+	text_end
+
+Route19MartClerkText::
+	script_mart FRESH_WATER, SODA_POP, LEMONADE
