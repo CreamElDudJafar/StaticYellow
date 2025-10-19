@@ -155,3 +155,8 @@ _Route19SignText::
 	line "FUCHSIA CITY -"
 	cont "SEAFOAM ISLANDS"
 	done
+
+_Route19Sign1Text::
+	text "JOE'S DRINK STAND"
+	line "Sip on the shore!"
+	done
