@@ -60,6 +60,7 @@ Features:
 - Removed 25% chance for enemy stat down moves to miss
 - Swift will not hit throught Fly or Dig
 - SS Anne Captain Takes SS Ticket
+- SS Anne Icon In Town Map
 - Nurse Joy room on SS Anne
 - Secret Key, Lift Key, Card Key Consumed when used
 - Town Map in Start Menu
@@ -110,7 +111,7 @@ CREDITS: THE MOST IMPORTANT PART OF THIS
 - Rosie- for the Nurse Joy, Jenny, Yellow back picture.
 - SteppoBlazer- Fixing the Unused Song.
 - Porygondolier- Pokedex Remember Position
-- PokeFanMarcel- For the Nurse Joy SS Anne room, LAND,WATER, ROD Pokedex Area function, Running sprites and the code to make the EXP ALL a key item that can turn on or off
+- PokeFanMarcel- For the Nurse Joy SS Anne room, LAND,WATER, ROD Pokedex Area function, SS Anne Map Icon, Running sprites and the code to make the EXP ALL a key item that can turn on or off
 - RainbowMetalPigeon/ExtremeYellow- Space code for Bank 1E, Surrender in battle option, and Pikachu Flying Animation. Also for 3rd character/gender tutorial AND FOR CREATING THE HARDEST GEN 1 YELLOW HACK EVER. BUT I LOVE PLAYING IT
 - RainbowDevs/Pokemon Brown- Another awesome Gen 1 hack. Some Pokemon Sprites were taken from Brown and added into this game.
 - BYRAX- FOR THE BOXART FOR ALL THE GBC/GBA GAMES. ALSO TESTING THE GAME MULTIPLE TIMES AS WELL.
