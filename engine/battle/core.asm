@@ -4886,8 +4886,6 @@ JumpToOHKOMoveEffect:
 	dec a
 	ret
 
-INCLUDE "data/battle/unused_critical_hit_moves.asm"
-
 ; determines if attack is a critical hit
 ; Azure Heights claims "the fastest pokémon (who are, not coincidentally,
 ; among the most popular) tend to CH about 20 to 25% of the time."
