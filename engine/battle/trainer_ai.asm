@@ -966,6 +966,9 @@ AIPrintItemUseAndUpdateHPBar:
 	xor a
 	ld [wHPBarType], a
 	predef UpdateHPBar2
+	push af
+	farcall DrawEnemyHUDAndHPBar
+	pop af
 	jp DecrementAICount
 
 AISwitchIfEnoughMons:
@@ -1058,6 +1061,9 @@ AICureStatus:	;shinpokerednote: CHANGED: modified to be more robust and also und
 	ld [wEnemyMonStatus], a ; clear status in active enemy data
 	ld hl, wEnemyBattleStatus3
 	res BADLY_POISONED, [hl]	;clear toxic bit
+	push af
+	farcall DrawEnemyHUDAndHPBar
+	pop af
 	ret
 
 ;AIUseXAccuracy: ; unused
