@@ -6491,14 +6491,9 @@ LoadEnemyMonData:
 	cp $2 ; is it a trainer battle?
 	jr nz, .wildMon
 ; fixed DVs for trainer mon
-	ld a, [wDifficulty]
-	and a
-	ld a, ATKDEFDV_TRAINER_HARD
-	ld b, SPDSPCDV_TRAINER_HARD
-	jr nz, .storeDVs
 	ld a, ATKDEFDV_TRAINER
 	ld b, SPDSPCDV_TRAINER
-	jr .storeDVs
+	jr z, .storeDVs
 ; random DVs for wild mon
 .wildMon
 	call BattleRandom
