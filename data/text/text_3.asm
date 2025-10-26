@@ -455,10 +455,7 @@ _HardModeText::
 	text "Forced SET mode,"
 	line "no items allowed"
 	cont "in battle, gym"
-	cont "level caps, and"
-	cont "all opponent's"
-        cont "#MON will have"
-	cont "maximum STATS."
+	cont "level caps."
 	done
 
 _OakSpeechText1::
