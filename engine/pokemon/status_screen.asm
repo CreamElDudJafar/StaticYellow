@@ -80,22 +80,22 @@ StatusScreen:
 	ld hl, wStatusFlags2
 	set BIT_NO_AUDIO_FADE_OUT, [hl]
 	ld a, $33
-	ld [rNR50], a ; Reduce the volume
+	ldh [rNR50], a ; Reduce the volume
 	call GBPalWhiteOutWithDelay3
 	call ClearScreen
 	call UpdateSprites
 	call LoadHpBarAndStatusTilePatterns
 	ld de, BattleHudTiles1  ; source
-	ld hl, vChars2 + $6d0 ; dest
-	lb bc, BANK(BattleHudTiles1), $03
+	ld hl, vChars2 tile $6d ; dest
+	lb bc, BANK(BattleHudTiles1), 3
 	call CopyVideoDataDouble ; ·│ :L and halfarrow line end
 	ld de, BattleHudTiles2
-	ld hl, vChars2 + $780
-	lb bc, BANK(BattleHudTiles2), $01
+	ld hl, vChars2 tile $78
+	lb bc, BANK(BattleHudTiles2), 1
 	call CopyVideoDataDouble ; │
 	ld de, BattleHudTiles3
-	ld hl, vChars2 + $760
-	lb bc, BANK(BattleHudTiles3), $02
+	ld hl, vChars2 tile $76
+	lb bc, BANK(BattleHudTiles3), 2
 	call CopyVideoDataDouble ; ─┘
 	ld de, PTile
 	ld hl, vChars2 tile $72
@@ -104,7 +104,7 @@ StatusScreen:
 	ldh a, [hTileAnimations]
 	push af
 	xor a
-	ld [hTileAnimations], a
+	ldh [hTileAnimations], a
 	hlcoord 19, 3
 	lb bc, 2, 8
 	call DrawLineBox ; Draws the box around name, HP and status
