@@ -36,13 +36,9 @@ DisplayPokemartDialogue_::
 	dec a ; quitting?
 	jp z, .done
 .sellMenu
-
-; the same variables are set again below, so this code has no effect
 	xor a
 	ld [wPrintItemPrices], a
-	ld a, INIT_BAG_ITEM_LIST
-	ld [wInitListType], a
-	callfar InitList
+	callfar InitBagItemList
 
 	ld a, [wNumBagItems]
 	and a
@@ -94,10 +90,10 @@ DisplayPokemartDialogue_::
 	jr z, .sellMenuLoop ; if the player chose No or pressed the B button
 
 ; The following code is supposed to check if the player chose No, but the above
-; check already catches it.
-	ld a, [wChosenMenuItem]
-	dec a
-	jr z, .sellMenuLoop
+; check already catches it. ; Removed
+;	ld a, [wChosenMenuItem]
+;	dec a
+;	jr z, .sellMenuLoop
 
 .sellItem
 	ld a, [wBoughtOrSoldItemInMart]
@@ -120,13 +116,10 @@ DisplayPokemartDialogue_::
 	call SaveScreenTilesToBuffer1
 	jp .returnToMainPokemartMenu
 .buyMenu
-
 ; the same variables are set again below, so this code has no effect
 	ld a, 1
 	ld [wPrintItemPrices], a
-	ld a, INIT_OTHER_ITEM_LIST
-	ld [wInitListType], a
-	callfar InitList
+	callfar InitItemList
 
 	ld hl, PokemartBuyingGreetingText
 	rst _PrintText
