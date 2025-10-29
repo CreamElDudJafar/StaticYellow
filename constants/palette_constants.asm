@@ -23,14 +23,15 @@ DEF NUM_ACTIVE_PALS EQU 4
 	const SET_PAL_TITLE_SCREEN             ; $06
 	const SET_PAL_NIDORINO_INTRO           ; $07
 	const SET_PAL_GENERIC                  ; $08
-	const SET_PAL_OVERWORLD                ; $09
-	const SET_PAL_PARTY_MENU               ; $0A
-	const SET_PAL_POKEMON_WHOLE_SCREEN     ; $0B
-	const SET_PAL_GAME_FREAK_INTRO         ; $0C
-	const SET_PAL_TRAINER_CARD             ; $0D
-	const SET_PAL_SURFING_PIKACHU_TITLE    ; $0E
-	const SET_PAL_SURFING_PIKACHU_MINIGAME ; $0F
-	const SET_PAL_MOVEDEX                  ; $00
+	const SET_PAL_LINK                     ; $09
+	const SET_PAL_OVERWORLD                ; $0A
+	const SET_PAL_PARTY_MENU               ; $0B
+	const SET_PAL_POKEMON_WHOLE_SCREEN     ; $0C
+	const SET_PAL_GAME_FREAK_INTRO         ; $0D
+	const SET_PAL_TRAINER_CARD             ; $0E
+	const SET_PAL_SURFING_PIKACHU_TITLE    ; $0F
+	const SET_PAL_SURFING_PIKACHU_MINIGAME ; $10
+	const SET_PAL_MOVEDEX                  ; $11
   
 DEF SET_PAL_PARTY_MENU_HP_BARS EQU $fc
 DEF SET_PAL_DEFAULT EQU $ff

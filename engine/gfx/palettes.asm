@@ -143,6 +143,12 @@ SetPal_Generic:
 	ld de, BlkPacket_WholeScreen
 	ret
 
+; used for link battle
+SetPal_Link:
+	ld hl, PalPacket_Link
+	ld de, BlkPacket_WholeScreen
+	ret
+
 SetPal_NidorinoIntro:
 	ld hl, PalPacket_NidorinoIntro
 	ld de, BlkPacket_NidorinoIntro
@@ -307,6 +313,7 @@ SetPalFunctions:
 	dw SetPal_TitleScreen
 	dw SetPal_NidorinoIntro
 	dw SetPal_Generic
+	dw SetPal_Link
 	dw SetPal_Overworld
 	dw SetPal_PartyMenu
 	dw SetPal_PokemonWholeScreen
