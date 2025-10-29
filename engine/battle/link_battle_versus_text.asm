@@ -18,5 +18,9 @@ DisplayLinkBattleVersusTextBox:
 	xor a
 	ld [wUpdateSpritesEnabled], a
 	callfar SetupPlayerAndEnemyPokeballs
+
+;	gbcnote - set a specific palette since yellow's Pal_Generic colors different from Red
+	ld b, SET_PAL_LINK
+	call RunPaletteCommand
 	ld c, 150
 	jp DelayFrames
