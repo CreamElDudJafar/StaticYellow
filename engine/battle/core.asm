@@ -160,9 +160,7 @@ StartBattle:
 	rst _DelayFrames
 	call SaveScreenTilesToBuffer1
 .checkAnyPartyAlive
-;	ld a, [wBattleType]
-;	cp BATTLE_TYPE_RUN
-	jp z, .specialBattle
+	ld a, [wBattleType]
 	cp BATTLE_TYPE_PIKACHU
 	jp z, .specialBattle
 	call AnyPartyAlive
