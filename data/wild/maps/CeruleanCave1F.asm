@@ -7,8 +7,8 @@ CeruleanCave1FWildMons:
 	db 65, CHANSEY
 	db 65, GOLEM
 	db 65, MACHAMP
+	db 65, MAROWAK
 	db 65, DITTO
-	db 65, RAICHU
 	db 65, RAICHU
 	end_grass_wildmons
 
