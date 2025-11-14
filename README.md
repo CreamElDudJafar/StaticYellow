@@ -89,7 +89,7 @@ Features:
 - GYM LEADER REMATCHES
 - ELITE 4 REMATCHES
 - Jenny and Joy Post Game Battle
-- Coin Clerk in Celadon will sell coins in bulk after 4th Badge
+- Coin Clerk in Celadon will sell coins in bulk after 5th Badge
 - Celadon Hotel has Pokemon Observer: Will give Coins based on if player owns Pokemon and in 1st Party slot. (Resets Pokemon if you exit Hotel or Save and Power Off/On
 - 2nd Plateau Mart after E4 beaten says ALL TMs
 - SLOT FIXES

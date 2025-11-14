@@ -8,8 +8,8 @@ PokemonTower8FWildMons:
 	db 25, CUBONE
 	db 24, CUBONE
 	db 29, HAUNTER
-	db 29, MAROWAK
-	db 30, MAROWAK
+	db 29, HAUNTER
+	db 30, GENGAR
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate
