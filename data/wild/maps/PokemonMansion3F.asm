@@ -5,8 +5,8 @@ PokemonMansion3FWildMons:
 	db 37, GRIMER
 	db 35, GRIMER
 	db 43, MUK
-	db 43, RATICATE
-	db 38, MUK
+	db 43, MUK
+	db 38, VULPIX
 	db 38, VULPIX
 	db 38, MAGMAR
 	db 41, MAGMAR
