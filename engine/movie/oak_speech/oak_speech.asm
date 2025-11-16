@@ -85,25 +85,21 @@ OakSpeech:
   	call DifficultyChoice
 	ld a, [wCurrentMenuItem]
 	ld [wDifficulty], a
-	cp 0 ; normal
+	and a
 	jr z, .SelectedNormalMode
-	cp 1 ; hard
-	jr z, .SelectedHardMode
-	; space for more game modes down the line
-.SelectedNormalMode
-	ld hl, NormalModeText
+	ld hl, HardModeText
 	rst _PrintText
 	jp .YesNoNormalHard
-.SelectedHardMode
-	ld hl, HardModeText
+.SelectedNormalMode
+	ld hl, NormalModeText
 	rst _PrintText
 .YesNoNormalHard ; Give the player a brief description of each game mode and make sure that's what they want
   	call YesNoNormalHardChoice
 	ld a, [wCurrentMenuItem]
-	cp 0
-	jr z, .doneLoop
+	and a
+	jr z, .done
 	jp .MenuCursorLoop ; If player says no, back to difficulty selection
-.doneLoop
+.done
    	call ClearScreen ; clear the screen before resuming normal intro
 
 	; Gender Menu
