@@ -1495,9 +1495,7 @@ EnemySendOutFirstMon:
 	jr z, .next4
 	ld a, [wDifficulty]
 	and a
-	jr z, .DontForceSetMode
-	jr .next4
-.DontForceSetMode
+	jr nz, .next4
 	ld a, [wOptions]
 	bit BIT_BATTLE_SHIFT, a
 	jr nz, .next4
@@ -6466,11 +6464,18 @@ LoadEnemyMonData:
 	jr nz, .storeDVs
 	ld a, [wIsInBattle]
 	cp $2 ; is it a trainer battle?
+	jr nz, .wildMon
 ; fixed DVs for trainer mon
+	ld a, [wDifficulty]
+	and a
+	ld a, ATKDEFDV_TRAINER_HARD
+	ld b, SPDSPCDV_TRAINER_HARD
+	jr nz, .storeDVs
 	ld a, ATKDEFDV_TRAINER
 	ld b, SPDSPCDV_TRAINER
-	jr z, .storeDVs
+	jr .storeDVs
 ; random DVs for wild mon
+.wildMon
 	call BattleRandom
 	ld b, a
 	call BattleRandom
@@ -6512,6 +6517,25 @@ LoadEnemyMonData:
 	ld [wEnemyMonHP], a
 	ld a, [hli]
 	ld [wEnemyMonHP + 1], a
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;shinpokerednote: CHANGED: if this is a trainer battle and it's the first time the pkmn is sent out
+;		   then make sure it's current hp = it's max hp
+
+	ld a, [wIsInBattle]
+	cp $2 ; is it a trainer battle?
+	jr nz, .nottrainer2
+	
+	;has pkmn already been sent out?
+	call CheckAISentOut
+	jr nz, .nottrainer2
+	
+;set hp equal to max hp
+	ld a, [wEnemyMonMaxHP]
+	ld [wEnemyMonHP], a
+	ld a, [wEnemyMonMaxHP+1]
+	ld [wEnemyMonHP + 1], a
+.nottrainer2
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wWhichPokemon]
 	ld [wEnemyMonPartyPos], a
 	inc hl
@@ -6596,6 +6620,17 @@ LoadEnemyMonData:
 	ld b, FLAG_SET
 	ld hl, wPokedexSeen
 	predef FlagActionPredef ; mark this mon as seen in the pokedex
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;shinpokerednote: ADDED: if this is a trainer battle, set the pkmn as being sent out and apply any burn/par stat changes
+	push af
+	ld a, [wIsInBattle]
+	cp 2 ; is it a trainer battle?
+	jr nz, .end_set_sendout
+	call SetAISentOut	;joenote - custom function
+	call ApplyBurnAndParalysisPenaltiesToEnemy
+.end_set_sendout
+	pop af
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld hl, wEnemyMonLevel
 	ld de, wEnemyMonUnmodifiedLevel
 	ld bc, 1 + NUM_STATS * 2
@@ -7229,4 +7264,81 @@ CheckShouldReloadGhostSprite::
 	ret
 .no
 	and a
+	ret
+
+;shinpokerednote: ADDED: custom functions for determining which trainerAI pkmn have already been sent out before
+;a=party position of pkmn (like wWhichPokemon). If checking, zero flag gives bit state (1 means sent out already)
+CheckAISentOut:
+	ld a, [wWhichPokemon]	
+	cp 5
+	jr z, .party5
+	cp 4
+	jr z, .party4
+	cp 3
+	jr z, .party3
+	cp 2
+	jr z, .party2
+	cp 1
+	ld a, [wAIWhichPokemonSentOutAlready]
+	jr z, .party1
+	bit 1, a
+	ret
+.party5
+	ld a, [wAIWhichPokemonSentOutAlready]
+	bit 6, a
+	ret
+.party4
+	ld a, [wAIWhichPokemonSentOutAlready]
+	bit 5, a
+	ret
+.party3
+	ld a, [wAIWhichPokemonSentOutAlready]
+	bit 4, a
+	ret
+.party2
+	ld a, [wAIWhichPokemonSentOutAlready]
+	bit 3, a
+	ret
+.party1
+	bit 2, a
+	ret
+	
+SetAISentOut:
+	ld a, [wWhichPokemon]	
+	cp $05
+	jr z, .party5
+	cp $04
+	jr z, .party4
+	cp $03
+	jr z, .party3
+	cp $02
+	jr z, .party2
+	cp $01
+	jr z, .party1
+	jr .party0
+.party5
+	ld a, [wAIWhichPokemonSentOutAlready]
+	set 6, a
+	jr .partyret
+.party4
+	ld a, [wAIWhichPokemonSentOutAlready]
+	set 5, a
+	jr .partyret
+.party3
+	ld a, [wAIWhichPokemonSentOutAlready]
+	set 4, a
+	jr .partyret
+.party2
+	ld a, [wAIWhichPokemonSentOutAlready]
+	set 3, a
+	jr .partyret
+.party1
+	ld a, [wAIWhichPokemonSentOutAlready]
+	set 2, a
+	jr .partyret
+.party0
+	ld a, [wAIWhichPokemonSentOutAlready]
+	set 1, a
+.partyret
+	ld [wAIWhichPokemonSentOutAlready], a
 	ret

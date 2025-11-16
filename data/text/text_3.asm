@@ -447,15 +447,19 @@ _ExpressionText::
 ;	done
 
 _NormalModeText::
-	text "Normal #MON"
-	line "rules."
+	text "Classic #MON."
+	line "No difficulty"
+	cont "changes made."
 	done
 
 _HardModeText::
 	text "Forced SET mode,"
 	line "no items allowed"
 	cont "in battle, gym"
-	cont "level caps."
+	cont "level caps, and"
+	cont "enemy trainer's"
+	cont "#MON will have"
+	cont "perfect DVs."
 	done
 
 _OakSpeechText1::
