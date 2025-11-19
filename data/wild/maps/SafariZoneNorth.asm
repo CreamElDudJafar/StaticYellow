@@ -5,10 +5,10 @@ SafariZoneNorthWildMons:
 	db 35, EXEGGCUTE
 	db 35, RHYHORN
 	db 33, PINSIR
-	db 37, KANGASKHAN
-	db 37, EXEGGUTOR
-	db 33, KANGASKHAN
+	db 35, KANGASKHAN
 	db 37, SCYTHER
+	db 38, KANGASKHAN
+	db 37, EXEGGUTOR
 	db 38, CHANSEY
 	end_grass_wildmons
 

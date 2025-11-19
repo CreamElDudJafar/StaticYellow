@@ -5,10 +5,10 @@ CeruleanCave2FWildMons:
 	db 65, DODRIO
 	db 65, EXEGGUTOR
 	db 65, GYARADOS
-	db 65, KABUTO
-	db 65, OMANYTE
+	db 65, VICTREEBEL
+	db 65, VILEPLUME
 	db 65, POLIWRATH
-	db 65, DRAGONAIR
+	db 65, RAICHU
 	db 65, DRAGONITE
 	end_grass_wildmons
 

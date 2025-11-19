@@ -5,10 +5,10 @@ Route16WildMons:
 	db 23, RATTATA
 	db 24, DODUO
 	db 24, FEAROW
-	db 26, GRIMER
 	db 23, GRIMER
+	db 26, GRIMER
 	db 24, PONYTA
-	db 26, RATICATE
+	db 25, RATICATE
 	db 26, RATICATE
 	end_grass_wildmons
 

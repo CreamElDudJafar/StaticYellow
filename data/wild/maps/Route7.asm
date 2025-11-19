@@ -1,13 +1,13 @@
 Route7WildMons:
 	def_grass_wildmons 15 ; encounter rate
+	db 20, VULPIX
 	db 20, EKANS
-	db 20, ABRA
-	db 22, VULPIX
 	db 19, MEOWTH
 	db 20, KOFFING
-	db 24, PIDGEOTTO
+	db 22, KOFFING
+	db 20, ABRA
 	db 26, JIGGLYPUFF
-	db 19, PONYTA
+	db 24, PIDGEOTTO
 	db 25, JIGGLYPUFF
 	db 30, JIGGLYPUFF
 	end_grass_wildmons

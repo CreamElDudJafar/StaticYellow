@@ -6,8 +6,8 @@ PokemonTower5FWildMons:
 	db 25, GASTLY
 	db 26, GASTLY
 	db 23, GASTLY
-	db 22, CUBONE
-	db 27, GASTLY
+	db 24, CUBONE
+	db 25, CUBONE
 	db 27, HAUNTER
 	db 27, HAUNTER
 	end_grass_wildmons

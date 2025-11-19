@@ -8,7 +8,7 @@ PokemonTower4FWildMons:
 	db 22, GASTLY
 	db 18, GASTLY
 	db 25, GASTLY
-	db 25, HAUNTER
+	db 24, HAUNTER
 	db 25, HAUNTER
 	end_grass_wildmons
 

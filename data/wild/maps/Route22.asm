@@ -9,7 +9,7 @@ Route22WildMons:
 	db  5, MANKEY
 	db  4, SPEAROW
 	db  5, SPEAROW
-	db  3, POLIWAG
+	db  4, POLIWAG
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

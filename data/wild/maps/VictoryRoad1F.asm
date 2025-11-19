@@ -3,7 +3,7 @@ VictoryRoad1FWildMons:
 	db 43, GRAVELER
 	db 38, RHYHORN
 	db 38, GRAVELER
-	db 39, ZUBAT
+	db 44, MACHAMP
 	db 44, GOLBAT
 	db 46, GOLEM
 	db 46, ONIX

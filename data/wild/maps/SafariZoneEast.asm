@@ -1,12 +1,12 @@
 SafariZoneEastWildMons:
 	def_grass_wildmons 30 ; encounter rate
 	db 33, CUBONE
-	db 33, MR_MIME
+	db 33, RHYHORN
 	db 33, EXEGGCUTE
 	db 32, TAUROS
-	db 32, NIDOQUEEN
-	db 32, MAROWAK
-	db 33, EXEGGCUTE
+	db 34, MAROWAK
+	db 34, EXEGGCUTE
+	db 36, PINSIR
 	db 34, TANGELA
 	db 35, CHANSEY
 	db 38, SCYTHER

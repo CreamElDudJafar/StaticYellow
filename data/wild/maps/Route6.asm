@@ -3,12 +3,12 @@ Route6WildMons:
 	db 15, PIDGEY
 	db 14, RATTATA
 	db 15, ABRA
-	db 16, PIDGEY
-	db 16, ODDISH
 	db 17, LICKITUNG
+	db 16, PSYDUCK
+	db 15, ODDISH
 	db 17, PIDGEOTTO
-	db 16, JIGGLYPUFF
-	db 16, JIGGLYPUFF
+	db 17, JIGGLYPUFF
+	db 17, MAGNEMITE
 	db 19, MAGNEMITE
 	end_grass_wildmons
 
