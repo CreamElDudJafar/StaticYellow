@@ -51,11 +51,21 @@ _GameCornerClerkDoYouNeedSomeGameCoins2Text::
 _GameCornerClerkThanksHereAre50CoinsText::
 	text "Thanks! Here are"
 	line "your 50 coins!"
+	prompt
+
+_GameCornerClerkWantMoreCoinsText::
+	text "More? It's ¥1000"
+	line "for 50 coins."
 	done
 
 _GameCornerClerkThanksHereAre800CoinsText::
 	text "Thanks! Here are"
 	line "your 800 coins!"
+	prompt
+
+_GameCornerClerkWantMoreCoinsText2::
+	text "More? It's ¥10,000"
+	line "for 800 coins."
 	done
 
 _GameCornerClerkPleaseComePlaySometimeText::
