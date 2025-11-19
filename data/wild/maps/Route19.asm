@@ -3,11 +3,11 @@ Route19WildMons:
 	end_grass_wildmons
 
 	def_water_wildmons 5 ; encounter rate
+	db 30, TENTACOOL
+	db 25, TENTACOOL
 	db 25, MAGIKARP
 	db 25, HORSEA
 	db 25, GOLDEEN
-	db 30, TENTACOOL
-	db 25, TENTACOOL
 	db 25, TENTACOOL
 	db 25, TENTACOOL
 	db 37, TENTACRUEL

@@ -7,9 +7,9 @@ Route10WildMons:
 	db 17, NIDORAN_M
 	db 17, NIDORAN_F
 	db 22, MAGNEMITE
+	db 19, MACHOP
+	db 18, MACHOP
 	db 20, MACHOP
-	db 18, MACHOP
-	db 18, MACHOP
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

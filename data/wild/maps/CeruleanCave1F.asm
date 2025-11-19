@@ -3,7 +3,7 @@ CeruleanCave1FWildMons:
 	db 65, LICKITUNG
 	db 65, OMASTAR
 	db 65, KABUTOPS
-	db 65, MAGMAR
+	db 65, RHYDON
 	db 65, CHANSEY
 	db 65, GOLEM
 	db 65, MACHAMP

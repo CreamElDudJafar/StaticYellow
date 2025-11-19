@@ -3,12 +3,12 @@ SeafoamIslands1FWildMons:
 	db 33, ZUBAT
 	db 33, KRABBY
 	db 33, KRABBY
+	db 36, GOLBAT
+	db 33, SLOWPOKE
+	db 33, SLOWPOKE
 	db 33, STARYU
-	db 36, ZUBAT
 	db 33, SLOWPOKE
-	db 33, SLOWPOKE
-	db 33, SLOWPOKE
-	db 35, GOLBAT
+	db 35, JYNX
 	db 36, JYNX
 	end_grass_wildmons
 

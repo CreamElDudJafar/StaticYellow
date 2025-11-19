@@ -1,13 +1,13 @@
 Route2WildMons:
 	def_grass_wildmons 25 ; encounter rate
 	db  3, RATTATA
-	db  3, PIDGEY
 	db  4, RATTATA
+	db  3, PIDGEY
 	db  4, NIDORAN_M
 	db  4, NIDORAN_F
-	db  5, PIDGEY
-	db  6, NIDORAN_M
-	db  6, VULPIX
+	db  5, VULPIX
+	db  6, PIDGEY
+	db  7, VULPIX
 	db  7, PIDGEY
 	db  7, SPEAROW
 	end_grass_wildmons

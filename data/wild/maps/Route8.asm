@@ -1,10 +1,10 @@
 Route8WildMons:
 	def_grass_wildmons 15 ; encounter rate
-	db 20, PIDGEY
+	db 20, GROWLITHE
 	db 22, PIDGEY
 	db 20, KOFFING
-	db 15, ABRA
-	db 19, ABRA
+	db 18, ABRA
+	db 20, ABRA
 	db 24, PIDGEOTTO
 	db 23, JIGGLYPUFF
 	db 25, JIGGLYPUFF

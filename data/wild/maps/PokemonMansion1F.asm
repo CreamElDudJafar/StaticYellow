@@ -6,10 +6,10 @@ PokemonMansion1FWildMons:
 	db 26, GROWLITHE
 	db 37, RATTATA
 	db 37, RATICATE
-	db 30, GROWLITHE
-	db 26, GRIMER
-	db 34, GROWLITHE
-	db 38, GROWLITHE
+	db 32, GROWLITHE
+	db 33, GRIMER
+	db 40, MAGMAR
+	db 43, MAGMAR
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

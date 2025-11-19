@@ -7,8 +7,8 @@ PokemonMansion2FWildMons:
 	db 40, MUK
 	db 40, MUK
 	db 36, GROWLITHE
-	db 38, GROWLITHE
-	db 42, MAGMAR
+	db 40, MAGMAR
+	db 42, GROWLITHE
 	db 45, MAGMAR
 	end_grass_wildmons
 

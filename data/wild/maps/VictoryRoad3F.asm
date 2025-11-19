@@ -1,8 +1,8 @@
 VictoryRoad3FWildMons:
 	def_grass_wildmons 15 ; encounter rate
 	db 44, MACHOKE
-	db 44, MACHOKE
 	db 44, RHYHORN
+	db 46, MACHAMP
 	db 44, ONIX
 	db 46, PRIMEAPE
 	db 45, RHYDON

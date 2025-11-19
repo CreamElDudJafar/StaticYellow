@@ -5,9 +5,9 @@ SafariZoneCenterWildMons:
 	db 34, EXEGGCUTE
 	db 34, RHYHORN
 	db 33, NIDOKING
-	db 34, PARASECT
-	db 34, PARAS
+	db 34, NIDOQUEEN
 	db 35, PARASECT
+	db 35, WEEPINBELL
 	db 35, TANGELA
 	db 35, CHANSEY
 	end_grass_wildmons
