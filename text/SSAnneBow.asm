@@ -50,3 +50,18 @@ _SSAnneBowSailor3AfterBattleText::
 	cont "#MON. I think"
 	cont "there are more."
 	done
+
+_SSAnneBowSuperNerd1Text::
+	text "You found me!"
+	line "Please take this"
+	cont "gift."
+	prompt
+
+_SSAnneBowSuperNerd2Text::
+	text "You got ¥1000."
+	done
+
+_SSAnneBowSuperNerd3Text::
+	text "Buy some POTIONS"
+	line "or REPELS!"
+	done
