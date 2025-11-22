@@ -589,6 +589,7 @@ DrawTrainerInfo:
 	ld [hli], a
 	ld [hl], 1
 	hlcoord 0, 0
+; height of the trainer info text box
 	call TrainerInfo_DrawTextBox
 	ld hl, wTrainerInfoTextBoxWidthPlus1
 	ld a, 16 + 1
@@ -596,27 +597,37 @@ DrawTrainerInfo:
 	dec a
 	ld [hli], a
 	ld [hl], 3
-	hlcoord 1, 10
+	hlcoord 1, 9
+; height of the badges box
 	call TrainerInfo_DrawTextBox
-	hlcoord 0, 10
+	hlcoord 0, 9
 	ld a, $d7
 	call TrainerInfo_DrawVerticalLine
-	hlcoord 19, 10
+	hlcoord 19, 9
 	call TrainerInfo_DrawVerticalLine
-	hlcoord 6, 9
+	hlcoord 6, 10
 	ld de, TrainerInfo_BadgesText
 	call PlaceString
-	hlcoord 2, 2
+; print trainer info (name,money,time) with added gamemode
+	ld a, [wDifficulty] ; Check if on hard mode
+	and a
+	ld de, NormalText
+	jr z, .printGameMode
+	ld de, HardText
+.printGameMode	
+	hlcoord 2, 7
+	call PlaceString
+	hlcoord 2, 1
 	ld de, TrainerInfo_NameMoneyTimeText
 	call PlaceString
-	hlcoord 7, 2
+	hlcoord 7, 1
 	ld de, wPlayerName
 	call PlaceString
-	hlcoord 8, 4
+	hlcoord 8, 3
 	ld de, wPlayerMoney
 	ld c, $e3
 	call PrintBCDNumber
-	hlcoord 9, 6
+	hlcoord 9, 5
 	ld de, wPlayTimeHours ; hours
 	lb bc, LEFT_ALIGN | 1, 3
 	call PrintNumber
@@ -635,12 +646,15 @@ TrainerInfo_NameMoneyTimeText:
 	next "MONEY/"
 	next "TIME/@"
 
+NormalText: 		db "MODE/ NORMAL@"
+HardText: 		db "MODE/  HARD@"
+
 ; $76 is a circle tile
 TrainerInfo_BadgesText:
 	db $76,"BADGES",$76,"@"
 
 ; draws a text box on the trainer info screen
-; height is always 6
+; height is always 7
 ; INPUT:
 ; hl = destination address
 ; [wTrainerInfoTextBoxWidthPlus1] = width
@@ -654,7 +668,7 @@ TrainerInfo_DrawTextBox:
 	ld a, [wTrainerInfoTextBoxWidthPlus1]
 	ld e, a
 	ld d, 0
-	ld c, 6 ; height of the text box
+	ld c, 7 ; height of the text box
 .loop
 	ld [hl], $7c ; left edge tile ID
 	add hl, de
@@ -692,7 +706,7 @@ TrainerInfo_NextTextBoxRow:
 ; a = tile ID
 TrainerInfo_DrawVerticalLine:
 	ld de, SCREEN_WIDTH
-	ld c, 8
+	ld c, 9
 .loop
 	ld [hl], a
 	add hl, de
