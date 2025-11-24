@@ -1521,7 +1521,7 @@ _SkyAttackDexEntry::
 	bage "ultimate glowing"
 	next "meteor dive-bomb.@"
 
-	text_jump _Generic25PercentRecoilText
+	text_jump _GenericNoAdditionalEffectText
 
 _TransformDexEntry::
 	text "Transforms into"
@@ -1547,12 +1547,9 @@ _BubbleDexEntry::
 _DizzyPunchDexEntry::
 	text "A rhythmic punch"
 	next "that leaves the"
-	next "foe reeling."
-	; fall through
-_Generic30PercentConfusionText::
-	bage "Causes confusion"
-	next "30% of the time"
-	dex
+	next "foe reeling.@"
+
+	text_jump _Generic10PercentConfusionText
 
 _SporeDexEntry::
 	text "Potent mushroom"
@@ -1723,9 +1720,8 @@ _TriAttackDexEntry::
 	bage "Fire, ice, and"
 	next "electricity."
 
-	bage "10% chance each"
-	next "of burn, freeze"
-	next "or paralysis"
+	bage "30% chance to"
+	next "burn the foe"
 	dex
 
 _SuperFangDexEntry::

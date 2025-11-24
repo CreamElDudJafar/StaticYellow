@@ -594,8 +594,8 @@ LovelyKissDescription:
 	db   "May cause the foe"
 	feed "to fall asleep.@"
 SkyAttackDescription:
-	db   "1st turn: Prepare"
-	feed "2nd turn: Attack@"
+	db   "The user gathers"
+	feed "and fires energy.@"
 TransformDescription:
 	db   "The user assumes"
 	feed "the foe's guise.@"
