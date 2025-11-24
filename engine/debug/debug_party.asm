@@ -127,7 +127,7 @@ DebugItemsList:
 	db ESCAPE_ROPE, 99
 	db SECRET_KEY, 1
 	db POKE_FLUTE, 1
-	db SILPH_SCOPE, 1
+	db ITEMFINDER, 1
 	db CARD_KEY, 1
 	db REVIVE, 99
 	db CHEAT_CANDY, 1
