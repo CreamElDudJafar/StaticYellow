@@ -130,11 +130,18 @@ _GenericOHKOText::
 	dex
 
 _RazorWindDexEntry::
-	text "The <user> lands"
-	next "from flying and"
-	next "rests.@"
+	text "Blades of wind"
+	next "hit the opposing"
+	next "#MON."
 	
-	text_jump _GenericNoAdditionalEffectText
+	bage "After usage,"
+	next "the <user> rests"
+	next "the next turn."
+
+	bage "If the <opponent>"
+	next "faints, no rest"
+	next "is necessary"
+	dex
 
 _SwordsDanceDexEntry::
 	text "A frenetic dance"
@@ -1370,9 +1377,16 @@ _SkullBashDexEntry::
 	next "rocket and slams"
 	next "the foe with a"
 
-	bage "rock-hard skull.@"
+	bage "rock-hard skull."
 
-	text_jump _GenericKeptGoingCrashedText
+	bage "After usage,"
+	next "the <user> rests"
+	next "the next turn."
+
+	bage "If the <opponent>"
+	next "faints, no rest"
+	next "is necessary"
+	dex
 
 _SpikeCannonDexEntry::
 	text "Rock-hard spikes"
