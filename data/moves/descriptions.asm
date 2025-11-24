@@ -204,8 +204,8 @@ GuillotineDescription:
 	db   "A one-hit KO,"
 	feed "pincer attack.@"
 RazorWindDescription:
-	db   "1st turn: Prepare"
-	feed "2nd turn: Attack@"
+	db   "1st turn: Attack"
+	feed "2nd turn: Rest@"
 SwordsDanceDescription:
 	db   "A dance that in-"
 	feed "creases ATTACK.@"
@@ -555,8 +555,8 @@ SwiftDescription:
 	db   "An attack that"
 	feed "never misses.@"
 SkullBashDescription:
-	db   "1st turn: Prepare"
-	feed "2nd turn: Attack@"
+	db   "1st turn: Attack"
+	feed "2nd turn: Rest@"
 SpikeCannonDescription:
 	db   "Fires spikes to"
 	feed "hit 2-5 times.@"

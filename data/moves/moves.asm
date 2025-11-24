@@ -122,7 +122,7 @@ Moves:
 	move CONFUSE_RAY,  CONFUSION_EFFECT,             0, GHOST,        100, 10
 	move WITHDRAW,     DEFENSE_UP1_EFFECT,           0, BIRD,         100, 40
 	move DEFENSE_CURL, DEFENSE_UP1_EFFECT,           0, BIRD,         100, 40
-	move BARRIER,      DEFENSE_UP2_EFFECT,           0, BIRD,	        100, 30
+	move BARRIER,      DEFENSE_UP2_EFFECT,           0, BIRD,	  100, 30
 	move LIGHT_SCREEN, LIGHT_SCREEN_EFFECT,          0, BIRD,         100, 30
 	move HAZE,         HAZE_EFFECT,                  0, BIRD,         100, 30
 	move REFLECT,      REFLECT_EFFECT,               0, BIRD,         100, 20

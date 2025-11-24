@@ -413,9 +413,6 @@ ShowNextMoveData:
 	jr .doneMarker
 .needsMarker
 	ld a, [wPlayerMoveType]
-	cp GHOST
-	ld b, $D5
-	jr z, .copyMarker
 	cp SPECIAL
 	ld b, $CD
 	jr nc, .copyMarker
