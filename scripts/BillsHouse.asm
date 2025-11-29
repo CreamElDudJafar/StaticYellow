@@ -94,6 +94,8 @@ BillsHouseScript3:
 	ld a, HS_BILL_POKEMON
 	ld [wMissableObjectIndex], a
 	predef HideObject
+	ld a, SFX_TRADE_MACHINE
+	rst _PlaySound
 	call CheckPikachuFollowingPlayer
 	jr z, .asm_1e13e
 	ld hl, PikachuMovementData_1e14d
