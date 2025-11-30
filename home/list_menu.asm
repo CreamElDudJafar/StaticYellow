@@ -37,7 +37,7 @@ DisplayListMenuID::
 ;	and a ; PCPOKEMONLISTMENU?
 ;	jr nz, .skipMovingSprites
 ;	call UpdateSprites
-.skipMovingSprites
+;.skipMovingSprites
 	ld a, 1 ; max menu item ID is 1 if the list has less than 2 entries
 	ld [wMenuWatchMovingOutOfBounds], a
 	ld a, [wListCount]
