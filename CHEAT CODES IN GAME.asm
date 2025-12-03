@@ -6,6 +6,8 @@ THE FOLLOWING CHEATS WILL WORK IN GAME: DISABLE ONCE CHEAT IS DONE BEING USED...
 Infinite Money:
 
 019946D3
+019947D3
+019948D3
 
 Walk Through Wall:
 
@@ -18,3 +20,8 @@ Rare Candies in Mart:
 Master Balls in Mart:
 
 0101E1D0
+
+9900 Coins:
+
+0199A3D5
+0199A3D5
