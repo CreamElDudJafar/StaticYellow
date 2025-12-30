@@ -815,6 +815,8 @@ OaksLabOak1Text:
 	ld a, [wNumSetBits]
 	cp 2
 	jr c, .check_for_poke_balls
+	CheckEvent EVENT_GOT_POKEDEX
+	jr z, .check_for_poke_balls
 .already_got_poke_balls
 	ld hl, .HowIsYourPokedexComingText
 	rst _PrintText
