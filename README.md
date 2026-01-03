@@ -148,7 +148,7 @@ USE RGBDS 7.0 or 8.0
 
 You can find Pret [Discord (pret, #pokered)](https://discord.gg/d5dubZ3).
 
-CREAMELDUDJAFAR'S DISCORD: https://discord.gg/3YQrCFzCNv
+CREAMELDUDJAFAR'S DISCORD: https://discord.gg/GFpKsrjxJs
 
 For other pret projects, see [pret.github.io](https://pret.github.io/).
 
