@@ -39,7 +39,7 @@ Features:
 - Pikachu can learn FLY (New Pikachu Flying Sprite) and now CUT
 - PROF. OAK gives you 5 POKÉBALLS when you receive the POKÉDEX.
 - TM names in BAG and MART (TM24 it says TM24 THNDRBLT)
-- 50 item bag space
+- 60 item bag space
 - Auto HM use (eg: surf, just touch the water and say YES)
 - Deletable HM's
 - Sort Items in BAG- Press Start while in bag

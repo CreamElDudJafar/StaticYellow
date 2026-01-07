@@ -2356,7 +2356,6 @@ wNumBagItems:: db
 ; item, quantity
 wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1
 
-
 wDifficulty::
 	; $00 = normal
 	; $01 = hard
@@ -2368,7 +2367,7 @@ wPlayerGender::
 	; $02 = enby
 		ds 1
 
-	ds 23
+	ds 4
 ENDU
 
 wObtainedHiddenItemsFlags:: flag_array MAX_HIDDEN_ITEMS
