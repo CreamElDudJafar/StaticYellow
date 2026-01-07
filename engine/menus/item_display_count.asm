@@ -42,7 +42,7 @@ DrawItemCountBox::
 	ret
 
 NumItemsText:
-	db "/50@"
+	db "/60@"
 
 ItemsText:
 	db "ITEMs@"
