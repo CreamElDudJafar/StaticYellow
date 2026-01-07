@@ -74,4 +74,4 @@ TextPredefs::
 	add_tx_pre PokemonStuffText                     ; 44
 	add_tx_pre BlueBedroomPCText                    ; 45
 	add_tx_pre BlueBedroomSNESText                  ; 46
-	add_tx_pre FlashLightsAreaText
+	add_tx_pre FlashLightsAreaText2                 ; 47
