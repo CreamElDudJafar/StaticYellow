@@ -324,6 +324,7 @@ StartMenu_Item::
 	rst _PrintText
 	jr .exitMenu
 .notInCableClubRoom
+	callfar DrawItemCountBox
 	; store item bag pointer in wListPointer (for DisplayListMenuID)
 	ld hl, wListPointer
 	ld [hl], LOW(wNumBagItems)

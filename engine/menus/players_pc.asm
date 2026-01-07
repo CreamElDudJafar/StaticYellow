@@ -103,6 +103,7 @@ PlayerPCDeposit:
 	set BIT_NO_TEXT_DELAY, [hl]
 	ld hl, WhatToDepositText
 	rst _PrintText
+	callfar DrawItemCountBox
 	ld hl, wNumBagItems
 	ld a, l
 	ld [wListPointer], a
@@ -168,6 +169,7 @@ PlayerPCWithdraw:
 	set BIT_NO_TEXT_DELAY, [hl]
 	ld hl, WhatToWithdrawText
 	rst _PrintText
+	callfar DrawStoredItemCountBox
 	ld hl, wNumBoxItems
 	ld a, l
 	ld [wListPointer], a
@@ -226,6 +228,7 @@ PlayerPCToss:
 	set BIT_NO_TEXT_DELAY, [hl]
 	ld hl, WhatToTossText
 	rst _PrintText
+	callfar DrawStoredItemCountBox
 	ld hl, wNumBoxItems
 	ld a, l
 	ld [wListPointer], a
