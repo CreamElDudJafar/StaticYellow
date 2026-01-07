@@ -105,13 +105,20 @@ TryFlash::
 	ld a, [wMapPalOffset]
    	and a
     	ret z
-; area is dark
+; area is dark and needs Flash
     	ld a, [wObtainedBadges] ; badges obtained
     	bit BIT_BOULDERBADGE, a ; BROCK	
 	jr z, TrySurf.no2
+	call InitializeFieldMoveTextBox
+	ld hl, PromptToFlashText
+	rst _PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, TrySurf.no2
 	xor a
 	ld [wMapPalOffset], a
-	tx_pre_jump FlashLightsAreaText
+	tx_pre_jump FlashLightsAreaText2
 
 
 HasPartyMove::
@@ -194,7 +201,12 @@ PromptToCutText:
 	text "Would you like to"
 	line "use CUT?@@"
 
-FlashLightsAreaText::
+PromptToFlashText:
+	text "Would you like to"
+	line "light this dark"
+	cont "tunnel with FLASH?@@"
+
+FlashLightsAreaText2::
 	text_far _FlashLightsAreaText2
 	text_end
 
