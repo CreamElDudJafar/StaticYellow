@@ -106,6 +106,9 @@ TryFlash::
    	and a
     	ret z
 ; area is dark and needs Flash
+	ld d, FLASH
+	call HasPartyMove
+	jr nz, TrySurf.no2
     	ld a, [wObtainedBadges] ; badges obtained
     	bit BIT_BOULDERBADGE, a ; BROCK	
 	jr z, TrySurf.no2
@@ -115,7 +118,7 @@ TryFlash::
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
-	jr nz, TrySurf.no2
+	jp nz, TrySurf.no2
 	xor a
 	ld [wMapPalOffset], a
 	tx_pre_jump FlashLightsAreaText2
