@@ -97,7 +97,7 @@ IsCutTile:
 	and a
 	ret
 
-TryFlash::
+TryFlash:
 	ldh a, [hJoyHeld]
 	bit BIT_A_BUTTON, a
 	ret z
