@@ -5400,13 +5400,27 @@ MirrorMoveCopyMove:
 	cp MIRROR_MOVE ; did the target Pokemon last use Mirror Move, and miss?
 	jr z, .mirrorMoveFailed
 	and a ; has the target selected any move yet?
-	jr nz, ReloadMoveData
+	jr nz, .doMirrorMove
 .mirrorMoveFailed
 	ld hl, MirrorMoveFailedText
 	rst _PrintText
 	xor a
 	ret
-
+;;;;;;;;;; PureRGBnote: ADDED: Mirror move has a small animation before using the mirrored move now
+.doMirrorMove
+	ld a, [hl]
+	push af
+	ld a, MIRROR_MOVE
+	ld [hl], a
+	push hl
+	push de
+	call PlayCurrentMoveAnimation
+	pop de
+	pop hl
+	pop af
+	ld [hl], a
+	jr ReloadMoveData
+;;;;;;;;;;
 MirrorMoveFailedText:
 	text_far _MirrorMoveFailedText
 	text_end
