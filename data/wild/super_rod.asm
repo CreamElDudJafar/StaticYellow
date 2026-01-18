@@ -106,7 +106,7 @@ SuperRodData::
 	db 50, OMASTAR
 	db 50, KABUTOPS
 	db 50, CLOYSTER
-	db 15, GYARADOS
+	db 50, GYARADOS
 
 .Group11:
 	db 4
