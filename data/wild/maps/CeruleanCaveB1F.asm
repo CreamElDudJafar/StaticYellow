@@ -3,7 +3,7 @@ CeruleanCaveB1FWildMons:
 	db 65, CLEFABLE
 	db 65, JYNX
 	db 65, SCYTHER
-	db 52, AERODACTYL
+	db 65, AERODACTYL
 	db 65, PORYGON
 	db 65, MAGNETON
 	db 65, HYPNO
