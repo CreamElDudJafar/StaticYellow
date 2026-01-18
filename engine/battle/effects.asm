@@ -61,6 +61,8 @@ SleepEffect:
 	call BattleRandom
 	and SLP_MASK
 	jr z, .setSleepCounter
+	cp $7
+	jr z, .setSleepCounter
 	ld b, a
 	ld a, [wUnknownSerialFlag_d499]
 	and a
