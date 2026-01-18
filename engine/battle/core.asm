@@ -3302,7 +3302,7 @@ SelectEnemyMove:
 	and (1 << CHARGING_UP) | (1 << THRASHING_ABOUT) ; using a charging move or thrash/petal dance
 	ret nz
 	ld a, [wEnemyMonStatus]
-	and (1 << FRZ) | SLP_MASK
+	and (1 << FRZ)
 	ret nz
 	ld a, [wEnemyBattleStatus1]
 	and (1 << USING_TRAPPING_MOVE) | (1 << STORING_ENERGY) ; using a trapping move like wrap or bide
