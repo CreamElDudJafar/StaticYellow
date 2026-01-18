@@ -41,7 +41,7 @@ SleepEffect:
 	                        ; including the event where the target already has another status
 	ld a, [de]
 	ld b, a
-	and $7
+	and SLP_MASK
 	jr z, .notAlreadySleeping ; can't affect a mon that is already asleep
 	ld hl, AlreadyAsleepText
 	rst _PrintText
@@ -59,7 +59,7 @@ SleepEffect:
 .setSleepCounter
 ; set target's sleep counter to a random number between 1 and 7
 	call BattleRandom
-	and $7
+	and SLP_MASK
 	jr z, .setSleepCounter
 	ld b, a
 	ld a, [wUnknownSerialFlag_d499]
