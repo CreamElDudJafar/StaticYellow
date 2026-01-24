@@ -24,10 +24,6 @@ _DoubleslapDexEntry::
 	text "Repeatedly slaps"
 	next "the <opponent> with"
 	next "two hands."
-
-	bage "Power doubles if"
-	next "foe is asleep, but"
-	next "foe will wake up."
 	; fall through
 _Generic2To5HitsText::
 	bage "Hits 2-5 times in"
@@ -183,10 +179,12 @@ _WhirlwindDexEntry::
 	next "is summoned and"
 	next "hurled at foe."
 	
-	bage "Has no effect in"
-	next "trainer battles.@"
+	bage "It will end wild"
+	next "battles. It has no"
+	next "effect in trainer"
 	
-	text_jump _GenericNoAdditionalEffectText
+	bage "battles"
+	dex
 	
 _FlyDexEntry::
 	text "The #MON flies"
@@ -438,9 +436,14 @@ _GrowlDexEntry::
 _RoarDexEntry::
 	text "A loud scary"
 	next "roar or bark that"
-	next "hurts the ears.@"
+	next "hurts the ears."
+
+	bage "It will end wild"
+	next "battles. It has no"
+	next "effect in trainer"
 	
-	text_jump _GenericNoAdditionalEffectText
+	bage "battles"
+	dex
 
 _SingDexEntry::
 	text "A soothing song"
@@ -674,10 +677,14 @@ _CounterDexEntry::
 
 	bage "from the foe's"
 	next "fighting spirit."
-	; fall through
-_GenericAlwaysGoesFirstText::
-	bage "Always goes"
-	next "first"
+
+	bage "Hits back NORMAL"
+	next "and FIGHTING moves"
+	next "for 2x damage."
+	
+	bage "Decreased priority"
+	next "move. Always goes"
+	next "second"
 	dex
 
 _SeismicTossDexEntry::
@@ -748,7 +755,7 @@ _LeechSeedDexEntry::
 
 _GrowthDexEntry::
 	text "The <user> grows"
-	next "larger and always"
+	next "larger."
 _GenericRaiseSpecial1StageText::	
 	bage "Raises <user>'s"
 	next "SPECIAL."
@@ -765,7 +772,9 @@ _RazorLeafDexEntry::
 _SolarbeamDexEntry::
 	text "Focuses sunlight"
 	next "into a powerful"
-	next "searing beam.@"
+	next "searing beam."
+
+	bage "2 turn attack.@"
 	
 	text_jump _GenericNoAdditionalEffectText
 
@@ -985,9 +994,12 @@ _AgilityDexEntry::
 
 _QuickAttackDexEntry::
 	text "A super fast"
-	next "lunging attack.@"
-
-	text_jump _GenericAlwaysGoesFirstText
+	next "lunging attack."
+	; fall through
+_GenericAlwaysGoesFirstText::
+	bage "Always goes"
+	next "first"
+	dex
 
 _RageDexEntry::
 	text "The <user> releases"
@@ -1002,11 +1014,12 @@ _RageDexEntry::
 
 _TeleportDexEntry::
 	text "The <user> teleports"
-	next "away from battle."
+	next "away ending wild" 
+	next "battles."
 
-	bage "Wild #MON can"
-	next "run from battle"
-	next "by using it."
+	bage "In trainer battles"
+	next "it can switch to"
+	next "another #MON."
 
 	bage "Fails if there are"
 	next "no #MON left to"
@@ -1116,10 +1129,7 @@ _WithdrawDexEntry::
 	next "of any kind."
 
 	bage "Raises DEFENSE"
-	next "(+1)."
-
-	bage "Does nothing if"
-	next "at full HP"
+	next "(+1)"
 	dex
 
 _DefenseCurlDexEntry::
@@ -1204,11 +1214,15 @@ _FocusEnergyDexEntry::
 _BideDexEntry::
 	text "The <user> steels"
 	next "itself, raising"
-	next "physical prowess."
+	next "physical energy."
 
-	bage "Raises ATTACK"
-	next "and DEFENSE."
-	next "(+1 Each)"
+	bage "Stores its energy"
+	next "for 2-3 turns,"
+	next "then unleashes it."
+	
+	bage "Deals twice the"
+	next "HP damage it"
+	next "received"
 	dex
 
 _MetronomeDexEntry::
@@ -1222,15 +1236,12 @@ _MetronomeDexEntry::
 	dex
 
 _MirrorMoveDexEntry::
-	text "Uses the last"
-	next "move any foe"
-	next "used."
+	text "Uses the last move"
+	next "any foe used."
 
-	bage "Always goes"
-	next "first"
-
-	bage "Fails if no foe"
-	next "has attacked yet"
+	bage "Always goes first."
+	next "Fails if foe hasn't"
+	next "attacked yet"
 	dex
 
 _SelfdestructDexEntry::
@@ -1381,9 +1392,9 @@ _AmnesiaDexEntry::
 
 _KinesisDexEntry::
 	text "Lowers the foe's"
-	next "ACCURACY.@"
-	
-	text_jump _GenericLowerAccuracyText
+	next "ACCURACY."
+	next "(-1 ACCURACY)"
+	dex
 
 
 _SoftboiledDexEntry::
@@ -1533,8 +1544,9 @@ _FlashDexEntry::
 
 	bage "Usually caused"
 	next "by a powerful"
-	next "electric arc"
-	dex
+	next "electric arc.@"
+	
+	text_jump _GenericLowerAccuracyText
 
 _PsywaveDexEntry::
 	text "A small psychic"
@@ -1652,11 +1664,18 @@ _SharpenDexEntry::
 _ConversionDexEntry::
 	text "The <user> analyzes"
 	next "the <opponent> and"
-	next "upgrades its body"
+	next "upgrades its type"
 
 	bage "to be better"
 	next "suited for taking"
-	next "down its enemy"
+	next "down its enemy."
+
+	bage "Original type is"
+	next "restored once the"
+	next "battle ends or the"
+
+	bage "#MON faints or"
+	next "is switched out"
 	dex
 
 _TriAttackDexEntry::
