@@ -42,11 +42,7 @@ _Generic2To5HitsText::
 _CometPunchDexEntry::
 	text "Delivers a"
 	next "lightning speed"
-	next "punch."
-	; fall through
-_GenericAlwaysGoesFirstText::
-	bage "Always goes"
-	next "first"
+	next "punch"
 	dex
 
 _MegaPunchDexEntry::
@@ -179,14 +175,16 @@ _GustDexEntry::
 _WingAttackDexEntry::
 	text "Strikes and slaps"
 	next "the foe with"
-	next "wings.@"
-
-	text_jump _GenericAlwaysGoesFirstText
+	next "wings"
+	dex
 
 _WhirlwindDexEntry::
 	text "A massive tornado"
 	next "is summoned and"
-	next "hurled at foe.@"
+	next "hurled at foe."
+	
+	bage "Has no effect in"
+	next "trainer battles.@"
 	
 	text_jump _GenericNoAdditionalEffectText
 	
@@ -213,7 +211,7 @@ _BindDexEntry::
 
 _SlamDexEntry::
 	text "Slams the foe"
-	next "with a dirty tail"
+	next "with a dirty tail,"
 	next "leg, arm, etc."
 	; fall through
 _Generic10PercentFlinchText::
@@ -263,12 +261,8 @@ _JumpKickDexEntry::
 	next "big kick."
 	; fall through
 _GenericKeptGoingCrashedText::
-	bage "Does damage to"
-	next "<user> on missing."
-
-	bage "25% of the damage"
-	next "it would have"
-	next "done to the foe"
+	bage "Does 1 HP damage"
+	next "to <user> if missed"
 	dex
 
 _RollingKickDexEntry::
@@ -347,8 +341,8 @@ _GenericTrappingMoveText::
 
 _TakeDownDexEntry::
 	text "Tackles the foe"
-	next "while alight with"
-	next "raging flames."
+	next "with a full on"
+	next "charge."
 	; fall through
 _Generic25PercentRecoilText::
 	bage "User takes 25%"
@@ -473,11 +467,8 @@ _SonicboomDexEntry::
 	next "generates a "
 	next "shockwave."
 
-	bage "Always goes first."
-	next "If it's the <user>'s"
-	next "1st turn out in"
-
-	bage "battle."
+	bage "Always inflicts 20"
+	next "damage if it hits"
 	dex
 
 _DisableDexEntry::
@@ -530,14 +521,6 @@ _MistDexEntry::
 	bage "ice crystals,"
 	next "enshrouding it in"
 	next "ethereal vapor."
-
-	bage "The <user> becomes"
-	next "ethereal; immune"
-	next "to NORMAL and"
-
-	bage "FIGHTING-type"
-	next "moves until it"
-	next "switches out."
 
 	bage "Prevents stats"
 	next "from decreasing"
@@ -626,7 +609,12 @@ _AuroraBeamDexEntry::
 	next "multicolored beam"
 	next "of light is shot"
 
-	bage "at the <opponent>"
+	bage "at the <opponent>."
+	; fall through
+_Generic33PercentLowerAttackText::
+	bage "33% chance to"
+	next "lower foe's ATTACK."
+	next "(-1 ATTACK)"
 	dex
 
 _HyperBeamDexEntry::
@@ -685,9 +673,12 @@ _CounterDexEntry::
 	next "drains energy"
 
 	bage "from the foe's"
-	next "fighting spirit.@"
-
-	text_jump _GenericNoAdditionalEffectText
+	next "fighting spirit."
+	; fall through
+_GenericAlwaysGoesFirstText::
+	bage "Always goes"
+	next "first"
+	dex
 
 _SeismicTossDexEntry::
 	text "The <user> suplexes"
@@ -757,11 +748,11 @@ _LeechSeedDexEntry::
 
 _GrowthDexEntry::
 	text "The <user> grows"
-	next "larger or heals"
-	next "its body,"
-
-	bage "usually with"
-	next "photosynthesis."
+	next "larger and always"
+_GenericRaiseSpecial1StageText::	
+	bage "Raises <user>'s"
+	next "SPECIAL."
+	next "(+1 SPECIAL)"
 	dex
 
 _RazorLeafDexEntry::
@@ -832,9 +823,11 @@ _StringShotDexEntry::
 _DragonRageDexEntry::
 	text "The foe is hit"
 	next "by a shockwave of"
-	next "draconic rage.@"
+	next "draconic rage."
 	
-	text_jump _GenericNoAdditionalEffectText
+	bage "Always inflicts 40"
+	next "damage if it hits"
+	dex
 
 _FireSpinDexEntry::
 	text "A swirling pillar"
@@ -953,9 +946,13 @@ _PsychicDexEntry::
 
 	bage "Few foes resist"
 	next "this fantastic"
-	next "psychic move.@"
-
-	text_jump _Generic33PercentLowerSpecialText
+	next "psychic move."
+	; fall through
+_Generic33PercentLowerSpecialText::
+	bage "33% chance to"
+	next "lower SPECIAL."
+	next "(-1 SPECIAL)"
+	dex
 
 _HypnosisDexEntry::
 	text "The foe is hypno-"
@@ -967,15 +964,9 @@ _HypnosisDexEntry::
 _MeditateDexEntry::
 	text "Assuming a pose"
 	next "meant for deep"
-	next "contemplation,"
+	next "contemplation."
 
-	bage "the <user> relaxes,"
-	next "raising many of"
-	next "its abilities."
-
-	bage "Raises ATTACK,"
-	next "SPECIAL, and"
-	next "SPEED. (+1 Each)"
+	bage "Raises ATTACK(+1)"
 	dex
 
 _AgilityDexEntry::
@@ -1001,7 +992,11 @@ _QuickAttackDexEntry::
 _RageDexEntry::
 	text "The <user> releases"
 	next "pent up anger on"
-	next "the foe.@"
+	next "the foe."
+
+	bage "Raises <user> ATTACK"
+	next "(+1) each time"
+	next "damage is taken.@"
 	
 	text_jump _GenericNoAdditionalEffectText
 
@@ -1012,10 +1007,6 @@ _TeleportDexEntry::
 	bage "Wild #MON can"
 	next "run from battle"
 	next "by using it."
-
-	bage "In trainer battles"
-	next "the <user> switches"
-	next "and heals 25% HP."
 
 	bage "Fails if there are"
 	next "no #MON left to"
@@ -1124,9 +1115,8 @@ _WithdrawDexEntry::
 	next "its shell/cover"
 	next "of any kind."
 
-	bage "Heals 33% of max"
-	next "HP and raises"
-	next "DEFENSE. (+1)"
+	bage "Raises DEFENSE"
+	next "(+1)."
 
 	bage "Does nothing if"
 	next "at full HP"
@@ -1173,11 +1163,6 @@ _HazeDexEntry::
 	next "powers is spread"
 
 	bage "all over."
-	next "The <user> becomes"
-	next "immune to PSYCHIC"
-
-	bage "-type moves until"
-	next "it switches out."
 
 	bage "Resets all stat"
 	next "changes and cures"
@@ -1256,27 +1241,7 @@ _SelfdestructDexEntry::
 _GenericExplodeDexEntry::
 	bage "Does heavy recoil"
 	next "damage to the"
-	next "<user>;"
-
-	bage "half the damage"
-	next "inflicted. If it"
-	next "misses, the <user>"
-
-	bage "will still take"
-	next "1/4 of it's full"
-	next "HP in damage."
-
-	bage "If the <user> has"
-	next "less than 1/3 of"
-	next "it's HP left,"
-
-	bage "the explosion will"
-	next "become extremely"
-	next "powerful;"
-
-	bage "power increases"
-	next "to 500! But <user>"
-	next "always faints"
+	next "<user> as well"
 	dex
 
 _EggBombDexEntry::
@@ -1397,12 +1362,10 @@ _SpikeCannonDexEntry::
 
 _ConstrictDexEntry::
 	text "The <opponent> is"
-	next "snared with an"
-	next "electrostatically"
-
-	bage "charged tendril"
-	next "or tail, electro-"
-	next "cuting the foe.@"
+	next "constricted and"
+	next "is inflicted with"
+	
+	bage "damage.@"
 
 	text_jump _Generic33PercentLowerSpeedText
 
@@ -1491,7 +1454,7 @@ _BarrageDexEntry::
 	next "ghostly orbs come"
 	next "from is unknown.@"
 
-	text_jump _GenericHitsTwiceText
+	text_jump _Generic2To5HitsText
 
 _LeechLifeDexEntry::
 	text "Bites and sucks"
@@ -1570,19 +1533,21 @@ _FlashDexEntry::
 
 	bage "Usually caused"
 	next "by a powerful"
-	next "electric arc.@"
-
-	text_jump _GenericAlwaysGoesFirstText
+	next "electric arc"
+	dex
 
 _PsywaveDexEntry::
 	text "A small psychic"
 	next "wave hits the"
 	next "<opponent>."
-	; fall through
-_Generic33PercentLowerSpecialText::
-	bage "33% chance to"
-	next "lower SPECIAL."
-	next "(-1 SPECIAL)"
+
+	bage "Inflicts damage"
+	next "varying between"
+	next "1 to 1.5 x <user>'s"
+
+	bage "level. Between 0"
+	next "to 1.5 x used by"
+	next "opponent"
 	dex
 
 _SplashDexEntry::
@@ -1602,10 +1567,10 @@ _AcidArmorDexEntry::
 	next "additional"
 	next "protection."
 
-	bage "Cuts all damage"
-	next "(Physical/Special)"
-	next "in half"
+	bage "Raises DEFENSE"
+	next "(+2)"
 	dex
+
 	
 _CrabhammerDexEntry::
 	text "The <user> hammers"
@@ -1632,7 +1597,7 @@ _FurySwipesDexEntry::
 	next "with dust-ridden"
 	next "claws.@"
 
-	text_jump _GenericNoAdditionalEffectText
+	text_jump _Generic2To5HitsText
 
 _BonemerangDexEntry::
 	text "Throws a bone"
@@ -1681,9 +1646,7 @@ _SharpenDexEntry::
 	next "its claws or"
 	next "edges."
 
-	bage "Raises ATTACK"
-	next "and ACCURACY."
-	next "(+1 Each)"
+	bage "Raises ATTACK(+1)"
 	dex
 
 _ConversionDexEntry::
@@ -1693,23 +1656,7 @@ _ConversionDexEntry::
 
 	bage "to be better"
 	next "suited for taking"
-	next "down its enemy."
-
-	bage "The <user> converts"
-	next "to either ATTACK"
-	next "or DEFENSE mode."
-
-	bage "In ATTACK mode"
-	next "the <user> queries"
-	next "a move that will"
-
-	bage "always work well"
-	next "on the foe from"
-	next "its data banks."
-
-	bage "In DEFENSE mode,"
-	next "damage from foe's"
-	next "moves is halved"
+	next "down its enemy"
 	dex
 
 _TriAttackDexEntry::
@@ -1732,7 +1679,7 @@ _SuperFangDexEntry::
 	bage "-sharp front"
 	next "fangs."
 
-	bage "Always does 2/3"
+	bage "Always does 1/2"
 	next "of the <opponent>'s"
 	next "current HP"
 	dex
