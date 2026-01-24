@@ -1250,9 +1250,9 @@ _SelfdestructDexEntry::
 	next "fulmination."
 	; fall through
 _GenericExplodeDexEntry::
-	bage "Does heavy recoil"
-	next "damage to the"
-	next "<user> as well"
+	bage "Causes the <user>'s"
+	next "#MON to faint"
+	next "as well"
 	dex
 
 _EggBombDexEntry::
