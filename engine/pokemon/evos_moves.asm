@@ -179,13 +179,13 @@ Evolution_PartyMonLoop: ; loop over party mons
 	call CalcStats
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMon1
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld e, l
 	ld d, h
 	push hl
 	push bc
-	ld bc, wPartyMon1MaxHP - wPartyMon1
+	ld bc, MON_MAXHP
 	add hl, bc
 	ld a, [hli]
 	ld b, a
@@ -280,7 +280,7 @@ RenameEvolvedMon:
 	cp [hl]
 	inc hl
 	ret nz
-	cp "@"
+	cp '@'
 	jr nz, .compareNamesLoop
 	ld a, [wWhichPokemon]
 	ld bc, NAME_LENGTH
@@ -345,7 +345,7 @@ LearnMoveFromLevelUp:
 ; If it is not 0, this function will not work properly.
 	ld hl, wPartyMon1Moves
 	ld a, [wWhichPokemon]
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 .next
 	ld b, NUM_MOVES
@@ -364,7 +364,7 @@ LearnMoveFromLevelUp:
 	ld a, b
 	and a
 	jr z, .done
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .done
 	ld a, [wMoveNum]
 	cp THUNDERBOLT
@@ -559,7 +559,7 @@ WriteMonMoves:
 
 ; shift PP as well if learning moves from day care
 	push de
-	ld bc, wPartyMon1PP - (wPartyMon1Moves + 3)
+	ld bc, MON_PP - (MON_MOVES + 3)
 	add hl, bc
 	ld d, h
 	ld e, l
@@ -578,7 +578,7 @@ WriteMonMoves:
 ; write move PP value if learning moves from day care
 	push hl
 	ld a, [hl]
-	ld hl, wPartyMon1PP - wPartyMon1Moves
+	ld hl, MON_PP - MON_MOVES
 	add hl, de
 	push hl
 	dec a

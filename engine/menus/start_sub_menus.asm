@@ -1,6 +1,6 @@
 StartMenu_Pokedex::
 	predef ShowPokedexMenu
-	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	call LoadScreenTilesFromBuffer2
 	call Delay3
 	call LoadGBPal
 	call UpdateSprites
@@ -63,7 +63,7 @@ StartMenu_Pokemon::
 	ld [hl], a
 	call HandleMenuInput
 	push af
-	call LoadScreenTilesFromBuffer1 ; restore saved screen
+	call LoadScreenTilesFromBuffer1
 	pop af
 	bit B_PAD_B, a
 	jp nz, .loop
@@ -117,7 +117,7 @@ StartMenu_Pokemon::
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	ld a, [wObtainedBadges] ; badges obtained
+	ld a, [wObtainedBadges]
 	jp hl
 .outOfBattleMovePointers
 	dw .cut
@@ -253,7 +253,7 @@ StartMenu_Pokemon::
 .softboiled
 	ld hl, wPartyMon1MaxHP
 	ld a, [wWhichPokemon]
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld a, [hli]
 	ldh [hDividend], a
@@ -263,7 +263,7 @@ StartMenu_Pokemon::
 	ldh [hDivisor], a
 	ld b, 2 ; number of bytes
 	call Divide
-	ld bc, wPartyMon1HP - wPartyMon1MaxHP
+	ld bc, MON_HP - MON_MAXHP
 	add hl, bc
 	ld a, [hld]
 	ld b, a
@@ -303,17 +303,17 @@ StartMenu_Pokemon::
 ; writes a blank tile to all possible menu cursor positions on the party menu
 ErasePartyMenuCursors::
 	hlcoord 0, 1
-	ld bc, 2 * 20 ; menu cursor positions are 2 rows apart
+	ld bc, 2 * SCREEN_WIDTH ; menu cursor positions are 2 rows apart
 	ld a, 6 ; 6 menu cursor positions
 .loop
-	ld [hl], " "
+	ld [hl], ' '
 	add hl, bc
 	dec a
 	jr nz, .loop
 	ret
 
 ItemMenuLoop:
-	call LoadScreenTilesFromBuffer2DisableBGTransfer ; restore saved screen
+	call LoadScreenTilesFromBuffer2DisableBGTransfer
 	call RunDefaultPaletteCommand
 
 StartMenu_Item::
@@ -340,13 +340,13 @@ StartMenu_Item::
 	ld [wBagSavedMenuItem], a
 	jr nc, .choseItem
 .exitMenu
-	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	call LoadScreenTilesFromBuffer2
 	call LoadTextBoxTilePatterns
 	call UpdateSprites
 	jp RedisplayStartMenu
 .choseItem
 ; erase menu cursor (blank each tile in front of an item name)
-	ld a, " "
+	ld a, ' '
 	ldcoord_a 5, 4
 	ldcoord_a 5, 6
 	ldcoord_a 5, 8
@@ -357,7 +357,7 @@ StartMenu_Item::
 	ld a, [wCurItem]
 	cp BICYCLE
 	jp z, .useOrTossItem
-.notBicycle1
+; not Bicycle
 	ld a, USE_TOSS_MENU_TEMPLATE
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
@@ -380,21 +380,21 @@ StartMenu_Item::
 	bit B_PAD_B, a
 	jr z, .useOrTossItem
 	jp ItemMenuLoop
-.useOrTossItem ; if the player made the choice to use or toss the item
+.useOrTossItem
 	ld a, [wCurItem]
 	ld [wNamedObjectIndex], a
 	call GetItemName
 	call CopyToStringBuffer
 	ld a, [wCurItem]
 	cp BICYCLE
-	jr nz, .notBicycle2
+	jr nz, .notBicycle
 	ld a, [wStatusFlags6]
 	bit BIT_ALWAYS_ON_BIKE, a
 	jr z, .useItem_closeMenu
 	ld hl, CannotGetOffHereText
 	call PrintText
 	jp ItemMenuLoop
-.notBicycle2
+.notBicycle
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .tossItem
@@ -476,14 +476,14 @@ StartMenu_TrainerInfo::
 	xor a
 	ldh [hTileAnimations], a
 	call DrawTrainerInfo
-	predef DrawBadges ; draw badges
+	predef DrawBadges
 	ld b, SET_PAL_TRAINER_CARD
 	call RunPaletteCommand
 	call GBPalNormal
-	call WaitForTextScrollButtonPress ; wait for button press
+	call WaitForTextScrollButtonPress
 	call GBPalWhiteOut
 	call LoadFontTilePatterns
-	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	call LoadScreenTilesFromBuffer2
 	call RunDefaultPaletteCommand
 	call ReloadMapData
 	farcall DrawStartMenu ; XXX what difference does this make?
@@ -499,7 +499,7 @@ DrawTrainerInfo:
 	predef DisplayPicCenteredOrUpperRight
 	call DisableLCD
 	hlcoord 0, 2
-	ld a, " "
+	ld a, ' '
 	call TrainerInfo_DrawVerticalLine
 	hlcoord 1, 2
 	call TrainerInfo_DrawVerticalLine
@@ -507,7 +507,7 @@ DrawTrainerInfo:
 	ld de, vChars2 tile $00
 	ld bc, $1c tiles
 	call CopyData
-	ld hl, TrainerInfoTextBoxTileGraphics ; trainer info text box tile patterns
+	ld hl, TrainerInfoTextBoxTileGraphics
 	ld de, vChars2 tile $77
 	ld bc, 8 tiles
 	push bc
@@ -517,10 +517,10 @@ DrawTrainerInfo:
 	ld bc, $17 tiles
 	call TrainerInfo_FarCopyData
 	pop bc
-	ld hl, BadgeNumbersTileGraphics  ; badge number tile patterns
+	ld hl, BadgeNumbersTileGraphics
 	ld de, vChars1 tile $58
 	call TrainerInfo_FarCopyData
-	ld hl, GymLeaderFaceAndBadgeTileGraphics  ; gym leader face and badge tile patterns
+	ld hl, GymLeaderFaceAndBadgeTileGraphics
 	ld de, vChars2 tile $20
 	ld bc, 8 * 8 tiles
 	ld a, BANK(GymLeaderFaceAndBadgeTileGraphics)
@@ -529,7 +529,7 @@ DrawTrainerInfo:
 	ld de, 13 tiles
 	add hl, de ; hl = colon tile pattern
 	ld de, vChars1 tile $56
-	ld bc, 1 tiles
+	ld bc, TILE_SIZE
 	ld a, BANK(TextBoxGraphics)
 	push bc
 	call FarCopyData
@@ -573,12 +573,12 @@ DrawTrainerInfo:
 	ld c, 3 | LEADING_ZEROES | LEFT_ALIGN | MONEY_SIGN
 	call PrintBCDNumber
 	hlcoord 9, 6
-	ld de, wPlayTimeHours ; hours
+	ld de, wPlayTimeHours
 	lb bc, LEFT_ALIGN | 1, 3
 	call PrintNumber
 	ld [hl], $d6 ; colon tile ID
 	inc hl
-	ld de, wPlayTimeMinutes ; minutes
+	ld de, wPlayTimeMinutes
 	lb bc, LEADING_ZEROES | 1, 2
 	jp PrintNumber
 
@@ -660,8 +660,8 @@ StartMenu_SaveReset::
 	ld a, [wStatusFlags4]
 	bit BIT_LINK_CONNECTED, a
 	jp nz, Init
-	predef SaveSAV ; save the game
-	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	predef SaveMenu
+	call LoadScreenTilesFromBuffer2
 	jp HoldTextDisplayOpen
 
 StartMenu_Option::
@@ -670,7 +670,7 @@ StartMenu_Option::
 	call ClearScreen
 	call UpdateSprites
 	callfar DisplayOptionMenu
-	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	call LoadScreenTilesFromBuffer2
 	call LoadTextBoxTilePatterns
 	call UpdateSprites
 	jp RedisplayStartMenu
@@ -689,19 +689,19 @@ SwitchPartyMon_ClearGfx:
 	ld bc, SCREEN_WIDTH * 2
 	call AddNTimes
 	ld c, SCREEN_WIDTH * 2
-	ld a, " "
+	ld a, ' '
 .clearMonBGLoop ; clear the mon's row in the party menu
 	ld [hli], a
 	dec c
 	jr nz, .clearMonBGLoop
 	pop af
-	ld hl, wShadowOAM
-	ld bc, $10
+	ld hl, wShadowOAMSprite00YCoord
+	ld bc, OBJ_SIZE * 4
 	call AddNTimes
-	ld de, $4
+	ld de, OBJ_SIZE
 	ld c, e
 .clearMonOAMLoop
-	ld [hl], $a0
+	ld [hl], SCREEN_HEIGHT_PX + OAM_Y_OFS
 	add hl, de
 	dec c
 	jr nz, .clearMonOAMLoop
@@ -761,24 +761,24 @@ SwitchPartyMon_InitVarOrSwapData:
 	ldh a, [hSwapTemp]
 	ld [de], a
 	ld hl, wPartyMons
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld a, [wCurrentMenuItem]
 	call AddNTimes
 	push hl
 	ld de, wSwitchPartyMonTempBuffer
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call CopyData
 	ld hl, wPartyMons
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	ld a, [wMenuItemToSwap]
 	call AddNTimes
 	pop de
 	push hl
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call CopyData
 	pop de
 	ld hl, wSwitchPartyMonTempBuffer
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call CopyData
 	ld hl, wPartyMonOT
 	ld a, [wCurrentMenuItem]

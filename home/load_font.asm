@@ -2,7 +2,7 @@ LoadFontTilePatterns::
 	ldh a, [rLCDC]
 	bit B_LCDC_ENABLE, a
 	jr nz, .on
-.off
+; off
 	ld hl, FontGraphics
 	ld de, vFont
 	ld bc, FontGraphicsEnd - FontGraphics
@@ -11,14 +11,14 @@ LoadFontTilePatterns::
 .on
 	ld de, FontGraphics
 	ld hl, vFont
-	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / $8
+	lb bc, BANK(FontGraphics), (FontGraphicsEnd - FontGraphics) / TILE_1BPP_SIZE
 	jp CopyVideoDataDouble ; if LCD is on, transfer during V-blank
 
 LoadTextBoxTilePatterns::
 	ldh a, [rLCDC]
 	bit B_LCDC_ENABLE, a
 	jr nz, .on
-.off
+; off
 	ld hl, TextBoxGraphics
 	ld de, vChars2 tile $60
 	ld bc, TextBoxGraphicsEnd - TextBoxGraphics
@@ -27,15 +27,15 @@ LoadTextBoxTilePatterns::
 .on
 	ld de, TextBoxGraphics
 	ld hl, vChars2 tile $60
-	lb bc, BANK(TextBoxGraphics), (TextBoxGraphicsEnd - TextBoxGraphics) / $10
+	lb bc, BANK(TextBoxGraphics), (TextBoxGraphicsEnd - TextBoxGraphics) / TILE_SIZE
 	jp CopyVideoData ; if LCD is on, transfer during V-blank
 
 LoadHpBarAndStatusTilePatterns::
 	ld de, HpBarAndStatusGraphics
 	ld hl, vChars2 tile $62
-	lb bc, BANK(HpBarAndStatusGraphics), (HpBarAndStatusGraphicsEnd - HpBarAndStatusGraphics) / $10
+	lb bc, BANK(HpBarAndStatusGraphics), (HpBarAndStatusGraphicsEnd - HpBarAndStatusGraphics) / TILE_SIZE
 	call GoodCopyVideoData
 	ld de, EXPBarGraphics
 	ld hl, vChars1 tile $40
-	lb bc, BANK(EXPBarGraphics), (EXPBarGraphicsEnd - EXPBarGraphics) / $10
+	lb bc, BANK(EXPBarGraphics), (EXPBarGraphicsEnd - EXPBarGraphics) / TILE_SIZE
 	jp GoodCopyVideoData

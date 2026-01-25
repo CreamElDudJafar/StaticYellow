@@ -81,7 +81,7 @@ INCLUDE "home/give.asm"
 INCLUDE "home/random.asm"
 INCLUDE "home/bankswitch2.asm"
 INCLUDE "home/predef.asm"
-INCLUDE "home/hidden_objects.asm"
+INCLUDE "home/hidden_events.asm"
 INCLUDE "home/predef_text.asm"
 
 GoodCopyVideoData:

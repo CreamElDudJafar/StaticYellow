@@ -151,7 +151,7 @@ Trade_Delay80:
 Trade_ClearTileMap:
 	hlcoord 0, 0
 	ld bc, SCREEN_AREA
-	ld a, " "
+	ld a, ' '
 	jp FillMemory
 
 LoadTradingGFXAndMonNames:
@@ -168,8 +168,8 @@ LoadTradingGFXAndMonNames:
 	ld a, BANK(TradingAnimationGraphics2)
 	call FarCopyData
 	ld hl, vBGMap0
-	ld bc, $800
-	ld a, " "
+	ld bc, 2 * TILEMAP_AREA
+	ld a, ' '
 	call FillMemory
 	call ClearSprites
 	ld a, $ff
@@ -226,7 +226,7 @@ Trade_Cleanup:
 	ret
 
 Trade_ShowPlayerMon:
-	ld a, %10101011
+	ld a, LCDC_ON | LCDC_WIN_9800 | LCDC_WIN_ON | LCDC_BLOCK21 | LCDC_BG_9C00 | LCDC_OBJ_8 | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	ld a, $50
 	ldh [hWY], a
@@ -281,7 +281,7 @@ Trade_DrawOpenEndOfLinkCable:
 	ld a, $a0
 	ldh [hSCX], a
 	call DelayFrame
-	ld a, %10001011
+	ld a, LCDC_ON | LCDC_WIN_9800 | LCDC_WIN_OFF | LCDC_BLOCK21 | LCDC_BG_9C00 | LCDC_OBJ_8 | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	hlcoord 6, 2
 	ld b, TILEMAP_LINK_CABLE
@@ -319,7 +319,7 @@ Trade_AnimateBallEnteringLinkCable:
 	ld [wLinkCableAnimBulgeToggle], a
 	add $7e
 	ld hl, wShadowOAMSprite00TileID
-	ld de, 4
+	ld de, OBJ_SIZE
 	ld c, e
 .cycleLinkCableBulgeTile
 	ld [hl], a
@@ -341,7 +341,7 @@ Trade_AnimateBallEnteringLinkCable:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call ClearScreen
-	ld b, $98
+	ld b, HIGH(vBGMap0)
 	call CopyScreenTileBufferToVRAM
 	call Delay3
 	xor a
@@ -457,7 +457,7 @@ Trade_InitGameboyTransferGfx:
 	ldh [hAutoBGTransferEnabled], a
 	call Trade_LoadMonPartySpriteGfx
 	call DelayFrame
-	ld a, %10101011
+	ld a, LCDC_ON | LCDC_WIN_9800 | LCDC_WIN_ON | LCDC_BLOCK21 | LCDC_BG_9C00 | LCDC_OBJ_8 | LCDC_OBJ_ON | LCDC_BG_ON
 	ldh [rLCDC], a
 	xor a
 	ldh [hSCX], a
@@ -606,7 +606,7 @@ Trade_AnimCircledMon:
 	ldh [rBGP], a
 	call UpdateCGBPal_BGP
 	ld hl, wShadowOAMSprite00TileID
-	ld de, $4
+	ld de, OBJ_SIZE
 	ld c, $14
 .loop
 	ld a, [hl]
@@ -761,7 +761,7 @@ Trade_ShowClearedWindow:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call ClearScreen
-	ld a, %11100011
+	ld a, LCDC_DEFAULT
 	ldh [rLCDC], a
 	ld a, $7
 	ldh [rWX], a

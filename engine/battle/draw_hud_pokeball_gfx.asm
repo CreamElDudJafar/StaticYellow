@@ -13,13 +13,13 @@ DrawEnemyPokeballs:
 LoadPartyPokeballGfx:
 	ld de, PokeballTileGraphics
 	ld hl, vSprites tile $31
-	lb bc, BANK(PokeballTileGraphics), (PokeballTileGraphicsEnd - PokeballTileGraphics) / $10
+	lb bc, BANK(PokeballTileGraphics), (PokeballTileGraphicsEnd - PokeballTileGraphics) / TILE_SIZE
 	jp CopyVideoData
 
 SetupOwnPartyPokeballs:
 	ld hl, PlayerHUDTilesBeforeStart
 	call PlaceHUDTilesBeforeStart
-	ld hl, wPartyMon1
+	ld hl, wPartyMons
 	ld de, wPartyCount
 	call SetupPokeballs
 	ld a, $60
@@ -95,7 +95,7 @@ PickPokeball:
 .done
 	ld a, b
 	ld [de], a
-	ld bc, wPartyMon2 - wPartyMon1Status
+	ld bc, PARTYMON_STRUCT_LENGTH - MON_STATUS
 	add hl, bc ; next mon struct
 	ret
 
@@ -125,7 +125,7 @@ PlacePlayerHUDTiles:
 	ld hl, PlayerBattleHUDGraphicsTiles
 PlaceHUDTilesBeforeStart:
 	ld de, wHUDGraphicsTiles
-	ld bc, $3
+	ld bc, wHUDGraphicsTilesEnd - wHUDGraphicsTiles
 	call CopyData
 	hlcoord 18, 10
 	ld de, -1
@@ -146,7 +146,7 @@ PlayerHUDTilesBeforeStart:
 PlaceEnemyHUDTiles:
 	ld hl, EnemyBattleHUDGraphicsTiles
 	ld de, wHUDGraphicsTiles
-	ld bc, $3
+	ld bc, wHUDGraphicsTilesEnd - wHUDGraphicsTiles
 	call CopyData
 
 	; place the 'already owned' pokeball tile
@@ -187,7 +187,7 @@ PlaceHUDTiles:
 	ld [hl], a
 	ld bc, SCREEN_WIDTH
 	add hl, bc
-	ld a, [wHUDGraphicsTiles + 1] ; leftmost tile
+	ld a, [wHUDCornerTile] ; leftmost tile
 	ld [hl], a
 	ld a, 8
 .loop
@@ -196,7 +196,7 @@ PlaceHUDTiles:
 	dec a
 	jr nz, .loop
 	add hl, de
-	ld a, [wHUDGraphicsTiles + 2] ; rightmost tile
+	ld a, [wHUDTriangleTile] ; rightmost tile
 	ld [hl], a
 	ret
 

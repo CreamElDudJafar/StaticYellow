@@ -31,14 +31,14 @@ ReadTrainer:
 ; and hl points to the trainer class.
 ; Our next task is to iterate through the trainers,
 ; decrementing b each time, until we get to the right one.
-.outer
+.CheckNextTrainer
 	dec b
 	jr z, .IterateTrainer
-.inner
+.SkipTrainer
 	ld a, [hli]
 	and a
-	jr nz, .inner
-	jr .outer
+	jr nz, .SkipTrainer
+	jr .CheckNextTrainer
 
 ; if the first byte of trainer data is FF,
 ; - each pokemon has a specific level
@@ -90,10 +90,10 @@ ReadTrainer:
 	cp $ff
 	jr z, .FinishUp
 	cp b
-	jr nz, .asm_39c46
+	jr nz, .loopSkipTrainer
 	ld a, [hli]
 	cp c
-	jr nz, .asm_39c46
+	jr nz, .loopSkipTrainer
 	ld d, h
 	ld e, l
 .writeAdditionalMoveDataLoop
@@ -103,7 +103,7 @@ ReadTrainer:
 	jp z, .FinishUp
 	dec a
 	ld hl, wEnemyMon1Moves
-	ld bc, wEnemyMon2 - wEnemyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld a, [de]
 	inc de
@@ -115,10 +115,10 @@ ReadTrainer:
 	inc de
 	ld [hl], a
 	jr .writeAdditionalMoveDataLoop
-.asm_39c46
+.loopSkipTrainer
 	ld a, [hli]
 	and a
-	jr nz, .asm_39c46
+	jr nz, .loopSkipTrainer
 	jr .loopAdditionalMoveData
 .FinishUp
 ; clear wAmountMoneyWon addresses

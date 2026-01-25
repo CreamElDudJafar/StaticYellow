@@ -62,11 +62,11 @@ ApplyOutOfBattlePoisonDamage:
 	ld a, TEXT_MON_FAINTED
 	ldh [hTextID], a
 	call DisplayTextID
-	callfar IsThisPartymonStarterPikachu_Party
+	callfar IsThisPartyMonStarterPikachu
 	jr nc, .curMonNotPlayerPikachu
 	ldpikacry e, PikachuCry4
 	callfar PlayPikachuSoundClip
-	calladb_ModifyPikachuHappiness PIKAHAPPY_PSNFNT
+	callfar_ModifyPikachuHappiness PIKAHAPPY_PSNFNT
 .curMonNotPlayerPikachu
 	pop de
 	pop hl
@@ -78,7 +78,7 @@ ApplyOutOfBattlePoisonDamage:
 	ld a, [de]
 	inc a
 	jr z, .applyDamageLoopDone
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	add hl, bc
 	push hl
 	ld hl, wWhichPokemon
@@ -95,7 +95,7 @@ ApplyOutOfBattlePoisonDamage:
 	and 1 << PSN
 	or e
 	ld e, a
-	ld bc, wPartyMon2 - wPartyMon1
+	ld bc, PARTYMON_STRUCT_LENGTH
 	add hl, bc
 	dec d
 	jr nz, .countPoisonedLoop
@@ -132,7 +132,7 @@ Func_c4c7:
 	call Random
 	and $1
 	jr z, .asm_c4de
-	calladb_ModifyPikachuHappiness $6
+	callfar_ModifyPikachuHappiness PIKAHAPPY_WALKING
 .asm_c4de
 	ld hl, wPikachuMood
 	ld a, [hl]
