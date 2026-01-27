@@ -347,41 +347,89 @@ PrintFanClubPortrait::
 	ldh [hCanceledPrinting], a
 	call Printer_PlayPrinterMusic
 	call Printer_GetMonStats
+
 	ldh a, [rIE]
 	push af
 	xor a
 	ldh [rIF], a
 	ld a, $9
 	ldh [rIE], a
+
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+
+; =======================
+; FIRST PAGE (unchanged)
+; =======================
+
 	call StartTransmission_Send9Rows
 	ld a, $13
 	ld [wcae2], a
 	call Printer_CopyTileMapToPrinterTileBuffer
-	call Printer_ResetJoypadHRAM
-.print_loop
-	call JoypadLowSensitivity
-	call Printer_StopIfPressB
-	jr c, .quit
-	ld a, [wPrinterSendState]
-	bit 7, a
-	jr nz, .quit
-	call PrinterTransmissionJumptable
-	call GBPrinter_CheckForErrors
-	call GBPrinter_UpdateStatusMessage
-	rst _DelayFrame
-	jr .print_loop
+	call .TryPrintPage
+	jr c, .finish_printing
 
-.quit
+; =======================
+; SECOND PAGE (NEW LOGIC)
+; =======================
+
 	xor a
 	ld [wPrinterConnectionOpen], a
 	ld [wPrinterOpcode], a
-	call Printer_CopyTileMapFromPrinterTileBuffer
+	ld c, $c
+	call DelayFrames
+
+	call SaveScreenTilesToBuffer1
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+
+	call Printer_RendarSecondPage
+
+	ld a, $7
+	call Printer_StartTransmission
+	ld a, $4
+	ld [wcae2], a
+	call Printer_CopyTileMapToPrinterTileBuffer
+
+	call LoadScreenTilesFromBuffer1
+	ld a, $1
+	ldh [hAutoBGTransferEnabled], a
+
+	call .TryPrintPage
+
+.finish_printing
+	xor a
+	ld [wPrinterConnectionOpen], a
+	ld [wPrinterOpcode], a
 	xor a
 	ldh [rIF], a
 	pop af
 	ldh [rIE], a
 	call ReloadMapAfterPrinter
 	call Printer_PlayMapMusic
+	ret
+
+.TryPrintPage:
+	call Printer_ResetJoypadHRAM
+.print_loop
+	call JoypadLowSensitivity
+	call Printer_StopIfPressB
+	jr c, .pressed_b
+	ld a, [wPrinterSendState]
+	bit 7, a
+	jr nz, .completed
+	call PrinterTransmissionJumptable
+	call GBPrinter_CheckForErrors
+	call GBPrinter_UpdateStatusMessage
+	rst _DelayFrame
+	jr .print_loop
+
+.completed
+	and a
+	ret
+
+.pressed_b
+	scf
 	ret
 
 PrinterDebug:
@@ -978,3 +1026,124 @@ PrintPCBox_PlaceHorizontalLines:
 
 .HorizontalLineString:
 	db "----------@"
+
+Printer_PrepareStatExp_Page2::
+	call ClearScreen
+	hlcoord 0, 0
+	lb bc, 6, 18
+	call TextBoxBorder
+
+	hlcoord 5, 1
+	ld de, .StatEXP
+	call PlaceString
+
+	ld hl, hUILayoutFlags
+	set BIT_SINGLE_SPACED_LINES, [hl]
+	hlcoord 1, 2
+	ld de, .StatStrings
+	call PlaceString
+	ld hl, hUILayoutFlags
+	res BIT_SINGLE_SPACED_LINES, [hl]
+
+	hlcoord 8, 2
+	ld de, wLoadedMonHPExp + 1
+	lb bc, 2, 5
+	call PrintNumber
+
+	hlcoord 8, 3
+	ld de, wLoadedMonAttackExp + 1
+	lb bc, 2, 5
+	call PrintNumber
+
+	hlcoord 8, 4
+	ld de, wLoadedMonDefenseExp + 1
+	lb bc, 2, 5
+	call PrintNumber
+
+	hlcoord 8, 5
+	ld de, wLoadedMonSpeedExp + 1
+	lb bc, 2, 5
+	call PrintNumber
+
+	hlcoord 8, 6
+	ld de, wLoadedMonSpecialExp + 1
+	lb bc, 2, 5
+	call PrintNumber
+
+	ret
+
+.StatEXP:
+	db "Stat EXP:@"
+
+.StatStrings:
+	db "HP:"
+	next "ATK:"
+	next "DEF:"
+	next "SPD:"
+	next "SPC:@"
+
+Printer_RendarSecondPage::
+	call ClearScreen
+	call Printer_PrepareStatExp_Page2
+	call Printer_PlaceDVsOn_Page2
+	ret
+
+; Place the 5 DVs on screen
+Printer_PlaceDVsOn_Page2::
+
+    hlcoord 0, 10
+    ld de, .Page2DV
+    call PlaceString
+
+    ; take dvs combined values from wLoadedMonDVs, separate them, and load them into wStringBuffer
+    ; in the reverse SPC-SPD-DEF-ATK-HP order.
+    ld hl, wLoadedMonDVs
+    ld e, %00001111 ; this is used to mask the lower nybble from the whole combined dvs value
+    ld a, [hli]
+    ld d, a
+    push de
+    ld d, [hl]
+    ld hl, wStringBuffer
+    lb bc, 0, 4 ; b set to 0 and is used for the HP DV
+    ; c is the amount of nybbles (4)
+.nextNybble
+    ld a, d
+    and e
+    ld [hli], a
+    rra
+    rr b
+    dec c
+    jr z, .done
+    swap d
+    bit 0, c
+    jr nz, .nextNybble
+    pop de
+    jr .nextNybble
+.done
+    swap b
+    ld [hl], b
+
+    ; hl now point to wStringBuffer + 4, transfer it into de for use with PrintNumber
+    ld d, h
+    ld e, l
+
+    ; Place the previously separated DVs on screen at regular interval.
+	hlcoord 0, 11 ; starting positionon screen
+	ld bc, 2 ; spacing between the dvs (the value is based on how HL move during PrintNumber
+    ; you may need to adjust it until you get the wanted result)
+    ld a, 5 ; amount of DVs to place on screen
+.printNextDV
+    push bc
+    push af
+	lb bc, (1 | LEADING_ZEROES), 2 ; this is the number format
+	; see the PrintNumber function comment for explanations
+    call PrintNumber
+    pop af
+    pop bc
+    add hl, bc
+    dec a
+    jr nz, .printNextDV
+    ret
+
+.Page2DV:
+    db "HP ATK DEF SPD SPC@"
