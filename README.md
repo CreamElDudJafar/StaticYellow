@@ -115,6 +115,7 @@ CREDITS: THE MOST IMPORTANT PART OF THIS
 - RainbowMetalPigeon/ExtremeYellow- Space code for Bank 1E, Surrender in battle option, and Pikachu Flying Animation. Also for 3rd character/gender tutorial AND FOR CREATING THE HARDEST GEN 1 YELLOW HACK EVER. BUT I LOVE PLAYING IT
 - RainbowDevs/Pokemon Brown- Another awesome Gen 1 hack. Some Pokemon Sprites were taken from Brown and added into this game.
 - BYRAX- FOR THE BOXART FOR ALL THE GBC/GBA GAMES. ALSO TESTING THE GAME MULTIPLE TIMES AS WELL.
+- Daylight/Enzo-Matrix23- DVs and Stat Exp when printing Pokemon stats in Vermilion City.
 - JA2398- Tester
 - DarthBR- Tester
 - Bri- Tester
