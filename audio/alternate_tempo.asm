@@ -1,5 +1,6 @@
 ; an alternate start for MeetRival which has a different first measure
 Music_RivalAlternateStart::
+	rst _DelayFrame	;joenote - added to help alleviate out of sync audio
 	ld c, BANK(Music_MeetRival)
 	ld a, MUSIC_MEET_RIVAL
 	call PlayMusic
