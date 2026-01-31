@@ -163,6 +163,13 @@ Audio1_PlayNextNote:
 	ld a, [wLowHealthAlarm]
 	bit BIT_LOW_HEALTH_ALARM, a
 	jr z, .asm_918c
+
+	;joenote - treat non-active wLowHealthTonePairs the same as a disabled wLowHealthAlarm
+;			- needed for limiting the hp alarm or else some sfx get cut off
+	ld a, [wLowHealthTonePairs]
+	bit BIT_LOW_HEALTH_ALARM, a
+	jr z, .asm_918c
+
 	call Audio1_EnableChannelOutput
 	ret
 .asm_918c

@@ -4,7 +4,53 @@ Music_DoLowHealthAlarm::
 	jr z, .disableAlarm
 
 	bit BIT_LOW_HEALTH_ALARM, a
-	ret z
+;	ret z 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; shinpokerednote: FIXED: low health alarm only rings a couple times before stopping after triggering
+;                         limit the low health alarm to 3 tone pairs
+	push af
+	jr z, .no_alarm_check_battle
+.yes_alarm_check_tone
+	ld a, [wLowHealthTonePairs]
+	and %01111111
+	jr z, .no_alarm_no_battle
+	cp 1
+	jr z, .dec_pop_and_disable_alarm
+	jr .do_alarm_tone_check_dec
+.no_alarm_check_battle
+	ld a, [wIsInBattle]
+	cp $00  ; and a
+	jr z, .no_alarm_no_battle
+	cp $FF
+	jr z, .no_alarm_no_battle
+.no_alarm_yes_battle_checkHP
+	ld a, [wPlayerHPBarColor]
+	cp HP_BAR_RED
+	jr z, .no_alarm_no_battle
+	ld a, 3 + 1
+	ld [wLowHealthTonePairs], a
+.no_alarm_no_battle
+	pop af
+	ret
+.dec_pop_and_disable_alarm
+	;ld a, [wLowHealthTonePairs]
+	dec a
+	ld [wLowHealthTonePairs], a
+.pop_and_disable_alarm
+	pop af
+	jr .disableAlarm
+.do_alarm_tone_check_dec
+	ld a, [wLowHealthAlarm]
+	cp $81
+	ld a, [wLowHealthTonePairs]	;tone pairs will be 2 or higher when this line is reached
+	set BIT_LOW_HEALTH_ALARM, a
+	ld [wLowHealthTonePairs], a
+	jr nz, .do_alarm_tone		;jump if wLowHealthAlarm was != $81
+	dec a	;decrement the value from wLowHealthTonePairs
+	ld [wLowHealthTonePairs], a
+.do_alarm_tone
+	pop af
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 	and LOW_HEALTH_TIMER_MASK
 	jr nz, .notToneHi ;if timer > 0, play low tone.
