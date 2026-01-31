@@ -14,8 +14,12 @@ PlaySoundWaitForCurrent::
 
 ; Wait for sound to finish playing
 WaitForSoundToFinish::
-	ld a, [wLowHealthAlarm]
-	and $80
+;	ld a, [wLowHealthAlarm]
+;	and $80
+;joenote - more adjustments for the modified low HP alarm
+	ld a, [wLowHealthTonePairs]
+	bit BIT_LOW_HEALTH_ALARM, a
+
 	ret nz
 	push hl
 .waitLoop
