@@ -6,8 +6,8 @@ GameCornerPrizeRoom_Object:
 	db $f ; border block
 
 	def_warp_events
-	warp_event  4,  7, LAST_MAP, 10
-	warp_event  5,  7, LAST_MAP, 10
+	warp_event  4,  7, LAST_MAP, 9
+	warp_event  5,  7, LAST_MAP, 9
 
 	def_bg_events
 	bg_event  2,  2, TEXT_GAMECORNERPRIZEROOM_PRIZE_VENDOR_1
