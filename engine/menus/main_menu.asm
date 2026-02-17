@@ -193,7 +193,7 @@ NewGameText:
 VersionText:
 	db " "
 	db "Version"
-	db " 1.6.2"
+	db " 1.6.3"
 	db "@"
 
 DisplayContinueGameInfo:
