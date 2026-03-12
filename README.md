@@ -1,5 +1,8 @@
 # Pokémon Static Yellow- A Gen 1 Hack with QOL improvements, but also trying to keep the same vibe as Gen 1!
 
+<img width="707" height="659" alt="STATIC" src="https://github.com/user-attachments/assets/65b224f5-5846-4bbc-89d3-19a91dff1cd9" />
+
+
 My love of hacks and hacking came from Playing Red++ and Blue Kaizo. 
 Small binary edits to disassembly have come a long way and I am greatful I found those 2 hacks many moons ago!
 
