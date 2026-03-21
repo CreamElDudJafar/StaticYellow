@@ -192,7 +192,7 @@ ROMX $2f
 	org $5000
 	"BG Map Attributes"
 ROMX $30
-; bank 30 is empty now
+	"Engine Spillover"
 ROMX $31
 	"Pikachu Cries 6"
 ROMX $32
@@ -213,7 +213,6 @@ ROMX $39
 	"Pikachu Graphics 1"
 ROMX $3A
 	"bank3A"
-	"Engine Spillover" ; Added Can Be Removed For Space
 ROMX $3B
 	"NPC Sprites 5"
 ROMX $3C
