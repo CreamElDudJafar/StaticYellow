@@ -2329,7 +2329,7 @@ ItemUsePPRestore:
 
 .fullyRestorePP
 	ld a, [hl] ; move PP
-  and %00111111 ; lower 6 bits store current PP
+  	and %00111111 ; lower 6 bits store current PP
 	cp b ; does current PP equal max PP?
 	ret z
 	jr .storeNewAmount
