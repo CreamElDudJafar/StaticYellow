@@ -2071,7 +2071,7 @@ RodResponse:
 	dec a ; is there a bite?
 	jr nz, .DoNotGenerateFishingEncounter
 	; if yes, store level and species data
-	ld a, 1
+	inc a ; a = 1
 	ld [wMoveMissed], a
 	ld a, b ; level
 	ld [wCurEnemyLevel], a
