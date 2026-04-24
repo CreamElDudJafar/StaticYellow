@@ -40,7 +40,7 @@ OptionMenuJumpTable:
 	dw OptionsMenu_SpeakerSettings
 	dw OptionsMenu_GBPrinterBrightness
 	dw OptionsMenu_Dummy
-	dw OptionsMenu_Dummy
+	dw OptionsMenu_GoHome
 	dw OptionsMenu_Cancel
 
 OptionsMenu_TextSpeed:
@@ -355,6 +355,27 @@ GetGBPrinterBrightness:
 	lb de, $60, $0
 	ret
 
+OptionsMenu_GoHome:
+	ldh a, [hJoy5]
+	and A_BUTTON ; clears carry
+	ret z
+	ld hl, GoHomeConfirmText
+	rst _PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .popAndJump ; said No
+	inc a ; a = 1 so nz
+	scf ; set carry flag but not zero flag to warp home
+	ret
+.popAndJump
+	pop hl ; pop the 'call GetOptionPointer' return address
+	jp DisplayOptionMenu_
+
+GoHomeConfirmText:
+	text_far _GoHomeConfirmText
+	text_end
+
 OptionsMenu_Dummy:
 	and a
 	ret
@@ -362,10 +383,8 @@ OptionsMenu_Dummy:
 OptionsMenu_Cancel:
 	ldh a, [hJoy5]
 	and A_BUTTON
-	jr nz, .pressedCancel
-	and a
-	ret
-.pressedCancel
+	ret z
+	xor a
 	scf
 	ret
 
@@ -387,23 +406,23 @@ OptionsControl:
 	ret
 .doNotWrapAround
 	cp $4
-	jr c, .regularIncrement
-	ld [hl], $6
+	jr nz, .regularIncrement
+	inc [hl]
 .regularIncrement
 	inc [hl]
 	scf
 	ret
 .pressedUp
 	ld a, [hl]
-	cp $7
-	jr nz, .doNotMoveCursorToPrintOption
-	ld [hl], $4
+	and a
+	jr nz, .doNotWrapAround2
+	ld [hl], 7
 	scf
 	ret
-.doNotMoveCursorToPrintOption
-	and a
+.doNotWrapAround2
+	cp 6
 	jr nz, .regularDecrement
-	ld [hl], $8
+	dec [hl]
 .regularDecrement
 	dec [hl]
 	scf
@@ -437,14 +456,12 @@ InitOptionsMenu:
 	call PlaceString
 	xor a
 	ld [wOptionsCursorLocation], a
-	ld c, 5 ; the number of options to loop through
 .loop
-	push bc
 	call GetOptionPointer ; updates the next option
-	pop bc
 	ld hl, wOptionsCursorLocation
 	inc [hl] ; moves the cursor for the highlighted option
-	dec c
+	ld a, 5 ; the number of options to loop through
+	cp [hl]
 	jr nz, .loop
 	xor a
 	ld [wOptionsCursorLocation], a
@@ -458,7 +475,9 @@ AllOptionsText:
 	next "ANIMATION  :"
 	next "BATTLESTYLE:"
 	next "SOUND:"
-	next "PRINT:@"
+	next "PRINT:"
+	next ""
+	next "RETURN HOME@"
 
 OptionMenuCancelText:
 	db "CANCEL     SELECT@"
