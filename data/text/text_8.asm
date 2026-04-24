@@ -42,6 +42,12 @@ _WarpToLastPokemonCenterText::
 	line "#MON CENTER."
 	done
 
+_GoHomeConfirmText::
+	text "Do you want to"
+	line "return to PALLET"
+	cont "TOWN?"
+	done
+
 _CannotUseTeleportNowText::
 	text_ram wNameBuffer
 	text " can't"

@@ -729,10 +729,24 @@ StartMenu_Option::
 	call ClearScreen
 	call UpdateSprites
 	callfar DisplayOptionMenu
+	jr nc, .returnToOptionsMenu
+	jr nz, .goHome ; Go Home sets C and clears Z
+.returnToOptionsMenu
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call LoadTextBoxTilePatterns
 	call UpdateSprites
 	jp RedisplayStartMenu
+.goHome
+	ld a, PALLET_TOWN
+	ld [wLastBlackoutMap], a
+	ld hl, wStatusFlags6
+	set BIT_FLY_WARP, [hl]
+	set BIT_ESCAPE_WARP, [hl]
+	ld hl, wStatusFlags4
+	res BIT_NO_BATTLES, [hl]
+	call GBPalWhiteOutWithDelay3
+	call RestoreScreenTilesAndReloadTilePatterns
+	jp CloseTextDisplay
 
 SwitchPartyMon::
 	call SwitchPartyMon_InitVarOrSwapData ; swap data
