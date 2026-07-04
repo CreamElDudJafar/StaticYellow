@@ -1,3 +1,8 @@
+AlreadyOnThatFloor:
+	ld hl, AlreadyOnThatFloorText
+	rst _PrintText
+	jr DisplayElevatorFloorMenu.menuDisplayLoop
+
 DisplayElevatorFloorMenu:
 	ld a, [wListScrollOffset]
 	push af ; preserve the list scroll offset so our item list offset is remembered
@@ -8,6 +13,8 @@ DisplayElevatorFloorMenu:
 .menuDisplayLoop:
 	ld hl, WhichFloorText
 	rst _PrintText
+; draw box for current elevator floor
+	call .printCurrentFloor
 	ld hl, wItemList
 	ld a, l
 	ld [wListPointer], a
@@ -30,15 +37,12 @@ DisplayElevatorFloorMenu:
 ;;;;;;;;;; PureRGBnote: CHANGED: elevators will tell you if you selected the floor you are currently on and will track how far you will travel
 	ld a, [wWarpedFromWhichMap] ; map you were on before entering the elevator
 	cp c
-	jr z, .alreadyOnThatFloor
+	jr z, AlreadyOnThatFloor
+
 	push bc
-	; wWarpedFromWhichMap still loaded
 	ld hl, wElevatorWarpMaps + 1
 	ld de, 2
-	; warning - the map in wWarpedFromWhichMap is expected to DEFINITELY be in wElevatorWarpMaps
-	; if it isn't, IsInArray will keep searching outside the bounds of the list and that could lead to undefined behavior
 	call IsInArray
-	; what index of the floors the current floor is on now = b
 	ld a, [wWhichPokemon] ; which index did we pick in the list
 	ld c, a
 	sub b
@@ -51,12 +55,12 @@ DisplayElevatorFloorMenu:
 	pop bc
 	ld hl, wCurrentMapScriptFlags
 	set BIT_CUR_MAP_USED_ELEVATOR, [hl]
-;;;;;;;;;;
+
 	ld hl, wWarpEntries
-	call .UpdateWarp ; update first warp
-	call .UpdateWarp ; update second warp
-	; destination map ID still loaded
-	; PureRGBnote: ADDED: update the "map ID we came from" variable so the above usage of this variable thinks are now on the new floor
+	call .UpdateWarp
+	call .UpdateWarp
+
+	ld a, c
 	ld [wWarpedFromWhichMap], a
 	ld a, b ; destination warp id
 	ld [wWarpedFromWhichWarp], a
@@ -76,15 +80,87 @@ DisplayElevatorFloorMenu:
 	ld [hli], a ; destination map ID
 	ret
 
-.alreadyOnThatFloor
-	ld hl, AlreadyOnThatFloor
-	rst _PrintText
-	jr .menuDisplayLoop
+.printCurrentFloor
+	hlcoord 4, 0
+	lb bc, 1, 14
+	call TextBoxBorder
+
+	hlcoord 5, 1
+	ld de, CurrentFloorText
+	call PlaceString
+
+	ld hl, wElevatorWarpMaps + 1
+	ld a, [wItemList]
+	ld b, a
+	ld c, 0
+	ld a, [wWarpedFromWhichMap]
+	ld d, a
+
+.loopFindFloor
+	ld a, [hli]
+	inc hl
+	cp d
+	jr z, .foundMap
+	inc c
+	dec b
+	jr nz, .loopFindFloor
+
+	xor a
+	ld c, a
+
+.foundMap
+	ld b, 0
+	ld hl, wItemList + 1
+	add hl, bc
+	ld a, [hl]
+	ld [wNamedObjectIndex], a
+	call GetFloorName
+	hlcoord 14, 1
+	ld de, wNameBuffer
+	call PlaceString
+	ret
+
 
 WhichFloorText:
 	text_far _WhichFloorText
 	text_end
 
-AlreadyOnThatFloor:
+AlreadyOnThatFloorText:
 	text_far _AlreadyOnThatFloor
 	text_end
+
+CurrentFloorText:
+	db "Current: @"
+
+
+GetFloorName::
+	ld a, [wNamedObjectIndex]
+	sub FLOOR_B2F
+	ld hl, FloorNames
+	ld bc, 4
+	call AddNTimes
+	ld d, h
+	ld e, l
+	ld hl, wNameBuffer
+	push hl
+	call CopyString
+	pop de
+	ret
+
+FloorNames:
+	table_width 4
+	db "B2F@"
+	db "B1F@"
+	db "1F@@"
+	db "2F@@"
+	db "3F@@"
+	db "4F@@"
+	db "5F@@"
+	db "6F@@"
+	db "7F@@"
+	db "8F@@"
+	db "9F@@"
+	db "10F@"
+	db "11F@"
+	db "B4F@"
+	assert_table_length NUM_FLOORS
