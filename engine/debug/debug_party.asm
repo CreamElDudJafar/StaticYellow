@@ -13,10 +13,12 @@ SetDebugNewGameParty: ; unreferenced except in _DEBUG
 	jr .loop
 
 DebugNewGameParty: ; unreferenced except in _DEBUG
-	db SNORLAX, 80
-	db PERSIAN, 80
-	db JIGGLYPUFF, 80
-	db STARTER_PIKACHU, 80
+	db SNORLAX, 100
+	db BLASTOISE, 100
+	db CHARIZARD, 100
+	db STARTER_PIKACHU, 100
+	db DRAGONITE, 100
+	db MEW, 100
 	db -1 ; end
 
 PrepareNewGameDebug: ; dummy except in _DEBUG
