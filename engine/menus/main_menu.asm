@@ -193,7 +193,7 @@ NewGameText:
 VersionText:
 	db " "
 	db "Version"
-	db " 1.6.3"
+	db " 1.6.4"
 	db "@"
 
 DisplayContinueGameInfo:
@@ -291,6 +291,17 @@ CheckForPlayerNameInSRAM:
 	ld [MBC1SRamBankingMode], a
 	assert SRAM_BANKING_MODE == BANK("Save Data")
 	ld [MBC1SRamBank], a
+	
+	call CheckSaveFileExists
+	push af
+	xor a
+	ld [MBC1SRamEnable], a
+	ld [MBC1SRamBankingMode], a
+	pop af
+	ret
+
+CheckSaveFileExists::
+
 	ld b, NAME_LENGTH
 	ld hl, sPlayerName
 .loop
@@ -299,14 +310,8 @@ CheckForPlayerNameInSRAM:
 	jr z, .found
 	dec b
 	jr nz, .loop
-	xor a
-	ld [MBC1SRamEnable], a
-	ld [MBC1SRamBankingMode], a
 	and a
 	ret
 .found
-	xor a
-	ld [MBC1SRamEnable], a
-	ld [MBC1SRamBankingMode], a
 	scf
 	ret

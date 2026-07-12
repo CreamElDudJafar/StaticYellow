@@ -15,7 +15,19 @@ SECTION "Save Data", SRAM
 
 sGameData::
 sPlayerName::  ds NAME_LENGTH
+
+UNION
 sMainData::    ds wMainDataEnd - wMainDataStart
+
+NEXTU
+ds wOptions2 - wMainDataStart
+sOptions2:: db
+
+NEXTU
+ds wOptions - wMainDataStart
+sOptions:: db
+ENDU
+
 sSpriteData::  ds wSpriteDataEnd - wSpriteDataStart
 sPartyData::   ds wPartyDataEnd - wPartyDataStart
 sCurBoxData::  ds wBoxDataEnd - wBoxDataStart

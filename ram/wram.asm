@@ -659,7 +659,9 @@ wLowHealthAlarmDisabled:: db
 
 wPlayerMonMinimized:: db
 
-	ds 2
+wNewInGameFlags:: db
+
+	ds 1
 
 wEXPBarPixelLength::  ds 1
 wEXPBarBaseEXP::      ds 3
@@ -2370,7 +2372,9 @@ wPlayerGender::
 	; $02 = enby
 		ds 1
 
-	ds 4
+wOptions2:: db
+
+	ds 3
 ENDU
 
 wObtainedHiddenItemsFlags:: flag_array MAX_HIDDEN_ITEMS

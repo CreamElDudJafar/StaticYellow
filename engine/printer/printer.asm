@@ -382,7 +382,7 @@ PrintFanClubPortrait::
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 
-	call Printer_RendarSecondPage
+	call Printer_RenderSecondPage
 
 	ld a, $7
 	call Printer_StartTransmission
@@ -1036,13 +1036,17 @@ Printer_PrepareStatExp_Page2::
 	ld de, .StatEXP
 	call PlaceString
 
-	ld hl, hUILayoutFlags
-	set BIT_SINGLE_SPACED_LINES, [hl]
+	ldh a, [hUILayoutFlags]
+	push af
+	set BIT_SINGLE_SPACED_LINES, a
+	ldh [hUILayoutFlags], a
+
 	hlcoord 1, 2
 	ld de, .StatStrings
 	call PlaceString
-	ld hl, hUILayoutFlags
-	res BIT_SINGLE_SPACED_LINES, [hl]
+
+	pop af
+	ldh [hUILayoutFlags], a
 
 	hlcoord 8, 2
 	ld de, wLoadedMonHPExp
@@ -1068,7 +1072,6 @@ Printer_PrepareStatExp_Page2::
 	ld de, wLoadedMonSpecialExp
 	lb bc, 2, 5
 	call PrintNumber
-
 	ret
 
 .StatEXP:
@@ -1081,64 +1084,76 @@ Printer_PrepareStatExp_Page2::
 	next "SPD:"
 	next "SPC:@"
 
-Printer_RendarSecondPage::
-	call ClearScreen
+Printer_RenderSecondPage::
 	call Printer_PrepareStatExp_Page2
 	call Printer_PlaceDVsOn_Page2
 	ret
 
-; Place the 5 DVs on screen
+; Place HP, Attack, Defense, Speed, and Special DVs on the second page.
 Printer_PlaceDVsOn_Page2::
-    hlcoord 0, 10
-    ld de, .Page2DV
-    call PlaceString
-; take dvs combined values from wLoadedMonDVs, separate them, and load them into wStringBuffer
-; in the reverse SPC-SPD-DEF-ATK-HP order.
-    ld hl, wLoadedMonDVs
-    ld e, %00001111 ; this is used to mask the lower nybble from the whole combined dvs value
-    ld a, [hli]
-    ld d, a
-    push de
-    ld d, [hl]
-    ld hl, wStringBuffer
-    lb bc, 0, 4 ; b set to 0 and is used for the HP DV
-; c is the amount of nybbles (4)
+	hlcoord 0, 10
+	ld de, .Page2DV
+	call PlaceString
+
+	; Separate the packed DVs into wStringBuffer in reverse order:
+	; Special, Speed, Defense, Attack, HP.
+	ld hl, wLoadedMonDVs
+	ld e, $0f
+
+	; Save the Attack/Defense byte while processing Speed/Special first.
+	ld a, [hli]
+	ld d, a
+	push de
+	ld d, [hl]
+
+	ld hl, wStringBuffer
+	lb bc, 0, 4 ; B builds HP DV; C counts the four stored DVs.
+
 .nextNybble
-    ld a, d
-    and e
-    ld [hli], a
-    rra
-    rr b
-    dec c
-    jr z, .done
-    swap d
-    bit 0, c
-    jr nz, .nextNybble
-    pop de
-    jr .nextNybble
+	ld a, d
+	and e
+	ld [hli], a
+
+	; Build HP DV from the low bit of each DV.
+	rra
+	rr b
+
+	dec c
+	jr z, .done
+
+	swap d
+	bit 0, c
+	jr nz, .nextNybble
+
+	; Switch from Speed/Special to Attack/Defense.
+	pop de
+	jr .nextNybble
+
 .done
-    swap b
-    ld [hl], b
-; hl now point to wStringBuffer + 4, transfer it into de for use with PrintNumber
-    ld d, h
-    ld e, l
-; Place the previously separated DVs on screen at regular interval.
-    hlcoord 0, 11 ; starting positionon screen
-    ld bc, 2 ; spacing between the dvs (the value is based on how HL move during PrintNumber
-; you may need to adjust it until you get the wanted result)
-    ld a, 5 ; amount of DVs to place on screen
+	swap b
+	ld [hl], b
+
+	; HL points to wStringBuffer + 4, which contains HP DV.
+	; PrintNumber decrements DE after each one-byte number, so the
+	; values print as HP, Attack, Defense, Speed, Special.
+	ld d, h
+	ld e, l
+
+	hlcoord 0, 11
+	ld bc, 2
+	ld a, 5
+
 .printNextDV
-    push bc
-    push af
-    lb bc, (1 | LEADING_ZEROES), 2 ; this is the number format
-; see the PrintNumber function comment for explanations
-    call PrintNumber
-    pop af
-    pop bc
-    add hl, bc
-    dec a
-    jr nz, .printNextDV
-    ret
+	push bc
+	push af
+	lb bc, LEADING_ZEROES | 1, 2
+	call PrintNumber
+	pop af
+	pop bc
+	add hl, bc
+	dec a
+	jr nz, .printNextDV
+	ret
 
 .Page2DV:
-    db "HP ATK DEF SPD SPC@"
+	db "HP ATK DEF SPD SPC@"
