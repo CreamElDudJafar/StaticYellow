@@ -637,21 +637,23 @@ _SendSGBPacket:
 ; else send 16 more bytes
 	jr .loop2
 
-LoadSGB:
+LoadSGB::
+	ldh a, [hGBC]
+	and a
+	ld a, 1
+	ld [wOnSGB], a
+	ret nz ; no need to do anything else if on GBC, we just treat it as SGB
 	xor a
 	ld [wOnSGB], a
 	call CheckSGB
-	jr c, .onSGB
-	ldh a, [hGBC]
+	ld a, $1
+	jr c, .next
+	dec a
+.next
+	ld [wOnSGB], a
 	and a
-	jr z, .onDMG
-	ld a, $1
-	ld [wOnSGB], a
-.onDMG
-	ret
+	ret z
 .onSGB
-	ld a, $1
-	ld [wOnSGB], a
 	di
 	call PrepareSuperNintendoVRAMTransfer
 	ei
@@ -667,8 +669,12 @@ LoadSGB:
 	call CopyGfxToSuperNintendoVRAM
 	ld a, 1
 	ld [wCopyingSGBTileData], a
+;;;;;;;;;; PureRGBnote: ADDED: optional toggle between original SGB palettes and GBC palettes when playing on SGB
+	call GetPalettes
+	ld h, d
+	ld l, e ; GetPalettes stores the palette set address in de, but here we need it to be in hl, so we copy it over to hl
+;;;;;;;;;;
 	ld de, PalTrnPacket
-	ld hl, SuperPalettes
 	call CopyGfxToSuperNintendoVRAM
 	call ClearVram
 	ld hl, MaskEnCancelPacket
@@ -829,13 +835,29 @@ SendSGBPackets:
 	ldh a, [rLCDC]
 	and 1 << rLCDC_ENABLE
 	ret z
-	call Delay3
-	ret
+	CheckAndResetEvent FLAG_SKIP_DELAY_IN_GBC_PALETTE_FUNC
+	ret nz
+	jp Delay3
 .notGBC
 	push de
 	call SendSGBPacket
 	pop hl
 	jp SendSGBPacket
+
+GetPalettes:
+	ld a, [wOptions2]
+	and %11
+	cp PALETTES_YELLOW
+	jr z, .yellow
+
+	ld de, SuperPalettes
+	and a
+	ret
+
+.yellow
+	ld de, GBCBasePalettes
+	scf
+	ret
 
 InitGBCPalettes:
 	ld a, [hl]
@@ -897,7 +919,7 @@ GetGBCBasePalAddress::
 	add hl, hl
 	add hl, hl
 	add hl, hl
-	ld de, GBCBasePalettes
+	call GetPalettes
 	add hl, de
 	ld a, l
 	ld e, a

@@ -97,6 +97,7 @@ DEF rLCDC_DEFAULT EQU (1 << rLCDC_ENABLE) | (1 << rLCDC_WINDOW_TILEMAP) | (1 << 
 
 	ei
 
+	callfar CopyOptionsFromSRAM
 	predef LoadSGB
 
 	ld a, BANK(SFX_Shooting_Star)

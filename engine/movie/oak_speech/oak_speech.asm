@@ -1,15 +1,7 @@
 PrepareOakSpeech:
 	ld a, [wLetterPrintingDelayFlags]
 	push af
-	ld a, [wOptions]
-	push af
-	; Retrieve BIT_DEBUG_MODE set in DebugMenu for StartNewGameDebug.
-	; BUG: StartNewGame carries over BIT_ALWAYS_ON_BIKE from previous save files,
-	; which causes CheckForceBikeOrSurf to not return.
-	; To fix this in debug builds, reset BIT_ALWAYS_ON_BIKE here or in StartNewGame.
-	; In non-debug builds, the instructions can be removed.
-	ld a, [wStatusFlags6]
-	push af
+	call BackupOptionsSettings
 	ld a, [wPrinterSettings]
 	push af
 	ld hl, wPlayerName
@@ -26,10 +18,7 @@ PrepareOakSpeech:
 	ld [wSurfingMinigameHiScore + 2], a
 	pop af
 	ld [wPrinterSettings], a
-	pop af
-	ld [wStatusFlags6], a
-	pop af
-	ld [wOptions], a
+	call RestoreOptionsSettings
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	ld a, [wOptionsInitialized]
@@ -353,6 +342,96 @@ IntroDisplayPicCenteredOrUpperRight:
 	xor a
 	ldh [hStartTileID], a
 	predef_jump CopyUncompressedPicToTilemap
+
+BackupOptionsSettings:
+	ld de, wBuffer
+	ld hl, BackupList
+	jr DoOptionsBackup
+
+RestoreOptionsSettings:
+	ld de, wBuffer
+	ld hl, BackupList
+	call DoOptionsRestore
+	ld hl, wStatusFlags6
+	res BIT_ALWAYS_ON_BIKE, [hl]
+	ret
+
+DoOptionsBackup:
+	ld b, [hl]
+	inc hl
+.loopBackup
+	push hl
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld a, [hl]
+	ld [de], a
+	pop hl
+	inc hl
+	inc hl
+	inc de
+	dec b
+	jr nz, .loopBackup
+	ret
+
+DoOptionsRestore:
+	ld b, [hl]
+	inc hl
+.loopRestore
+	push hl
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld a, [de]
+	ld [hl], a
+	pop hl
+	inc hl
+	inc hl
+	inc de
+	dec b
+	jr nz, .loopRestore
+	ret
+
+BackupList:
+	db 3
+	dw wOptions2
+	dw wOptions
+	dw wStatusFlags6
+
+CopyOptionsFromSRAM::
+	ld a, [wOptionsInitialized]
+	and a
+	ret nz
+
+	ld a, SRAM_ENABLE
+	ld [MBC1SRamEnable], a
+
+	ld a, $1
+	ld [MBC1SRamBankingMode], a
+	ld [MBC1SRamBank], a
+
+	call CheckSaveFileExists
+	jr nc, .noSave
+
+	ld a, [sOptions2]
+	ld [wOptions2], a
+
+	ld a, [sOptions]
+	ld [wOptions], a
+	jr .doneLoad
+
+.noSave
+	ld a, PALETTES_YELLOW
+	ld [wOptions2], a
+
+.doneLoad
+	xor a
+	ld [MBC1SRamBankingMode], a
+	ld [MBC1SRamEnable], a
+
+	ld a, TRUE
+	ld [wOptionsInitialized], a
+	ret
 
 ; displays difficulty choice
 DifficultyChoice::

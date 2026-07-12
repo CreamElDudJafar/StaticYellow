@@ -6,7 +6,7 @@ DisplayOptionMenu_:
 	ld b, a
 	and START | B_BUTTON
 	jr nz, .exitOptionMenu
-	bit BIT_SELECT, b ; Select button pressed
+	bit BIT_SELECT, b
 	jp nz, DisplaySoundTestMenu
 	call OptionsControl
 	jr c, .dpadDelay
@@ -16,7 +16,7 @@ DisplayOptionMenu_:
 	call OptionsMenu_UpdateCursorPosition
 	rst _DelayFrame
 	rst _DelayFrame
-        rst _DelayFrame
+	rst _DelayFrame
 	jr .optionMenuLoop
 .exitOptionMenu
 	ret
@@ -31,7 +31,7 @@ GetOptionPointer:
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
-	jp hl ; jump to the function for the current highlighted option
+	jp hl
 
 OptionMenuJumpTable:
 	dw OptionsMenu_TextSpeed
@@ -39,98 +39,107 @@ OptionMenuJumpTable:
 	dw OptionsMenu_BattleStyle
 	dw OptionsMenu_SpeakerSettings
 	dw OptionsMenu_GBPrinterBrightness
-	dw OptionsMenu_Dummy
+	dw OptionsMenu_Color
 	dw OptionsMenu_Dummy
 	dw OptionsMenu_Cancel
 
 OptionsMenu_TextSpeed:
-    	call GetTextSpeed ; c = 0 (instant), 1 (fast), 2 (medium), 3 (slow),
-    	ldh a, [hJoy5]    ; d = left speed, e = right speed
-    	bit BIT_D_RIGHT, a
-    	jr nz, .pressedRight
-    	bit BIT_D_LEFT, a
-    	jr nz, .pressedLeft
-    	jr .nonePressed
-.pressedRight ; pick right speed e and increase c
-    	inc c
-    	ld a, c
-    	cp 4
-    	jr nz, .save
-    	ld c, 0   ; wrap around to 0 if c = 4
-    	jr .save
-.pressedLeft  ; pick left speed d and decrease c
-    	ld e, d
-    	dec c
-    	ld a, c
-    	cp -1 ; inc a
-    	jr nz, .save
-    	ld c, 3   ; wrap around to 3 if c = 0
+	call GetTextSpeed
+	ldh a, [hJoy5]
+	bit BIT_D_RIGHT, a
+	jr nz, .pressedRight
+	bit BIT_D_LEFT, a
+	jr nz, .pressedLeft
+	jr .print
+
+.pressedRight
+	inc c
+	ld a, c
+	cp 4
+	jr c, .save
+	ld c, 0
+	jr .save
+
+.pressedLeft
+	ld a, c
+	and a
+	jr nz, .noWrapLeft
+	ld c, 4
+.noWrapLeft
+	dec c
+
 .save
-    	ld a, [wOptions]
-    	and ~TEXT_DELAY_MASK
-    	or e
-    	ld [wOptions], a
-.nonePressed
-    	ld b, 0
-    	sla c
-    	ld hl, TextSpeedStringsPointerTable
-    	add hl, bc
-    	ld a, [hli]
-    	ld e, a
-    	ld d, [hl]
-    	hlcoord 14, 2
-    	call PlaceString
-    	and a
-    	ret
+	call GetTextSpeedValueFromIndex
+	ld a, [wOptions]
+	and ~TEXT_DELAY_MASK
+	or e
+	ld [wOptions], a
+
+.print
+	ld b, 0
+	ld hl, TextSpeedStringsPointerTable
+	add hl, bc
+	add hl, bc
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	hlcoord 14, 2
+	call PlaceString
+	and a
+	ret
 
 TextSpeedStringsPointerTable:
-    	dw InstantText
-    	dw FastText
-    	dw MediumText
-    	dw SlowText
+	dw InstantText
+	dw FastText
+	dw MediumText
+	dw SlowText
 
 InstantText:
-    	db "INST@"
+	db "INST@"
 FastText:
-    	db "FAST@"
+	db "FAST@"
 MediumText:
-    	db "MID @"
+	db "MID @"
 SlowText:
-    	db "SLOW@"
+	db "SLOW@"
 
 GetTextSpeed:
-    	ld a, [wOptions]
-    	and TEXT_DELAY_MASK
-    	ld c, 0
-    	cp TEXT_DELAY_INSTANT
-    	jr z, .instantTextOption
-    	inc c
-    	cp TEXT_DELAY_FAST
-    	jr z, .fastTextOption
-    	inc c
-    	cp TEXT_DELAY_MEDIUM
-    	jr z, .mediumTextOption
-; slow text option
-    	inc c
-    	lb de, TEXT_DELAY_MEDIUM, TEXT_DELAY_INSTANT
-    	ret
-.mediumTextOption
-    	lb de, TEXT_DELAY_FAST, TEXT_DELAY_SLOW
-    	ret
-.fastTextOption
-    	lb de, TEXT_DELAY_INSTANT, TEXT_DELAY_MEDIUM
-    	ret
-.instantTextOption
-    	lb de, TEXT_DELAY_SLOW, TEXT_DELAY_FAST
-    	ret
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	ld c, 0
+	cp TEXT_DELAY_INSTANT
+	ret z
+	inc c
+	cp TEXT_DELAY_FAST
+	ret z
+	inc c
+	cp TEXT_DELAY_MEDIUM
+	ret z
+	inc c
+	cp TEXT_DELAY_SLOW
+	ret z
+	ld c, 1
+	ret
 
+GetTextSpeedValueFromIndex:
+	ld hl, TextSpeedValueTable
+	ld b, 0
+	add hl, bc
+	ld e, [hl]
+	ret
+
+TextSpeedValueTable:
+	db TEXT_DELAY_INSTANT
+	db TEXT_DELAY_FAST
+	db TEXT_DELAY_MEDIUM
+	db TEXT_DELAY_SLOW
 
 OptionsMenu_BattleAnimations:
 	ldh a, [hJoy5]
 	and D_RIGHT | D_LEFT
 	jr nz, .buttonPressed
 	ld a, [wOptions]
-	and $80 ; mask other bits
+	and $80
 	jr .nothingPressed
 .buttonPressed
 	ld a, [wOptions]
@@ -355,6 +364,77 @@ GetGBPrinterBrightness:
 	lb de, $60, $0
 	ret
 
+OptionsMenu_Color:
+	call GetColorSetting
+	ldh a, [hJoy5]
+	bit BIT_D_RIGHT, a
+	jr nz, .toggle
+	bit BIT_D_LEFT, a
+	jr nz, .toggle
+	jr .nothingPressed
+
+.toggle
+	ld a, c
+	xor 1
+	ld c, a
+
+.save
+	push bc
+	call GetColorValueFromIndex
+	ld b, a
+	ld a, [wOptions2]
+	and %10111100
+	or b
+	ld [wOptions2], a
+	call RunDefaultPaletteCommand
+	pop bc
+
+.nothingPressed
+	ld b, $0
+	ld hl, ColorOptionStringsPointerTable
+	add hl, bc
+	add hl, bc
+	ld e, [hl]
+	inc hl
+	ld d, [hl]
+	hlcoord 8, 12
+	call PlaceString
+	and a
+	ret
+
+GetColorSetting:
+	ld a, [wOptions2]
+	and %11
+	cp PALETTES_SGB
+	jr z, .sgb
+	ld c, 0 ; Y
+	ret
+
+.sgb
+	ld c, 1 ; SGB
+	ret
+
+GetColorValueFromIndex:
+	ld hl, ColorOptionValueTable
+	ld b, $0
+	add hl, bc
+	ld a, [hl]
+	ret
+
+ColorOptionValueTable:
+	db PALETTES_YELLOW
+	db PALETTES_SGB
+
+ColorOptionStringsPointerTable:
+	dw ColorYText
+	dw ColorSGBText
+
+ColorYText:
+	db "Y  @"
+
+ColorSGBText:
+	db "SGB@"
+
 OptionsMenu_Dummy:
 	and a
 	ret
@@ -386,7 +466,7 @@ OptionsControl:
 	scf
 	ret
 .doNotWrapAround
-	cp $4
+	cp $5
 	jr c, .regularIncrement
 	ld [hl], $6
 .regularIncrement
@@ -396,11 +476,11 @@ OptionsControl:
 .pressedUp
 	ld a, [hl]
 	cp $7
-	jr nz, .doNotMoveCursorToPrintOption
-	ld [hl], $4
+	jr nz, .doNotMoveCursorToColorOption
+	ld [hl], $5
 	scf
 	ret
-.doNotMoveCursorToPrintOption
+.doNotMoveCursorToColorOption
 	and a
 	jr nz, .regularDecrement
 	ld [hl], $8
@@ -437,13 +517,13 @@ InitOptionsMenu:
 	call PlaceString
 	xor a
 	ld [wOptionsCursorLocation], a
-	ld c, 5 ; the number of options to loop through
+	ld c, 6
 .loop
 	push bc
-	call GetOptionPointer ; updates the next option
+	call GetOptionPointer
 	pop bc
 	ld hl, wOptionsCursorLocation
-	inc [hl] ; moves the cursor for the highlighted option
+	inc [hl]
 	dec c
 	jr nz, .loop
 	xor a
@@ -458,7 +538,8 @@ AllOptionsText:
 	next "ANIMATION  :"
 	next "BATTLESTYLE:"
 	next "SOUND:"
-	next "PRINT:@"
+	next "PRINT:"
+	next "COLOR:@"
 
 OptionMenuCancelText:
 	db "CANCEL     SELECT@"
