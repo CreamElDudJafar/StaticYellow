@@ -100,7 +100,6 @@ HandlePokedexSideMenu:
 	add b
 	inc a
 	ld [wPokedexNum], a
-;	ld a, [wPokedexNum]
 	push af
 	ld a, [wDexMaxSeenMon]
 	push af ; this doesn't need to be preserved
@@ -560,6 +559,12 @@ ShowPokedexDataInternal:
 	push af
 	xor a
 	ldh [hTileAnimations], a
+	ld de, PokedexDataUI
+	ld hl, vChars1 tile $4D
+	lb bc, BANK(PokedexDataUI), 2
+	call CopyVideoDataDouble
+
+.redrawCurrentPokemon
 	call GBPalWhiteOut ; zero all palettes
 	ld a, [wPokedexNum]
 	ld [wCurPartySpecies], a
@@ -572,18 +577,51 @@ ShowPokedexDataInternal:
 	cp 2
 	jr z, .PrintStats
 .PrintDescription
+	hlcoord 10, 16
+	ld a, h
+	ld [wMenuCursorLocation], a
+	ld a, l
+	ld [wMenuCursorLocation + 1], a
+
 	pop af
 	ld [wPokedexNum], a
 	call DrawDexEntryOnScreen
 	jp z, .displaySeenBottomInfo
+	; description pages inside TextCommandProcessor. B/Left/Right can
+	; interrupt at a prompt and are checked immediately afterward.
+	ld a, B_BUTTON | D_LEFT | D_RIGHT
+	ld [wMenuWatchedKeys], a
 	call c, Pokedex_PrintFlavorTextAtRow11
+	; TextCommandProcessor returns immediately when one of the watched
+	; buttons is pressed at either description-page prompt. Do not call
+	; TextCommandPromptMultiButton here: doing so creates an extra blank page
+	; after the final description page.
+	ldh a, [hJoy5]
+	ld b, a
+.descriptionButtonTracking
+	bit BIT_B_BUTTON, b
+	jr nz, .exitDataPage
+	bit BIT_D_LEFT, b
+	jr nz, .previousPokemon
+	bit BIT_D_RIGHT, b
+	jr nz, .nextPokemon
 	jr .waitForButtonPress
 .PrintMoves
 	pop af
 	ld [wPokedexNum], a
 	call DrawDexEntryOnScreen
 	jp z, .displaySeenBottomInfo
+
+	; Preserve the current Pokémon index outside the MOVE renderer.
+	; MOVE helpers reuse wNumPokemon, wWhichPokemon, and other shared variables.
+	ld a, [wPokedexNum]
+	ld b, a
+	push bc
 	call c, Pokedex_PrintMovesText
+	pop bc
+	ld a, b
+	ld [wPokedexNum], a
+	jr c, .handlePageInput
 	jr .waitForButtonPress
 .PrintStats
 	pop af
@@ -591,11 +629,21 @@ ShowPokedexDataInternal:
 	call DrawDexEntryOnScreen
 	jp z, .displaySeenBottomInfo
 	call c, Pokedex_PrintStatsText
+	jr c, .handlePageInput
 .waitForButtonPress
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
-	and A_BUTTON | B_BUTTON
+	and A_BUTTON | B_BUTTON | D_LEFT | D_RIGHT
 	jr z, .waitForButtonPress
+
+.handlePageInput
+	ldh a, [hJoy5]
+	bit BIT_D_LEFT, a
+	jr nz, .previousPokemon
+	bit BIT_D_RIGHT, a
+	jr nz, .nextPokemon
+
+.exitDataPage
 	pop af
 	ldh [hTileAnimations], a
 	call GBPalWhiteOut
@@ -608,9 +656,106 @@ ShowPokedexDataInternal:
 	ld a, $77 ; max volume
 	ldh [rNR50], a
 	ret
+
+.previousPokemon
+	ld a, [wPokedexNum]
+	push af
+	call IndexToPokedex
+	call SeekToPreviousSeenPokemon
+	jr c, .restoreCurrentPokemon
+	pop af
+	call PokedexToIndex
+	jr .changedPokemon
+
+.nextPokemon
+	ld a, [wPokedexNum]
+	push af
+	call IndexToPokedex
+	call SeekToNextSeenPokemon
+	jr c, .restoreCurrentPokemon
+	pop af
+	call PokedexToIndex
+
+.changedPokemon
+	xor a
+	ld [wMoveListCounter], a
+	jp .redrawCurrentPokemon
+
+.restoreCurrentPokemon
+	pop af
+	ld [wPokedexNum], a
+	jr .waitForButtonPress
+
 .displaySeenBottomInfo
 	call PrintMonTypes ; PureRGBnote: ADDED: for pokemon you have seen but not caught it displays just their types on the bottom
 	jr .waitForButtonPress
+
+; Wait at a DATA/STAT/MOVE page prompt.
+; A continues to the next subpage.
+; B, Left, or Right returns carry so ShowPokedexDataInternal can exit or change Pokémon.
+Pokedex_WaitForPageInput:
+	; Place the flashing down arrow at the lower-right.
+	hlcoord 18, 16
+	ld a, h
+	ld [wMenuCursorLocation], a
+	ld a, l
+	ld [wMenuCursorLocation + 1], a
+
+	; Watch A, B, Left, and Right.
+	ld a, B_BUTTON | D_LEFT | D_RIGHT
+	ld [wMenuWatchedKeys], a
+
+	; Use the text engine's real flashing-arrow routine, but without
+	; its page-clear delay.
+	callfar PokedexPromptMultiButton
+
+	ldh a, [hJoy5]
+	bit BIT_D_LEFT, a
+	jr nz, .navigation
+	bit BIT_D_RIGHT, a
+	jr nz, .navigation
+	bit BIT_B_BUTTON, a
+	jr nz, .navigation
+	and a
+	ret
+
+.navigation
+	scf
+	ret
+
+SeekToPreviousSeenPokemon:
+	ld a, [wPokedexNum]
+	cp 1
+	jr z, .notFound
+.loop
+	dec a
+	ld [wPokedexNum], a
+	ld hl, wPokedexSeen
+	call IsPokemonBitSet
+	ret nz
+	ld a, [wPokedexNum]
+	cp 1
+	jr nz, .loop
+.notFound
+	scf
+	ret
+
+SeekToNextSeenPokemon:
+	ld a, [wPokedexNum]
+	cp NUM_POKEMON
+	jr nc, .notFound
+.loop
+	inc a
+	ld [wPokedexNum], a
+	ld hl, wPokedexSeen
+	call IsPokemonBitSet
+	ret nz
+	ld a, [wPokedexNum]
+	cp NUM_POKEMON
+	jr c, .loop
+.notFound
+	scf
+	ret
 
 HeightWeightText:
 	db   "HT  ?′??″"
@@ -626,6 +771,37 @@ PokedexDataDividerLine:
 	db $6B, $6B, $69, $6B, $69, $6B, $69, $6B, $69, $6A
 	db "@"
 
+DrawPokedexDataArrows:
+	CheckEvent EVENT_GOT_POKEDEX
+	ret z
+
+	; wPokedexNum normally contains the internal species index here.
+	; Save it, convert it to the actual Pokédex number for the
+	; boundary checks, then restore the internal index afterward.
+	ld a, [wPokedexNum]
+	push af
+	call IndexToPokedex
+
+	; Bulbasaur (#001) has no previous Pokédex entry.
+	ld a, [wPokedexNum]
+	cp 1
+	jr z, .checkRight
+	ld a, $CD
+	ldcoord_a 1, 17
+
+.checkRight
+	; Mew (#151) has no next Pokédex entry.
+	ld a, [wPokedexNum]
+	cp 151
+	jr z, .done
+	ld a, $CE
+	ldcoord_a 18, 17
+
+.done
+	pop af
+	ld [wPokedexNum], a
+	ret
+
 DrawDexEntryOnScreen:
 	call ClearScreen
 
@@ -634,9 +810,10 @@ DrawDexEntryOnScreen:
 	lb bc, $64, SCREEN_WIDTH
 	call DrawTileLine ; draw top border
 
-	hlcoord 0, 17
-	ld b, $6f
-	call DrawTileLine ; draw bottom border
+	hlcoord 1, 17
+	ld de, 1
+	lb bc, $6f, 18
+	call DrawTileLine ; draw bottom border between the corner tiles
 
 	hlcoord 0, 1
 	ld de, 20
@@ -655,6 +832,8 @@ DrawDexEntryOnScreen:
 	ldcoord_a 0, 17
 	ld a, $6e ; lower right corner tile
 	ldcoord_a 19, 17
+
+	call DrawPokedexDataArrows
 
 	hlcoord 0, 9
 	ld de, PokedexDataDividerLine
@@ -889,8 +1068,9 @@ Pokedex_PrintStatsText:
 	lb bc, 2, 3
 	call PrintNumber
 ; print evolution data
-	ld hl, DexPromptText
-	call TextCommandProcessor
+	; Allow Left/Right/B immediately from the first STAT page.
+	call Pokedex_WaitForPageInput
+	ret c
 	hlcoord 1, 10
 	lb bc, 7, 18
 	call ClearScreenArea
@@ -1125,17 +1305,31 @@ Pokedex_PrintMovesText:
 	inc de
 	push de
 	push bc
-	ld hl, DexPromptText
-	call TextCommandProcessor
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
+	call Pokedex_WaitForPageInput
+	jr c, .navigationFromLevelMoves
 	hlcoord 1, 10
 	lb bc, 7, 18
 	call ClearScreenArea
 	pop bc
 	pop de
 	jp .PrintLevelUpMovesLoop
+.navigationFromLevelMoves
+	pop bc
+	pop de
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
+	scf
+	ret
 .done
-	ld hl, DexPromptText
-	call TextCommandProcessor
+	; Move-printing helpers use wPokedexNum for move IDs. Restore the Pokémon
+	; index before checking Left/Right so navigation starts from this mon.
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
+	; Allow Left/Right/B immediately from the first MOVE page.
+	call Pokedex_WaitForPageInput
+	ret c
 	hlcoord 1, 10
 	lb bc, 7, 18
 	call ClearScreenArea
@@ -1211,14 +1405,23 @@ Pokedex_PrintMovesText:
 	jr z, .done2
 	; wait for button press
 	push de
-	ld hl, DexPromptText
-	call TextCommandProcessor
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
+	call Pokedex_WaitForPageInput
+	jr c, .navigationFromTMMoves
 	hlcoord 1, 10
 	lb bc, 7, 18
 	call ClearScreenArea
 	pop de
 	jp .PrintTMMovesLoop
+.navigationFromTMMoves
+	pop de
+	ld a, [wCurPartySpecies]
+	ld [wPokedexNum], a
+	scf
+	ret
 .done2
+	and a ; normal completion, not a navigation request
 	ret
 
 ClearMoveBuffer:

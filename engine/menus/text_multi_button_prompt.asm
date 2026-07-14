@@ -29,6 +29,19 @@ TextCommandPromptMultiButton::
 	ret
 
 ; waits for A being pressed or specific watched buttons, if A was pressed plays a sound, otherwise just exits
+
+; Pokédex-specific flashing prompt.
+; Uses the normal multi-button blink engine, but does not clear the
+; lower text area or wait 20 extra frames when A is pressed.
+PokedexPromptMultiButton::
+	call LoadDownArrowCoord
+	ld [hl], "▼"
+	call Delay3
+	call ManualTextScrollMultiButton
+	call LoadDownArrowCoord
+	ld [hl], " "
+	ret
+
 ManualTextScrollMultiButton::
 	call WaitForTextScrollSpecificButtonsPress
 	ld a, d
