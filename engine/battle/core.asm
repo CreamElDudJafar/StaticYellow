@@ -1704,7 +1704,13 @@ TryRunningFromBattle:
 	ld [wActionResultOrTookBattleTurn], a ; you lose your turn when you can't escape
 	ld hl, CantEscapeText
 	jr .printCantEscapeOrNoRunningText
-.trainerBattle ; edited
+.trainerBattle
+IF DEF(_DEBUG)
+	call FaintEnemyPokemon
+	call TrainerBattleVictory
+	scf
+	ret
+ENDC
 ;	ld hl, NoRunningText
 	call WantToSurrenderFromTrainerBattle
 .test
@@ -1716,6 +1722,7 @@ TryRunningFromBattle:
 .noSurrender
 	ld hl, LetsNotGiveUpYet
 	rst _PrintText
+	and a
 	ret
 .printCantEscapeOrNoRunningText
 	rst _PrintText
