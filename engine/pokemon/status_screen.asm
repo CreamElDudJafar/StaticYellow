@@ -122,43 +122,12 @@ StatusScreen:
 	hlcoord 11, 3
 	predef DrawHP
 
-;joenote - print stat exp if select is held
-	;parse dv stats here so they can be grabbed later
+; Parse DVs so the status pages can use them.
 	push de
 	ld bc, SCREEN_WIDTH + 1
 	add hl, bc
 	call DVParse
-	call Joypad
-	
-	ld a, [hJoyHeld]
-	and SELECT | START
-	jr z, .noblank
-	push hl
-	ld a, " "
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	pop hl
-.noblank
-	
-	ld a, [hJoyHeld]
-	bit BIT_SELECT, a
-	jr z, .checkstart
-	ld de, wLoadedMonHPExp
-	lb bc, 2, 5
-	jr .printnum
-.checkstart	;print DVs if start is held
-	bit BIT_START, a
-	jr z, .doregular
-	ld de, wDVCalcVar2 + 4
-	lb bc, 1, 2
-.printnum
-	call PrintNumber
-.doregular
+	call StatusScreen_PrintHPPageValue
 	pop de
 	ld hl, wStatusScreenHPBarColor
 	call GetHealthBarColor
@@ -337,34 +306,12 @@ PrintStatsBox:
 	pop bc
 	add hl, bc
 ; New Stat Exp / DVs display functionality, from shin pokered.
-;joenote - print stat exp if select is held
-	call Joypad
-	ld a, [hJoyHeld]
-	bit 2, a
-	jr z, .checkstart
-	dec l	;shift alignment 2 tiles to the left
-	dec l
-	ld de, wLoadedMonAttackExp
-	lb bc, 2, 5
-	call PrintStat
-	ld de, wLoadedMonDefenseExp
-	call PrintStat
-	ld de, wLoadedMonSpeedExp
-	call PrintStat
-	ld de, wLoadedMonSpecialExp
-	jp PrintNumber
-.checkstart	;joenote - print DVs if start is held
-	bit 3, a
-	jr z, .doregular
-	ld de, wDVCalcVar2
-	lb bc, 1, 2
-	call PrintStat
-	ld de, wDVCalcVar2 + 1
-	call PrintStat
-	ld de, wDVCalcVar2 + 2
-	call PrintStat
-	ld de, wDVCalcVar2 + 3
-	jp PrintNumber
+; wDVCalcVar1: 0 = regular stats, 1 = DVs, 2 = Stat Exp.
+	ld a, [wDVCalcVar1]
+	cp 1
+	jr z, .dodynamics
+	cp 2
+	jr z, .dostatexp
 .doregular
 	ld de, wLoadedMonAttack
 	lb bc, 2, 3
@@ -375,12 +322,69 @@ PrintStatsBox:
 	call PrintStat
 	ld de, wLoadedMonSpecial
 	jp PrintNumber
+.dodynamics
+	ld de, wDVCalcVar2
+	lb bc, 1, 2
+	call PrintStat
+	ld de, wDVCalcVar2 + 1
+	call PrintStat
+	ld de, wDVCalcVar2 + 2
+	call PrintStat
+	ld de, wDVCalcVar2 + 3
+	jp PrintNumber
+.dostatexp
+	dec l ; shift alignment 2 tiles to the left
+	dec l
+	ld de, wLoadedMonAttackExp
+	lb bc, 2, 5
+	call PrintStat
+	ld de, wLoadedMonDefenseExp
+	call PrintStat
+	ld de, wLoadedMonSpeedExp
+	call PrintStat
+	ld de, wLoadedMonSpecialExp
+	jp PrintNumber
 PrintStat:
 	push hl
 	call PrintNumber
 	pop hl
 	ld de, SCREEN_WIDTH * 2
 	add hl, de
+	ret
+
+StatusScreen_PrintHPPageValue:
+	ld a, [wDVCalcVar1]
+	and a
+	ret z
+	push hl
+	ld a, " "
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hl], a
+	pop hl
+	ld a, [wDVCalcVar1]
+	cp 1
+	jr z, .dvs
+	ld de, wLoadedMonHPExp
+	lb bc, 2, 5
+	jp PrintNumber
+.dvs
+	ld de, wDVCalcVar2 + 4
+	lb bc, 1, 2
+	jp PrintNumber
+
+StatusScreen_RedrawStatsPage:
+	call DVParse
+	hlcoord 11, 3
+	predef DrawHP
+	hlcoord 12, 4
+	call StatusScreen_PrintHPPageValue
+	ld d, $0
+	call PrintStatsBox
 	ret
 
 StatsText:
@@ -652,13 +656,18 @@ ExitStatusScreen:
 StatusScreenLoop:
 	ldh a, [hTileAnimations]
 	push af
+	xor a
+	ld [wDVCalcVar1], a
 .displayNextMon
 	call StatusScreen
-	call PokemonStatusWaitForButtonPress
+.waitStatsInput
+	call PokemonStatusWaitForButtonPressWithSelect
 	bit BIT_D_UP, a
 	jr nz, .prevMon
 	bit BIT_D_DOWN, a
 	jr nz, .nextMon
+	bit BIT_SELECT, a
+	jr nz, .nextStatsPage
 	bit BIT_B_BUTTON, a
 	jr nz, .exitStatus
 	call StatusScreen2
@@ -669,6 +678,17 @@ StatusScreenLoop:
 	jr nz, .nextMon
 .exitStatus
 	jp ExitStatusScreen
+.nextStatsPage
+	ld hl, wDVCalcVar1
+	inc [hl]
+	ld a, [hl]
+	cp 3
+	jr c, .redrawStatsPage
+	xor a
+	ld [hl], a
+.redrawStatsPage
+	call StatusScreen_RedrawStatsPage
+	jr .waitStatsInput
 .nextMon
 	ld hl, wWhichPokemon
 	inc [hl]
@@ -682,9 +702,13 @@ StatusScreenLoop:
 	dec [hl]
 	jr .displayNextMon
 
+PokemonStatusWaitForButtonPressWithSelect:
+	ld a, A_BUTTON | B_BUTTON | SELECT
+	jr PokemonStatusWaitForAllowedButtons
+
 PokemonStatusWaitForButtonPress:
-.decideButtons
 	ld a, A_BUTTON | B_BUTTON
+PokemonStatusWaitForAllowedButtons:
 	ld b, a
 	ld a, [wWhichPokemon]
 	and a
@@ -702,6 +726,8 @@ PokemonStatusWaitForButtonPress:
 	ld a, b
 	or D_DOWN
 	ld b, a
+	jr PokedexStatusWaitForButtonPressLoop
+
 PokedexStatusWaitForButtonPressLoop:
 .waitForButtonPress
 	push bc
