@@ -1,28 +1,13 @@
 DisplayPokemonCenterDialogue_::
 	ld a, [wCurMap]
 	cp PEWTER_POKECENTER
-	jr nz, .checkRouteCenters ; edited
+	jr nz, .regularCenter
 	call CheckPikachuFollowingPlayer
 	jr z, .regularCenter
 	ld hl, LooksContentText ; if pikachu is sleeping, don't heal
 	rst _PrintText
 	ret
-; new, for setting Route 4 and Route 10 Pokecenters fly locations
-.checkRouteCenters
-	cp MT_MOON_POKECENTER
-	jr nz, .checkRockTunnelPokecenter
-	lb bc, FLAG_SET, FLYLOC_ROUTE_4_CENTER
-	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
-	predef FlagActionPredef
-	jr .regularCenter
-.checkRockTunnelPokecenter
-	cp ROCK_TUNNEL_POKECENTER
-	jr nz, .regularCenter
-	lb bc, FLAG_SET, FLYLOC_ROUTE_10_CENTER
-	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
-	predef FlagActionPredef
 .regularCenter
-; back to vanilla
 	call SaveScreenTilesToBuffer1 ; save screen
 	CheckEvent EVENT_FIRST_POKECENTER
 	jr nz, .skiptext1
