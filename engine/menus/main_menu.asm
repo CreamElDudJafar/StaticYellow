@@ -2,7 +2,6 @@ MainMenu:
 ; Check save file
 	call InitOptions
 	xor a
-	ld [wOptionsInitialized], a
 	inc a
 	ld [wSaveFileStatus], a
 	call CheckForPlayerNameInSRAM
@@ -88,8 +87,14 @@ MainMenu:
 	jp z, StartNewGame
 	call ClearScreen ; remove version text before displaying options
 	call DisplayOptionMenu
-	ld a, TRUE
+	ld a, OPTIONS_INITIALIZED_VALUE
 	ld [wOptionsInitialized], a
+	call CheckForPlayerNameInSRAM
+	jr nc, .saveOptionsOnly
+	callfar SaveSAVtoSRAM
+	jp .mainMenuLoop
+.saveOptionsOnly
+	call CopyOptionsToSRAM
 	jp .mainMenuLoop
 .choseContinue
 	call DisplayContinueGameInfo
@@ -130,6 +135,9 @@ MainMenu:
 InitOptions:
 	ld a, 1 << BIT_FAST_TEXT_DELAY
 	ld [wLetterPrintingDelayFlags], a
+	ld a, [wOptionsInitialized]
+	cp OPTIONS_INITIALIZED_VALUE
+	ret z
 	ld a, TEXT_DELAY_FAST
 	ld [wOptions], a
 	ld a, 64 ; audio?

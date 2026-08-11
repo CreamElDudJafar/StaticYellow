@@ -22,8 +22,8 @@ PrepareOakSpeech:
 	pop af
 	ld [wLetterPrintingDelayFlags], a
 	ld a, [wOptionsInitialized]
-	and a
-	call z, InitOptions
+	cp OPTIONS_INITIALIZED_VALUE
+	call nz, InitOptions
 	; These debug names are used for StartNewGameDebug.
 	; TestBattle uses the debug names from DebugMenu.
 	; A variant of this process is performed in PrepareTitleScreen.
@@ -393,15 +393,16 @@ DoOptionsRestore:
 	ret
 
 BackupList:
-	db 3
+	db 4
 	dw wOptions2
 	dw wOptions
 	dw wStatusFlags6
+	dw wOptionsInitialized
 
 CopyOptionsFromSRAM::
 	ld a, [wOptionsInitialized]
-	and a
-	ret nz
+	cp OPTIONS_INITIALIZED_VALUE
+	ret z
 
 	ld a, SRAM_ENABLE
 	ld [MBC1SRamEnable], a
@@ -411,26 +412,66 @@ CopyOptionsFromSRAM::
 	ld [MBC1SRamBank], a
 
 	call CheckSaveFileExists
-	jr nc, .noSave
+	jr c, .loadOptions
 
+; No normal save exists. Load title-menu options only if they were
+; previously initialized and written to SRAM.
+	ld a, [sOptionsInitialized]
+	cp OPTIONS_INITIALIZED_VALUE
+	jr z, .loadOptions
+
+; First boot / no saved options: use Static Yellow defaults.
+	ld a, PALETTES_YELLOW
+	ld [wOptions2], a
+	ld a, TEXT_DELAY_FAST
+	ld [wOptions], a
+	ld a, 64
+	ld [wPrinterSettings], a
+	jr .doneLoad
+
+.loadOptions
 	ld a, [sOptions2]
 	ld [wOptions2], a
 
 	ld a, [sOptions]
 	ld [wOptions], a
-	jr .doneLoad
 
-.noSave
-	ld a, PALETTES_YELLOW
-	ld [wOptions2], a
+	ld a, [sPrinterSettings]
+	ld [wPrinterSettings], a
 
 .doneLoad
 	xor a
 	ld [MBC1SRamBankingMode], a
 	ld [MBC1SRamEnable], a
 
-	ld a, TRUE
+	ld a, OPTIONS_INITIALIZED_VALUE
 	ld [wOptionsInitialized], a
+	ret
+
+CopyOptionsToSRAM::
+	ld a, SRAM_ENABLE
+	ld [MBC1SRamEnable], a
+
+	ld a, $1
+	ld [MBC1SRamBankingMode], a
+	ld [MBC1SRamBank], a
+
+	ld a, [wOptions2]
+	ld [sOptions2], a
+
+	ld a, [wOptions]
+	ld [sOptions], a
+
+	ld a, [wPrinterSettings]
+	ld [sPrinterSettings], a
+
+	ld a, OPTIONS_INITIALIZED_VALUE
+	ld [sOptionsInitialized], a
+	ld [wOptionsInitialized], a
+
+	xor a
+	ld [MBC1SRamBankingMode], a
+	ld [MBC1SRamEnable], a
 	ret
 
 ; displays difficulty choice

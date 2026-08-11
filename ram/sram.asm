@@ -26,6 +26,14 @@ sOptions2:: db
 NEXTU
 ds wOptions - wMainDataStart
 sOptions:: db
+
+NEXTU
+ds wPrinterSettings - wMainDataStart
+sPrinterSettings:: db
+
+NEXTU
+ds wOptionsInitialized - wMainDataStart
+sOptionsInitialized:: db
 ENDU
 
 sSpriteData::  ds wSpriteDataEnd - wSpriteDataStart
