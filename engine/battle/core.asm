@@ -3223,8 +3223,7 @@ PrintMenuItem:
 	ld a, [wPlayerMoveEffect]
 	cp SWIFT_EFFECT
 	jr z, .infAccuracy
-	; convert accuracy
-	ld a, [wPlayerMoveAccuracy]
+; convert accuracy
 	farcall ConvertPercentagesBattle
 	ld de, wBuffer
 	hlcoord 5, 10
@@ -3232,30 +3231,8 @@ PrintMenuItem:
 	call PrintNumber
 	hlcoord 8, 10
 	ld [hl], "%"
-	jr .printHighCrit
-.infAccuracy
-	hlcoord 5, 10
-.printHighCrit
-	ld a, [wPlayerSelectedMove]
-	ld b, a
-	ld hl, HighCriticalMoves
-.hcLoop
-	ld a, [hli] ; read move from table
-	cp b
-	jr z, .highCritMove
-	inc a
-	jr nz, .hcLoop
-	jr .statusEffect
-.statusEffect
-	ld a, [wPlayerMoveEffect]
-.noAdditionalEffect
-	cp NO_ADDITIONAL_EFFECT
-	jp z, .finished
-	cp SPLASH_EFFECT
-	jp z, .finished
-.highCritMove
-	hlcoord 9, 8
-	jp .finished	
+	jr .finished
+.infAccuracy	
 .finished
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
