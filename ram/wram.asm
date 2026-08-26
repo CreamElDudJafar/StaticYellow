@@ -1773,6 +1773,7 @@ wMoveNum:: db
 wItemList::
 wMovesString:: ds 56
 
+wSelfConfusionAnimation::
 wUnusedCurMapTilesetCopy:: db
 
 ; wWalkBikeSurfState is sometimes copied here, but it doesn't seem to be used for anything
