@@ -4055,12 +4055,16 @@ HandleSelfConfusionDamage:
 	ld [hl], a
 	xor a
 	ld [wAnimationType], a
+	dec a
+	ld [wSelfConfusionAnimation], a
+	inc a
 	inc a
 	ldh [hWhoseTurn], a
 	call PlayMoveAnimation
 	call DrawPlayerHUDAndHPBar
 	xor a
 	ldh [hWhoseTurn], a
+	ld [wSelfConfusionAnimation], a
 	jp ApplyDamageToPlayerPokemon
 
 PrintMonName1Text:
@@ -6266,10 +6270,14 @@ CheckEnemyStatusConditions:
 	xor a
 	ld [wAnimationType], a
 	ldh [hWhoseTurn], a
+	dec a
+	ld [wSelfConfusionAnimation], a
 	ld a, POUND
 	call PlayMoveAnimation
 	ld a, $1
 	ldh [hWhoseTurn], a
+	xor a
+	ld [wSelfConfusionAnimation], a
 	call ApplyDamageToEnemyPokemon
 	jr .monHurtItselfOrFullyParalysed
 .checkIfTriedToUseDisabledMove
@@ -6677,6 +6685,7 @@ DoBattleTransitionAndInitBattleVariables:
 	ld [hli], a
 	ld [hl], a
 	ld [wPlayerDisabledMove], a
+	ld [wSelfConfusionAnimation], a
 	ret
 
 ; swaps the level values of the BattleMon and EnemyMon structs

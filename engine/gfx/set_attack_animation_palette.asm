@@ -54,13 +54,15 @@ SetAttackAnimPal:
 	ld a, [hl]
 	ld b, a
 
+	ld a, [wSelfConfusionAnimation]
+	inc a
+	jr nz, .noselfdamage
+	ld b, PAL_BLACK2
+	jr .starttransfer
+.noselfdamage
 	ld a, [wAnimationID]
 	and a
 	ret z
-	cp POUND
-	jr nz, .noselfdamage 		;check for self inflicted confusion damage
-	ld b, PAL_BLACK2
-.noselfdamage
 	cp ABSORB
 	jr nz, .noleechseed
 	ld b, PAL_GREENMON
