@@ -1351,6 +1351,14 @@ _AnimationSlideMonUp:
 ShakeEnemyHUD_WritePlayerMonPicOAM:
 ; Writes the OAM entries for a copy of the player mon's pic in OAM.
 ; The top 5 rows are reproduced in OAM, although only 2 are actually needed.
+	ld a, [hGBC]
+	and a
+	jr z, .notCGB
+	ld a, [wBattleMonSpecies]
+	ld [wCurPartySpecies], a
+	lb de, CONVERT_OBP0, 1
+	farcall TransferMonPal
+.notCGB
 	ld a, $10
 	ld [wBaseCoordX], a
 	ld a, $30
@@ -1444,7 +1452,11 @@ AdjustOAMBlockYPos2:
 	add b
 	cp 112
 	jr c, .skipSettingPreviousEntrysAttribute
+	dec hl
+	push af
 	ld a, 160
+	ld [hli], a
+	pop af
 .skipSettingPreviousEntrysAttribute
 	ld [hl], a
 	add hl, de

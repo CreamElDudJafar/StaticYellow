@@ -368,15 +368,26 @@ OptionsMenu_Color:
 	call GetColorSetting
 	ldh a, [hJoy5]
 	bit BIT_D_RIGHT, a
-	jr nz, .toggle
+	jr nz, .pressedRight
 	bit BIT_D_LEFT, a
-	jr nz, .toggle
+	jr nz, .pressedLeft
 	jr .nothingPressed
 
-.toggle
+.pressedRight
+	inc c
 	ld a, c
-	xor 1
-	ld c, a
+	cp 3
+	jr c, .save
+	ld c, 0
+	jr .save
+
+.pressedLeft
+	ld a, c
+	and a
+	jr nz, .decrease
+	ld c, 3
+.decrease
+	dec c
 
 .save
 	push bc
@@ -405,13 +416,16 @@ OptionsMenu_Color:
 GetColorSetting:
 	ld a, [wOptions2]
 	and %11
-	cp PALETTES_SGB
-	jr z, .sgb
 	ld c, 0 ; Y
-	ret
-
-.sgb
-	ld c, 1 ; SGB
+	cp PALETTES_YELLOW
+	ret z
+	inc c
+	cp PALETTES_SGB
+	ret z
+	inc c
+	cp PALETTES_DMG
+	ret z
+	ld c, 0 ; default to Y
 	ret
 
 GetColorValueFromIndex:
@@ -424,16 +438,21 @@ GetColorValueFromIndex:
 ColorOptionValueTable:
 	db PALETTES_YELLOW
 	db PALETTES_SGB
+	db PALETTES_DMG
 
 ColorOptionStringsPointerTable:
 	dw ColorYText
 	dw ColorSGBText
+	dw ColorDMGText
 
 ColorYText:
 	db "Y  @"
 
 ColorSGBText:
 	db "SGB@"
+
+ColorDMGText:
+	db "DMG@"
 
 OptionsMenu_Dummy:
 	and a

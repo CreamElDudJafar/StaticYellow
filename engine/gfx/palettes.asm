@@ -907,6 +907,12 @@ DMGPalToGBCPal::
 	ldh a, [rOBP1]
 	ld [wLastOBP1], a
 .convert
+	push af
+	ld a, [wOptions2]
+	and %11
+	cp PALETTES_DMG
+	jr z, .convertDMG
+	pop af
 	FOR color_index, NUM_PAL_COLORS
 		ld b, a
 		and %11
@@ -927,6 +933,26 @@ DMGPalToGBCPal::
 	ENDR
 	ret
 
+.convertDMG
+	pop af
+	ld de, CGB_DMGPalette
+	FOR color_index, NUM_PAL_COLORS
+		ld b, a
+		and %11
+		call .GetColorAddress
+		ld a, [hli]
+		ld [wGBCPal + color_index * 2], a
+		ld a, [hl]
+		ld [wGBCPal + color_index * 2 + 1], a
+
+		IF color_index < NUM_PAL_COLORS - 1
+			ld a, b
+			rrca
+			rrca
+		ENDC
+	ENDR
+	ret
+
 .GetColorAddress:
 	add a
 	ld l, a
@@ -934,6 +960,12 @@ DMGPalToGBCPal::
 	ld h, a
 	add hl, de
 	ret
+
+CGB_DMGPalette:
+	RGB 31, 31, 31
+	RGB 21, 21, 21
+	RGB 10, 10, 10
+	RGB  0,  0,  0
 
 TransferCurBGPData::
 	push de
