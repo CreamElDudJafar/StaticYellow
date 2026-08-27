@@ -108,12 +108,14 @@ InitCutAnimOAM:
 	call WriteCutOrBoulderDustAnimationOAMBlock
 	ld hl, wShadowOAMSprite36Attributes
 	ld de, 4
-	ld a, $30
+	ld a, [hl]
+	and $0f
+	or OAM_HFLIP | OAM_OBP1
 	ld c, e
 .loop
 	ld [hl], a
 	add hl, de
-	xor $60
+	xor OAM_VFLIP | OAM_HFLIP
 	dec c
 	jr nz, .loop
 	ret

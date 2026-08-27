@@ -46,7 +46,6 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 .noCarry
 	dec b
 	jr nz, .copyRowLoop
-	call EnableLCD
 	ld a, $90
 	ldh [hWY], a
 	ldh [rWY], a
@@ -71,6 +70,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	call UpdateGBCPal_BGP
 	call UpdateGBCPal_OBP0
 	call UpdateGBCPal_OBP1
+	call EnableLCD
 .slideSilhouettesLoop ; slide silhouettes of the player's pic and the enemy's pic onto the screen
 	ld h, b
 	ld l, $40
@@ -92,6 +92,12 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	ldh [hStartTileID], a
 	hlcoord 1, 5
 	predef CopyUncompressedPicToTilemap
+
+; Fix bottom battle window disappearing for 1 frame on DMG.
+	xor a
+	ldh [hSCX], a
+	call Delay3
+
 	xor a
 	ldh [hWY], a
 	ldh [rWY], a
