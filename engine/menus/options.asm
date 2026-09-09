@@ -376,7 +376,7 @@ OptionsMenu_Color:
 .pressedRight
 	inc c
 	ld a, c
-	cp 3
+	cp 4
 	jr c, .save
 	ld c, 0
 	jr .save
@@ -385,7 +385,7 @@ OptionsMenu_Color:
 	ld a, c
 	and a
 	jr nz, .decrease
-	ld c, 3
+	ld c, 4
 .decrease
 	dec c
 
@@ -423,6 +423,9 @@ GetColorSetting:
 	cp PALETTES_SGB
 	ret z
 	inc c
+	cp PALETTES_OG
+	ret z
+	inc c
 	cp PALETTES_DMG
 	ret z
 	ld c, 0 ; default to Y
@@ -438,11 +441,13 @@ GetColorValueFromIndex:
 ColorOptionValueTable:
 	db PALETTES_YELLOW
 	db PALETTES_SGB
+	db PALETTES_OG
 	db PALETTES_DMG
 
 ColorOptionStringsPointerTable:
 	dw ColorYText
 	dw ColorSGBText
+	dw ColorOGText
 	dw ColorDMGText
 
 ColorYText:
@@ -450,6 +455,9 @@ ColorYText:
 
 ColorSGBText:
 	db "SGB@"
+
+ColorOGText:
+	db "OG @"
 
 ColorDMGText:
 	db "DMG@"
