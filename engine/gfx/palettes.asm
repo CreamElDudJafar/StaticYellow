@@ -952,6 +952,8 @@ DMGPalToGBCPal::
 	push af
 	ld a, [wOptions2]
 	and %11
+	cp PALETTES_OG
+	jr z, .convertOG
 	cp PALETTES_DMG
 	jr z, .convertDMG
 	pop af
@@ -975,9 +977,16 @@ DMGPalToGBCPal::
 	ENDR
 	ret
 
+.convertOG
+	pop af
+	ld de, CGB_OGPalette
+	jr .convertFixedPalette
+
 .convertDMG
 	pop af
 	ld de, CGB_DMGPalette
+
+.convertFixedPalette
 	FOR color_index, NUM_PAL_COLORS
 		ld b, a
 		and %11
@@ -1002,6 +1011,12 @@ DMGPalToGBCPal::
 	ld h, a
 	add hl, de
 	ret
+
+CGB_OGPalette:
+	RGB 31, 31, 31
+	RGB 31, 31,  0
+	RGB 31,  0,  0
+	RGB  0,  0,  0
 
 CGB_DMGPalette:
 	RGB 31, 31, 31
