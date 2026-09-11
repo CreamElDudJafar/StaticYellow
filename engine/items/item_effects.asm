@@ -3193,6 +3193,68 @@ INCLUDE "data/wild/old_rod.asm"
 INCLUDE "data/wild/good_rod.asm"  
 INCLUDE "data/wild/super_rod.asm"
 
+TownMapRodTypeHasEncounters::
+; e = 2 (Super Rod), 3 (Good Rod), or 4 (Old Rod), d = map ID.
+; The type is deliberately passed in E: callfar/rst _Bankswitch clobbers A.
+; Preserve the map ID before loading DE with the 3-byte table stride.
+; Return carry if that rod has a group for the selected map.
+	ld c, d
+	ld a, e
+	cp 2
+	jr z, .super
+	cp 3
+	jr z, .good
+	ld hl, OldRodData
+	jr .search
+.good
+	ld hl, GoodRodData
+	jr .search
+.super
+	ld hl, SuperRodData
+.search
+	ld a, c
+	ld de, 3
+	jp IsInArray
+
+CopyTownMapCurrentRodEncounters::
+; e = 2 (Super Rod), 3 (Good Rod), or 4 (Old Rod), d = map ID.
+; Copy only the currently displayed rod into the shared Town Map scratch buffer.
+; E is used for the type because A is not a safe farcall argument in this engine.
+; Preserve the map ID before DE is reused as the table stride.
+	ld c, d
+	xor a
+	ld [wTownMapRodCount], a
+	ld a, e
+	cp 2
+	jr z, .super
+	cp 3
+	jr z, .good
+	ld hl, OldRodData
+	jr .search
+.good
+	ld hl, GoodRodData
+	jr .search
+.super
+	ld hl, SuperRodData
+.search
+	ld a, c
+	ld de, 3
+	call IsInArray
+	ret nc
+	inc hl
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld a, [hli]
+	ld [wTownMapRodCount], a
+	add a
+	ld c, a
+	ld b, 0
+	ld de, wTownMapRodMons
+	jp CopyData
+
+
+
 ; reloads map view and processes sprite data
 ; for items that cause the overworld to be displayed
 ItemUseReloadOverworldData:

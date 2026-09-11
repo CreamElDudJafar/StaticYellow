@@ -1,8 +1,15 @@
 LoadWildData::
-	ld hl, WildDataPointers
 	ld a, [wCurMap]
+	jr LoadWildDataCommon
 
-	; get wild data for current map
+LoadArbitraryWildData::
+; d = map ID. D survives callfar/Bankswitch.
+	ld a, d
+
+LoadWildDataCommon:
+	ld hl, WildDataPointers
+
+	; get wild data for map in a
 	ld c, a
 	ld b, 0
 	add hl, bc
