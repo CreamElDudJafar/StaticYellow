@@ -201,7 +201,7 @@ NewGameText:
 VersionText:
 	db " "
 	db "Version"
-	db " 1.6.4"
+	db " 1.6.5"
 	db "@"
 
 DisplayContinueGameInfo:
