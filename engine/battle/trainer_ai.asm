@@ -1022,7 +1022,11 @@ SwitchEnemyMon:
 	; switching in a new mon in response to this switch.
 	ld a, 1
 	ld [wFirstMonsNotOutYet], a
+	ld a, [wCurrentMenuItem] ; preserve Mimic's selected move slot across enemy switch
+	push af
 	callfar EnemySendOut
+	pop af
+	ld [wCurrentMenuItem], a
 	xor a
 	ld [wFirstMonsNotOutYet], a
 
