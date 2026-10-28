@@ -379,6 +379,13 @@ StatusScreen_PrintHPPageValue:
 
 StatusScreen_RedrawStatsPage:
 	call DVParse
+	hlcoord 12, 4
+	ld b, 7
+	ld a, " "
+.clearHP
+	ld [hli], a
+	dec b
+	jr nz, .clearHP
 	hlcoord 11, 3
 	predef DrawHP
 	hlcoord 12, 4
