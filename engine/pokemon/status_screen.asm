@@ -648,6 +648,8 @@ StatusScreenOriginal:
 	ld b, A_BUTTON | B_BUTTON
 	call PokedexStatusWaitForButtonPressLoop
 ExitStatusScreen:
+	xor a
+	ld [wDVCalcVar1], a
 	pop af
 	ldh [hTileAnimations], a
 	ld hl, wStatusFlags2
