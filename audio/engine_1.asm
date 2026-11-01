@@ -974,18 +974,6 @@ Audio1_ApplyWavePatternAndFrequency:
 	call Audio1_ApplyFrequencyModifier
 .asm_9642
 	ret
-.asm_9643
-	ld a, c
-	cp $4
-	ret nz
-	ld a, [wLowHealthAlarm]
-	bit BIT_LOW_HEALTH_ALARM, a
-	ret z
-	xor a
-	ld [wFrequencyModifier], a
-	ld a, $80
-	ld [wTempoModifier], a
-	ret
 
 Audio1_SetSfxTempo:
 	call Audio1_IsCry
