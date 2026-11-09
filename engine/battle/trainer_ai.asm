@@ -494,7 +494,7 @@ AIMoveChoiceModification3:
 	ld a, [wEnemyMoveType]
 	ld d, a
 	ld hl, wEnemyMonMoves  ; enemy moves
-	ld bc, NUM_MOVES + 1
+	ld b, NUM_MOVES + 1
 	ld c, $0
 .loopMoves
 	dec b
@@ -633,8 +633,6 @@ AIMoveChoiceModification4:
 .preferMoveEvenMore
 	dec [hl]
 	jr .preferMove
-.done
-	ret
 
 Modifier4PreferredMoves:
 	db SLEEP_EFFECT
@@ -1090,21 +1088,6 @@ AIUseGuardSpec:
 ;	set 2, [hl]
 ;	ld a, DIRE_HIT
 ;	jp AIPrintItemUse
-
-; PureRGBnote: ADDED: if enemy HP is below a 1/[wUnusedMusicByte], store 1 in wUnusedMusicByte.
-; used for checking whether the hyper ball item should guarantee success on use
-AICheckIfHPBelowFractionStore::
-	ld a, [wUnusedMusicByte]
-	call AICheckIfHPBelowFraction
-	jr c, .below
-
-	xor a
-	jr .done
-.below
-	ld a, 1
-.done
-	ld [wUnusedMusicByte], a 
-	ret
 
 AICheckIfHPBelowFractionWrapped:
 	push hl
