@@ -15,38 +15,38 @@ PCMainMenu:
 	set BIT_NO_MENU_BUTTON_SOUND, [hl]
 	call HandleMenuInput
 	bit BIT_B_BUTTON, a
-	jp nz, LogOff
+	jr nz, LogOff
 	ld a, [wMaxMenuItem]
 	cp 2
 	jr nz, .next ;if not 2 menu items (not counting log off) (2 occurs before you get the pokedex)
 	ld a, [wCurrentMenuItem]
 	and a
-	jp z, BillsPC    ;if current menu item id is 0, it's bills pc
+	jr z, BillsPC    ;if current menu item id is 0, it's bills pc
 	cp 1
 	jr z, .playersPC ;if current menu item id is 1, it's players pc
-	jp LogOff        ;otherwise, it's 2, and you're logging off
+	jr LogOff        ;otherwise, it's 2, and you're logging off
 .next
 	cp 3
 	jr nz, .next2 ;if not 3 menu items (not counting log off) (3 occurs after you get the pokedex, before you beat the pokemon league)
 	ld a, [wCurrentMenuItem]
 	and a
-	jp z, BillsPC    ;if current menu item id is 0, it's bills pc
+	jr z, BillsPC    ;if current menu item id is 0, it's bills pc
 	cp 1
 	jr z, .playersPC ;if current menu item id is 1, it's players pc
 	cp 2
-	jp z, OaksPC     ;if current menu item id is 2, it's oaks pc
-	jp LogOff        ;otherwise, it's 3, and you're logging off
+	jr z, OaksPC     ;if current menu item id is 2, it's oaks pc
+	jr LogOff        ;otherwise, it's 3, and you're logging off
 .next2
 	ld a, [wCurrentMenuItem]
 	and a
-	jp z, BillsPC    ;if current menu item id is 0, it's bills pc
+	jr z, BillsPC    ;if current menu item id is 0, it's bills pc
 	cp 1
 	jr z, .playersPC ;if current menu item id is 1, it's players pc
 	cp 2
-	jp z, OaksPC     ;if current menu item id is 2, it's oaks pc
+	jr z, OaksPC     ;if current menu item id is 2, it's oaks pc
 	cp 3
-	jp z, PKMNLeague ;if current menu item id is 3, it's pkmnleague
-	jp LogOff        ;otherwise, it's 4, and you're logging off
+	jr z, PKMNLeague ;if current menu item id is 3, it's pkmnleague
+	jr LogOff        ;otherwise, it's 4, and you're logging off
 .playersPC
 	ld hl, wMiscFlags
 	res BIT_NO_MENU_BUTTON_SOUND, [hl]
@@ -58,6 +58,16 @@ PCMainMenu:
 	rst _PrintText
 	farcall PlayerPC
 	jr ReloadMainMenu
+
+LogOff:
+	ld a, SFX_TURN_OFF_PC
+	rst _PlaySound
+	call WaitForSoundToFinish
+	ld hl, wMiscFlags
+	res BIT_USING_GENERIC_PC, [hl]
+	res BIT_NO_MENU_BUTTON_SOUND, [hl]
+	ret
+
 OaksPC:
 	ld a, SFX_ENTER_PC
 	rst _PlaySound
@@ -89,15 +99,6 @@ ReloadMainMenu:
 	call ReloadMapData
 	call UpdateSprites
 	jp PCMainMenu
-LogOff:
-	ld a, SFX_TURN_OFF_PC
-	rst _PlaySound
-	call WaitForSoundToFinish
-	ld hl, wMiscFlags
-	res BIT_USING_GENERIC_PC, [hl]
-	res BIT_NO_MENU_BUTTON_SOUND, [hl]
-	ret
-
 TurnedOnPC1Text:
 	text_far _TurnedOnPC1Text
 	text_end
